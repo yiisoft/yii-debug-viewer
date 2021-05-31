@@ -24,9 +24,6 @@ return [
             'yiisoft/validator' => [
                 'common.php',
             ],
-            'yiisoft/view' => [
-                'common.php',
-            ],
         ],
         'console' => [
             'yiisoft/yii-console' => [
@@ -75,19 +72,7 @@ return [
             'yiisoft/yii-console' => [
                 'params.php',
             ],
-            'yiiliveext/debug-panel-events' => [
-                'config/params.php',
-            ],
-            'yiiliveext/debug-panel-logs' => [
-                'config/params.php',
-            ],
-            'yiiliveext/debug-panel-services' => [
-                'config/params.php',
-            ],
             'yiisoft/aliases' => [
-                'params.php',
-            ],
-            'yiisoft/view' => [
                 'params.php',
             ],
         ],
@@ -100,19 +85,13 @@ return [
             '/' => [
                 'config/routes.php',
             ],
-            'yiiliveext/debug-panel-events' => [
-                'config/routes.php',
-            ],
-            'yiiliveext/debug-panel-logs' => [
-                'config/routes.php',
-            ],
-            'yiiliveext/debug-panel-services' => [
-                'config/routes.php',
-            ],
         ],
         'web' => [
             '/' => [
                 'config/web.php',
+            ],
+            'yiisoft/data-response' => [
+                'web.php',
             ],
             'yiisoft/error-handler' => [
                 'web.php',
@@ -120,16 +99,10 @@ return [
             'yiisoft/router-fastroute' => [
                 'web.php',
             ],
-            'yiisoft/data-response' => [
-                'web.php',
-            ],
             'yiisoft/middleware-dispatcher' => [
                 'web.php',
             ],
             'yiisoft/yii-event' => [
-                'web.php',
-            ],
-            'yiisoft/view' => [
                 'web.php',
             ],
         ],

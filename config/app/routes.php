@@ -10,6 +10,5 @@ return [
     Route::get('[/]')
         ->middleware(FormatDataResponseAsHtml::class)
         ->action([IndexController::class, 'index'])
-        ->override()
         ->name('site/index'),
 ];

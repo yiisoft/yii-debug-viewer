@@ -1,0 +1,22 @@
+<table class="table table-bordered table-striped panel-info-table">
+    <thead>
+    <tr>
+        <th>Time</th>
+        <th>Level</th>
+        <th>Message</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+<script>
+    (function () {
+        let logs = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\LogCollector"]
+        logs.forEach((log) => {
+            document.querySelector('.panel-info-table tbody').insertAdjacentHTML('beforeend',
+                '<tr><td>' + log.time + '</td><td>' + log.level + '</td><td>' + log.message + '</td></tr>');
+        });
+    })();
+</script>

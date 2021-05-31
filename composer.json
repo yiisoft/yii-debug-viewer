@@ -47,10 +47,7 @@
         "yiisoft/router-fastroute": "^3.0@dev",
         "yiisoft/yii-console": "^3.0@dev",
         "yiisoft/yii-event": "^1.0",
-        "yiisoft/yii-web": "^3.0@dev",
-        "yiiliveext/debug-panel-events": "*",
-        "yiiliveext/debug-panel-logs": "*",
-        "yiiliveext/debug-panel-services": "*"
+        "yiisoft/yii-web": "^3.0@dev"
     },
     "autoload": {
         "psr-4": {

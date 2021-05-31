@@ -1,0 +1,19 @@
+<table class="table table-bordered table-striped panel-routes-table">
+    <tbody>
+    <thead>
+    <tr>
+        <th>Time</th>
+        <th>Event</th>
+    </tr>
+    </thead>
+    </tbody>
+</table>
+<script>
+    (function () {
+        let events = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\EventCollector"];
+        events.forEach((event) => {
+            document.querySelector('.panel-routes-table tbody').insertAdjacentHTML('beforeend',
+                '<tr><td>' + event.time + '</td><td>' + event.name + '</td></tr>');
+        });
+    })();
+</script>
