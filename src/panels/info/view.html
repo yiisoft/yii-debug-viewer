@@ -1,0 +1,21 @@
+<table class="table table-bordered table-striped panel-info-table">
+    <thead>
+    <tr>
+        <th>Key</th>
+        <th>Value</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+<script>
+    (function () {
+        let appInfo = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\WebAppInfoCollector"]
+        for (let info in appInfo) {
+            document.querySelector('.panel-info-table tbody').insertAdjacentHTML('beforeend',
+                '<tr><td>' + info + '</td><td>' + appInfo[info] + '</td></tr>');
+        }
+    })();
+</script>

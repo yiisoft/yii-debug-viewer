@@ -1,43 +1,113 @@
 {
-    "name": "yiisoft/replace-with-package-name",
+    "name": "yiisoft/yii-debug-viewer",
     "type": "library",
-    "description": "_____",
+    "description": "Yii Debug Viewer",
     "keywords": [
-        "_____"
+        "yii", "debug"
     ],
     "homepage": "https://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/_____/issues?state=open",
+        "issues": "https://github.com/yiisoft/yii-debug-viewer/issues?state=open",
         "forum": "https://www.yiiframework.com/forum/",
         "wiki": "https://www.yiiframework.com/wiki/",
         "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/_____"
+        "source": "https://github.com/yiisoft/yii-debug-viewer"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.4|^8.0"
+        "php": "^7.4|^8.0",
+        "nyholm/psr7": "^1.3",
+        "tuupola/cors-middleware": "^1.2.1",
+        "yiisoft/http": "^1.0@dev",
+        "yiisoft/data-response": "^3.0@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
         "roave/infection-static-analysis-plugin": "^1.6",
         "spatie/phpunit-watcher": "^1.23",
-        "vimeo/psalm": "^4.3"
+        "vimeo/psalm": "^4.3",
+        "psr/container": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.0",
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0",
+        "psr/log": "^1.1",
+        "httpsoft/http-message": "^1.0.5",
+        "yiisoft/config": "1.0.x-dev",
+        "yiisoft/di": "^3.0@dev",
+        "yiisoft/error-handler": "^1.0",
+        "yiisoft/factory": "^3.0@dev",
+        "yiisoft/files": "^1.0",
+        "yiisoft/injector": "^1.0",
+        "yiisoft/log": "^1.0",
+        "yiisoft/log-target-file": "^1.0",
+        "yiisoft/router": "^3.0@dev",
+        "yiisoft/router-fastroute": "^3.0@dev",
+        "yiisoft/yii-console": "^3.0@dev",
+        "yiisoft/yii-event": "^1.0",
+        "yiisoft/yii-web": "^3.0@dev",
+        "yiiliveext/debug-panel-events": "*",
+        "yiiliveext/debug-panel-logs": "*",
+        "yiiliveext/debug-panel-services": "*"
     },
     "autoload": {
         "psr-4": {
-            "Yiisoft\\_____\\": "src"
+            "Yiisoft\\Yii\\Debug\\Viewer\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yiisoft\\_____\\Tests\\": "tests"
+            "Yiisoft\\Yii\\Debug\\Viewer\\Tests\\": "tests"
         }
     },
     "extra": {
         "branch-alias": {
             "dev-master": "3.0.x-dev"
+        },
+        "config-plugin-options": {
+            "output-directory": "config/packages"
+        },
+        "config-plugin-environments": {
+            "yii-debug-viewer-app": {
+                "common": "config/app/common.php",
+                "params": [
+                    "config/app/params.php"
+                ],
+                "console": [
+                    "$common",
+                    "config/app/console.php"
+                ],
+                "web": [
+                    "$common",
+                    "config/app/web.php"
+                ],
+                "events": "config/app/events.php",
+                "events-web": [
+                    "$events",
+                    "config/app/events-web.php"
+                ],
+                "events-console": [
+                    "$events",
+                    "config/app/events-console.php"
+                ],
+                "providers": "config/app/providers.php",
+                "providers-web": [
+                    "$providers",
+                    "config/app/providers-web.php"
+                ],
+                "providers-console": [
+                    "$providers",
+                    "config/app/providers-console.php"
+                ],
+                "routes": "config/app/routes.php"
+            }
+        },
+        "config-plugin": {
+            "web": "config/web.php",
+            "params": "config/params.php",
+            "routes": "config/routes.php"
         }
     },
     "config": {
