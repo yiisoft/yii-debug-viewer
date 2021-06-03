@@ -12,7 +12,7 @@ final class PanelServicesController
     private DataResponseFactoryInterface $responseFactory;
 
     /**
-     * PanelInfoController constructor.
+     * PanelServicesController constructor.
      */
     public function __construct(
         DataResponseFactoryInterface $responseFactory
