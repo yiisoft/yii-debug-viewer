@@ -26,8 +26,8 @@
         "common.php": "1c3045e19fad0f6a45dbeb59136c4144"
     },
     "yiisoft/data-response": {
-        "version": "dev-master 19c136e",
-        "web.php": "4d711632a5788457ef0704c1ee7bb532"
+        "version": "1.0.0",
+        "web.php": "37abfd4390e1a4db8622b3fe476a4705"
     },
     "yiisoft/error-handler": {
         "version": "1.0.0",
@@ -44,22 +44,22 @@
         "params.php": "16e4ea41a7d8964fff91d711bc5bb173"
     },
     "yiisoft/middleware-dispatcher": {
-        "version": "dev-master 08a0356",
-        "web.php": "373a249c83e171101677607b8f904ee5"
+        "version": "dev-master e56a1e8",
+        "web.php": "06eae76af898d597371ca530ef90d00d"
     },
     "yiisoft/router": {
-        "version": "dev-master 7942b3e",
-        "common.php": "4390b9eea28f3babeb8a95664cb7ed44"
+        "version": "dev-master 5721599",
+        "common.php": "cf05ec8347bf507894ef9061ea9a3ec9"
     },
     "yiisoft/router-fastroute": {
-        "version": "dev-master 7d460dc",
-        "params.php": "9eae6d19e6ab31138015d8649f58ff51",
-        "common.php": "fb36fe8b17270311521c44c14678dcc3",
+        "version": "dev-master 3ef9a5b",
+        "params.php": "07d80a035e80e1df4fc59332f0bbf17a",
+        "common.php": "dec33ba20e36c348e3edeb7d0468e4c1",
         "web.php": "cc597ad25859dbec67fff4830136e7a5"
     },
     "yiisoft/validator": {
-        "version": "dev-master 99ab46d",
-        "common.php": "4b94172a2c47b9f7db89944ce6655751"
+        "version": "dev-master a20a6f4",
+        "common.php": "49c02d9de47834a2d5141ae9df93d0f3"
     },
     "yiisoft/view": {
         "version": "dev-master 85d16ed",
@@ -68,8 +68,8 @@
         "web.php": "9b7055f276fb5fd981e2a390d25cf29b"
     },
     "yiisoft/yii-console": {
-        "version": "dev-master df9dfe2",
-        "params.php": "f317cc18e62d6e61e57cc96f72b354d7",
+        "version": "dev-master 4f6ff4b",
+        "params.php": "3f530a78778873a4e841a8b15fd79097",
         "console.php": "2c0ab3e1a5ccae37dea7d7fe86b46c07",
         "events-console.php": "92c76da023e07b7845db29791235dd17",
         "providers-console.php": "7887e93f0895f75069c346b8ae701366"
