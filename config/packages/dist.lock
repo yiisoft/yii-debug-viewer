@@ -48,14 +48,14 @@
         "web.php": "06eae76af898d597371ca530ef90d00d"
     },
     "yiisoft/router": {
-        "version": "dev-master 5721599",
-        "common.php": "cf05ec8347bf507894ef9061ea9a3ec9"
+        "version": "dev-master 694aa09",
+        "common.php": "9f3ec9233e0ea471e68b0bd6363e2285"
     },
     "yiisoft/router-fastroute": {
-        "version": "dev-master 3ef9a5b",
+        "version": "dev-master 1af8225",
         "params.php": "07d80a035e80e1df4fc59332f0bbf17a",
         "common.php": "dec33ba20e36c348e3edeb7d0468e4c1",
-        "web.php": "cc597ad25859dbec67fff4830136e7a5"
+        "web.php": "beb2272d9b3e8a51c6eab67286c86b74"
     },
     "yiisoft/validator": {
         "version": "dev-master a20a6f4",
