@@ -64,47 +64,48 @@
             "dev-master": "3.0.x-dev"
         },
         "config-plugin-options": {
+            "source-directory": "config",
             "output-directory": "config/packages"
         },
         "config-plugin-environments": {
             "yii-debug-viewer-app": {
-                "common": "config/app/common.php",
+                "common": "app/common.php",
                 "params": [
-                    "config/app/params.php"
+                    "app/params.php"
                 ],
                 "console": [
                     "$common",
-                    "config/app/console.php"
+                    "app/console.php"
                 ],
                 "web": [
                     "$common",
-                    "config/app/web.php"
+                    "app/web.php"
                 ],
-                "events": "config/app/events.php",
+                "events": "app/events.php",
                 "events-web": [
                     "$events",
-                    "config/app/events-web.php"
+                    "app/events-web.php"
                 ],
                 "events-console": [
                     "$events",
-                    "config/app/events-console.php"
+                    "app/events-console.php"
                 ],
-                "providers": "config/app/providers.php",
+                "providers": "app/providers.php",
                 "providers-web": [
                     "$providers",
-                    "config/app/providers-web.php"
+                    "app/providers-web.php"
                 ],
                 "providers-console": [
                     "$providers",
-                    "config/app/providers-console.php"
+                    "app/providers-console.php"
                 ],
-                "routes": "config/app/routes.php"
+                "routes": "app/routes.php"
             }
         },
         "config-plugin": {
-            "web": "config/web.php",
-            "params": "config/params.php",
-            "routes": "config/routes.php"
+            "web": "web.php",
+            "params": "params.php",
+            "routes": "routes.php"
         }
     },
     "config": {
