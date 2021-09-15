@@ -1,0 +1,13 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://rawgit.com/abodelot/jquery.json-viewer/master/json-viewer/jquery.json-viewer.js"></script>
+<link href="https://rawgit.com/abodelot/jquery.json-viewer/master/json-viewer/jquery.json-viewer.css" rel="stylesheet"/>
+
+<pre id="json-renderer"></pre>
+<div class="panel-view"></div>
+
+<script>
+    (() => {
+        let middlewares = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\MiddlewareCollector"]
+        $('#json-renderer').jsonViewer(middlewares);
+    })();
+</script>
