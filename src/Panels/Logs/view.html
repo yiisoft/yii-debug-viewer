@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped panel-info-table">
+<table class="table table-bordered table-striped panel-logs-table">
     <thead>
     <tr>
         <th>Time</th>
@@ -13,10 +13,10 @@
 
 <script>
     (function () {
-        let logs = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\LogCollector"]
+        const logs = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\LogCollector"];
+        const table = document.querySelector('.panel-logs-table tbody');
         logs.forEach((log) => {
-            document.querySelector('.panel-info-table tbody').insertAdjacentHTML('beforeend',
-                '<tr><td>' + log.time + '</td><td>' + log.level + '</td><td>' + log.message + '</td></tr>');
+            table.insertAdjacentHTML('beforeend', '<tr><td>' + log.time + '</td><td>' + log.level + '</td><td>' + log.message + '</td></tr>');
         });
     })();
 </script>

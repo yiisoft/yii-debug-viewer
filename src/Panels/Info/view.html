@@ -12,10 +12,10 @@
 
 <script>
     (function () {
-        let appInfo = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\WebAppInfoCollector"]
+        const appInfo = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\WebAppInfoCollector"];
+        const table = document.querySelector('.panel-info-table tbody');
         for (let info in appInfo) {
-            document.querySelector('.panel-info-table tbody').insertAdjacentHTML('beforeend',
-                '<tr><td>' + info + '</td><td>' + appInfo[info] + '</td></tr>');
+            table.insertAdjacentHTML('beforeend', '<tr><td>' + info + '</td><td>' + appInfo[info] + '</td></tr>');
         }
     })();
 </script>

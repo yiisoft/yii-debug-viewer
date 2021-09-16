@@ -1,4 +1,4 @@
-<table class="table table-bordered table-striped panel-routes-table">
+<table class="table table-bordered table-striped panel-events-table">
     <tbody>
     <thead>
     <tr>
@@ -10,10 +10,10 @@
 </table>
 <script>
     (function () {
-        let events = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\EventCollector"];
+        const events = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\EventCollector"];
+        const table = document.querySelector('.panel-events-table tbody');
         events.forEach((event) => {
-            document.querySelector('.panel-routes-table tbody').insertAdjacentHTML('beforeend',
-                '<tr><td>' + event.time + '</td><td>' + event.name + '</td></tr>');
+            table.insertAdjacentHTML('beforeend', '<tr><td>' + event.time + '</td><td>' + event.name + '</td></tr>');
         });
     })();
 </script>
