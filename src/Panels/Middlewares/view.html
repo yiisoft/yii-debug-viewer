@@ -7,7 +7,7 @@
 
 <script>
     (() => {
-        let middlewares = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\MiddlewareCollector"]
+        const middlewares = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\MiddlewareCollector"];
         $('#json-renderer').jsonViewer(middlewares);
     })();
 </script>

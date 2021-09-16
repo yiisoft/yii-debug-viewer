@@ -10,10 +10,10 @@
 </table>
 <script>
     (function () {
-        let routes = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\RouterCollector"].routes;
+        const routes = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\RouterCollector"].routes;
+        const table = document.querySelector('.panel-routes-table tbody');
         for (let route in routes) {
-            document.querySelector('.panel-routes-table tbody').insertAdjacentHTML('beforeend',
-                '<tr><td>' + route + '</td><td>' + routes[route] + '</td></tr>');
+            table.insertAdjacentHTML('beforeend', '<tr><td>' + route + '</td><td>' + routes[route] + '</td></tr>');
         }
     })();
 </script>

@@ -12,10 +12,10 @@
 
 <script>
     (function () {
-        let request = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\RequestCollector"]
+        const request = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\RequestCollector"];
+        const table = document.querySelector('.panel-request-table tbody');
         for (let info in request) {
-            document.querySelector('.panel-request-table tbody').insertAdjacentHTML('beforeend',
-                '<tr><td>' + info + '</td><td>' + request[info] + '</td></tr>');
+            table.insertAdjacentHTML('beforeend', '<tr><td>' + info + '</td><td>' + request[info] + '</td></tr>');
         }
     })();
 </script>
