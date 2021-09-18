@@ -1,17 +1,9 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://rawgit.com/abodelot/jquery.json-viewer/master/json-viewer/jquery.json-viewer.js"></script>
-<link href="https://rawgit.com/abodelot/jquery.json-viewer/master/json-viewer/jquery.json-viewer.css" rel="stylesheet"/>
+<script src="https://unpkg.com/@alenaksu/json-viewer@0.3.4/dist/index.js"></script>
 
-<pre id="json-renderer"></pre>
-<div class="panel-view"></div>
+<json-viewer class="panel-view" id="json-renderer" data="{}"></json-viewer>
 
 <script>
     (() => {
-        const services = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\ServiceCollector"]
-        services.forEach((service) => {
-            $(function () {
-                $('#json-renderer').clone().jsonViewer(service).appendTo(".panel-view");
-            });
-        });
+        document.querySelector('#json-renderer').data = collectors[currentDebugSession]["Yiisoft\\Yii\\Debug\\Collector\\ServiceCollector"];
     })();
 </script>
