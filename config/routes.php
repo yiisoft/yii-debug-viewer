@@ -36,7 +36,7 @@ return [
             Route::get('/routes')
                 ->action([PanelRoutesController::class, 'view'])
                 ->name('debug/panels/routes'),
-			Route::get('/logs')
+            Route::get('/logs')
                 ->action([PanelLogsController::class, 'view'])
                 ->name('debug/panels/logs'),
             Route::get('/events')

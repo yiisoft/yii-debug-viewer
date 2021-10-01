@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Yiisoft\Yii\Debug\Viewer\NotFoundHandler;
 use Yiisoft\ErrorHandler\Middleware\ErrorCatcher;
 use Yiisoft\Injector\Injector;
@@ -21,7 +23,6 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use Yiisoft\DataResponse\Middleware\FormatDataResponse;
-use Yiisoft\Request\Body\RequestBodyParser;
 use Yiisoft\Router\Group;
 use Yiisoft\Router\RouteCollection;
 use Yiisoft\Router\RouteCollectionInterface;
@@ -57,5 +58,4 @@ return [
 
         return new RouteCollection($collector);
     },
-
 ];

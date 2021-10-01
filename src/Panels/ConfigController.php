@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yiisoft\Yii\Debug\Viewer\Panels;
 
 use Psr\Http\Message\ResponseInterface;
