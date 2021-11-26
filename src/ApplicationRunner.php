@@ -52,7 +52,6 @@ final class ApplicationRunner
         $containerConfig = ContainerConfig::create()
             ->withDefinitions($config->get('web'))
             ->withProviders($config->get('providers-web'));
-
         $container = new Container($containerConfig);
 
         // Register error handler with real container-configured dependencies.
