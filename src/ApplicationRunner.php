@@ -12,6 +12,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Throwable;
 use Yiisoft\Config\Config;
 use Yiisoft\Di\Container;
+use Yiisoft\Di\ContainerConfig;
 use Yiisoft\ErrorHandler\ErrorHandler;
 use Yiisoft\ErrorHandler\Middleware\ErrorCatcher;
 use Yiisoft\ErrorHandler\Renderer\JsonRenderer;
@@ -48,10 +49,10 @@ final class ApplicationRunner
             'yii-debug-viewer-app'
         );
 
-        $container = new Container(
-            $config->get('web'),
-            $config->get('providers-web')
-        );
+        $containerConfig = ContainerConfig::create()
+            ->withDefinitions($config->get('web'))
+            ->withProviders($config->get('providers-web'));
+        $container = new Container($containerConfig);
 
         // Register error handler with real container-configured dependencies.
         $this->registerErrorHandler($container->get(ErrorHandler::class), $errorHandler);
