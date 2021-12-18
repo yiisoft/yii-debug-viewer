@@ -35,7 +35,7 @@
         "psr/http-server-middleware": "^1.0",
         "psr/log": "^1.1",
         "httpsoft/http-message": "^1.0.5",
-        "yiisoft/config": "1.0.x-dev",
+        "yiisoft/config": "^1.0",
         "yiisoft/di": "^1.0",
         "yiisoft/error-handler": "^2.0",
         "yiisoft/factory": "^1.0",
