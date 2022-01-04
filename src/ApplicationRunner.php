@@ -19,9 +19,10 @@ use Yiisoft\ErrorHandler\Renderer\JsonRenderer;
 use Yiisoft\Http\Method;
 use Yiisoft\Log\Logger;
 use Yiisoft\Log\Target\File\FileTarget;
-use Yiisoft\Yii\Web\Application;
-use Yiisoft\Yii\Web\SapiEmitter;
-use Yiisoft\Yii\Web\ServerRequestFactory;
+
+use Yiisoft\Yii\Http\Application;
+use Yiisoft\Yii\Runner\Http\SapiEmitter;
+use Yiisoft\Yii\Runner\Http\ServerRequestFactory;
 
 use function dirname;
 use function microtime;

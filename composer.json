@@ -47,7 +47,8 @@
         "yiisoft/router-fastroute": "^1.0",
         "yiisoft/yii-console": "^1.0",
         "yiisoft/yii-event": "^1.0",
-        "yiisoft/yii-web": "^3.0@dev"
+        "yiisoft/yii-http": "^1.0",
+        "yiisoft/yii-runner-http": "dev-master"
     },
     "autoload": {
         "psr-4": {
