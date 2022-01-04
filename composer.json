@@ -48,6 +48,7 @@
         "yiisoft/yii-console": "^1.0",
         "yiisoft/yii-event": "^1.0",
         "yiisoft/yii-http": "^1.0",
+        "yiisoft/yii-runner-console": "dev-master",
         "yiisoft/yii-runner-http": "dev-master"
     },
     "autoload": {
@@ -65,27 +66,44 @@
             "dev-master": "3.0.x-dev"
         },
         "config-plugin-options": {
-            "source-directory": "config",
-            "output-directory": "config/packages"
+            "source-directory": "config"
         },
         "config-plugin-environments": {
             "yii-debug-viewer-app": {
-                "common": "app/common.php",
+                "common": [
+                    "$common",
+                    "app/common.php"
+                ],
                 "params": [
                     "app/params.php"
                 ],
                 "console": [
-                    "$common",
+                    "$console",
                     "app/console.php"
                 ],
                 "web": [
-                    "$common",
+                    "$web",
                     "app/web.php"
                 ],
-                "events": "app/events.php",
+                "events": [
+                    "$events",
+                    "app/events.php"
+                ],
                 "events-web": [
                     "$events",
                     "app/events-web.php"
+                ],
+                "bootstrap": [
+                    "$bootstrap",
+                    "app/bootstrap.php"
+                ],
+                "bootstrap-console": [
+                    "$bootstrap",
+                    "app/bootstrap-console.php"
+                ],
+                "bootstrap-web": [
+                    "$bootstrap",
+                    "app/bootstrap-web.php"
                 ],
                 "events-console": [
                     "$events",

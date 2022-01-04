@@ -3,40 +3,10 @@
 
 declare(strict_types=1);
 
-use Psr\Container\ContainerInterface;
-use Yiisoft\Config\Config;
-use Yiisoft\Di\Container;
-use Yiisoft\Di\ContainerConfig;
-use Yiisoft\Yii\Console\Application;
-use Yiisoft\Yii\Console\Output\ConsoleBufferedOutput;
+use Yiisoft\Yii\Runner\Console\ConsoleApplicationRunner;
 
-define('YII_ENV', getenv('env') ?? 'production');
+require_once __DIR__ . '/preload.php';
 
-require_once 'vendor/autoload.php';
-
-$config = new Config(
-    __DIR__,
-    '/config/packages',
-    'yii-debug-viewer-app'
-);
-//die(var_dump($config->get('console')));
-$containerConfig = ContainerConfig::create()
-    ->withDefinitions($config->get('console'))
-    ->withProviders($config->get('providers-console'));
-$container = new Container($containerConfig);
-
-/** @var ContainerInterface $container */
-$container = $container->get(ContainerInterface::class);
-
-$application = $container->get(Application::class);
-$exitCode = 1;
-
-try {
-    $application->start();
-    $exitCode = $application->run(null, new ConsoleBufferedOutput());
-} catch (\Error $error) {
-    $application->renderThrowable($error, new ConsoleBufferedOutput());
-} finally {
-    $application->shutdown($exitCode);
-    exit($exitCode);
-}
+// Run console application runner
+$runner = new ConsoleApplicationRunner(__DIR__, $_ENV['YII_DEBUG'], $_ENV['YII_ENV']);
+$runner->run();
