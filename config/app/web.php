@@ -7,7 +7,6 @@ use Yiisoft\ErrorHandler\Middleware\ErrorCatcher;
 use Yiisoft\Injector\Injector;
 use Yiisoft\Middleware\Dispatcher\MiddlewareDispatcher;
 use Yiisoft\Router\Middleware\Router;
-use Yiisoft\Yii\Web\Middleware\SubFolder;
 use Yiisoft\Definitions\Reference;
 use Yiisoft\Definitions\DynamicReference;
 use HttpSoft\Message\RequestFactory;
@@ -29,14 +28,13 @@ use Yiisoft\Router\RouteCollectionInterface;
 use Yiisoft\Router\RouteCollectorInterface;
 
 return [
-    Yiisoft\Yii\Web\Application::class => [
+    Yiisoft\Yii\Http\Application::class => [
         '__construct()' => [
             'dispatcher' => DynamicReference::to(static function (Injector $injector) {
                 return ($injector->make(MiddlewareDispatcher::class))
                     ->withMiddlewares(
                         [
                             Router::class,
-                            SubFolder::class,
                             ErrorCatcher::class,
                         ]
                     );

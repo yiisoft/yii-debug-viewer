@@ -2,14 +2,20 @@
 
 declare(strict_types=1);
 
-use Yiisoft\Yii\Debug\Viewer\ApplicationRunner;
+use Yiisoft\Yii\Runner\Http\HttpApplicationRunner;
 
-define('YII_ENV', 'production');
+require_once __DIR__ . '/../vendor/autoload.php';
+
+/**
+ * @psalm-var string $_SERVER['REQUEST_URI']
+ */
 
 // PHP built-in server routing.
 if (PHP_SAPI === 'cli-server') {
     // Serve static files as is.
-    if (is_file(__DIR__ . $_SERVER["REQUEST_URI"])) {
+    /** @psalm-suppress MixedArgument */
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    if (is_file(__DIR__ . $path)) {
         return false;
     }
 
@@ -17,11 +23,6 @@ if (PHP_SAPI === 'cli-server') {
     $_SERVER['SCRIPT_NAME'] = '/index.php';
 }
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
-
-$runner = new ApplicationRunner();
-// Development mode:
-$runner->debug();
-// Run application:
+// Run HTTP application runner
+$runner = new HttpApplicationRunner(dirname(__DIR__), true, 'yii-debug-viewer-app');
 $runner->run();
-

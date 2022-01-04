@@ -78,7 +78,7 @@
                     '  <span class="visually-hidden">Loading...</span>\n' +
                     '</div>';
                 target = targetHost === '' ? location.protocol + '//' + location.host : targetHost;
-
+                console.log(targetPanelsHost);
                 const xhr = new XMLHttpRequest();
                 xhr.open('GET', targetPanelsHost + event.target.getAttribute("href") + '?targetHost=' + target + '&session=' + currentDebugSession);
                 xhr.send();
