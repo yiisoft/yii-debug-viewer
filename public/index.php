@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 use Yiisoft\Yii\Runner\Http\HttpApplicationRunner;
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
 /**
  * @psalm-var string $_SERVER['REQUEST_URI']
  */
@@ -23,6 +21,15 @@ if (PHP_SAPI === 'cli-server') {
     $_SERVER['SCRIPT_NAME'] = '/index.php';
 }
 
+require_once dirname(__DIR__) . '/preload.php';
+
+if (getenv('YII_ENV') === 'test') {
+    $c3 = dirname(__DIR__) . '/c3.php';
+    if (file_exists($c3)) {
+        require_once $c3;
+    }
+}
+
 // Run HTTP application runner
-$runner = new HttpApplicationRunner(dirname(__DIR__), true, 'yii-debug-viewer-app');
+$runner = new HttpApplicationRunner(dirname(__DIR__), $_ENV['YII_DEBUG'], $_ENV['YII_ENV']);
 $runner->run();
