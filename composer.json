@@ -72,39 +72,25 @@
         "config-plugin-environments": {
             "yii-debug-viewer-app": {
                 "common": [
-                    "$common",
                     "app/common.php"
                 ],
                 "params": [
                     "app/params.php"
                 ],
                 "console": [
-                    "$console",
+                    "$common",
                     "app/console.php"
                 ],
                 "web": [
-                    "$web",
+                    "$common",
                     "app/web.php"
                 ],
                 "events": [
-                    "$events",
                     "app/events.php"
                 ],
                 "events-web": [
                     "$events",
                     "app/events-web.php"
-                ],
-                "bootstrap": [
-                    "$bootstrap",
-                    "app/bootstrap.php"
-                ],
-                "bootstrap-console": [
-                    "$bootstrap",
-                    "app/bootstrap-console.php"
-                ],
-                "bootstrap-web": [
-                    "$bootstrap",
-                    "app/bootstrap-web.php"
                 ],
                 "events-console": [
                     "$events",
