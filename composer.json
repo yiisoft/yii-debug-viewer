@@ -14,8 +14,6 @@
         "irc": "irc://irc.freenode.net/yii",
         "source": "https://github.com/yiisoft/yii-debug-viewer"
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
     "require": {
         "php": "^8.0",
         "nyholm/psr7": "^1.3",
@@ -49,8 +47,8 @@
         "yiisoft/yii-console": "^1.0",
         "yiisoft/yii-event": "^1.0",
         "yiisoft/yii-http": "^1.0",
-        "yiisoft/yii-runner-console": "dev-master",
-        "yiisoft/yii-runner-http": "dev-master"
+        "yiisoft/yii-runner-console": "^1.0",
+        "yiisoft/yii-runner-http": "^1.0"
     },
     "autoload": {
         "psr-4": {
