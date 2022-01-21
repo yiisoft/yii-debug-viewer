@@ -1,0 +1,19 @@
+<table class="table table-bordered table-striped panel-routes-table">
+    <tbody>
+    <thead>
+    <tr>
+        <th>Route Name</th>
+        <th>Route Object</th>
+    </tr>
+    </thead>
+    </tbody>
+</table>
+<script>
+    (function () {
+        const routes = collectors[currentDebugSession]["YiisoftYiiDebugCollectorRouterCollector"].routes;
+        const table = document.querySelector('.panel-routes-table tbody');
+        for (let route in routes) {
+            table.insertAdjacentHTML('beforeend', '<tr><td>' + route + '</td><td>' + routes[route] + '</td></tr>');
+        }
+    })();
+</script>

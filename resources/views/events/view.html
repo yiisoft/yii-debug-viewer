@@ -1,0 +1,19 @@
+<table class="table table-bordered table-striped panel-events-table">
+    <tbody>
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Event</th>
+            </tr>
+        </thead>
+    </tbody>
+</table>
+<script>
+    (function () {
+        const events = collectors[currentDebugSession]["YiisoftYiiDebugCollectorEventCollector"];
+        const table = document.querySelector('.panel-events-table tbody');
+        events.forEach((event) => {
+            table.insertAdjacentHTML('beforeend', '<tr><td>' + event.time + '</td><td>' + event.name + '</td></tr>');
+        });
+    })();
+</script>

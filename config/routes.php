@@ -2,20 +2,14 @@
 
 declare(strict_types=1);
 
+use Psr\Http\Message\ResponseFactoryInterface;
 use Tuupola\Middleware\CorsMiddleware;
 use Yiisoft\DataResponse\Middleware\FormatDataResponseAsHtml;
 use Yiisoft\DataResponse\Middleware\FormatDataResponseAsJson;
 use Yiisoft\Router\Group;
 use Yiisoft\Router\Route;
 use Yiisoft\Yii\Debug\Viewer\IndexController;
-use Yiisoft\Yii\Debug\Viewer\Panels\ConfigController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Info\PanelInfoController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Middlewares\PanelMiddlewaresController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Request\PanelRequestController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Routes\PanelRoutesController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Logs\PanelLogsController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Events\PanelEventsController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Services\PanelServicesController;
+use Yiisoft\Yii\Debug\Viewer\ConfigController;
 
 return [
     Route::get('/debug/viewer[/]')
@@ -30,26 +24,25 @@ return [
                 ->middleware(FormatDataResponseAsJson::class)
                 ->action([ConfigController::class, 'index'])
                 ->name('debug/panels/config'),
-            Route::get('/info')
-                ->action([PanelInfoController::class, 'view'])
-                ->name('debug/panels/info'),
-            Route::get('/routes')
-                ->action([PanelRoutesController::class, 'view'])
-                ->name('debug/panels/routes'),
-            Route::get('/logs')
-                ->action([PanelLogsController::class, 'view'])
-                ->name('debug/panels/logs'),
-            Route::get('/events')
-                ->action([PanelEventsController::class, 'view'])
-                ->name('debug/panels/events'),
-            Route::get('/services')
-                ->action([PanelServicesController::class, 'view'])
-                ->name('debug/panels/services'),
-            Route::get('/middlewares')
-                ->action([PanelMiddlewaresController::class, 'view'])
-                ->name('debug/panels/middlewares'),
-            Route::get('/request')
-                ->action([PanelRequestController::class, 'view'])
-                ->name('debug/panels/request')
+            Route::get('/{panel}')
+                ->action([IndexController::class, 'panel'])
+                ->name('debug/panels/panel'),
         ),
+    Route::get($params['yiisoft/yii-debug-viewer']['toolbarUrl'])->action(
+        static function (
+            ResponseFactoryInterface $responseFactory,
+            \Yiisoft\Yii\Debug\Viewer\PanelCollection $panelCollection
+        ) {
+            $html = file_get_contents(dirname(__DIR__) . '/resources/views/toolbar.html');
+            $panels = array_map(
+                static fn (\Yiisoft\Yii\Debug\Viewer\Panels\PanelInterface $panel) => $panel->renderSummary(),
+                $panelCollection->getPanels()
+            );
+            $html = strtr($html, ['{TOOLBAR_BLOCKS}' => implode("\n", $panels)]);
+            $response = $responseFactory->createResponse()
+                ->withHeader('Content-Type', 'text/html');
+            $response->getBody()->write($html);
+            return $response;
+        }
+    )->name('debug/viewer/toolbar'),
 ];

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Yii Debug Viewer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<body>
+<main class="container py-4">
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card debug-sessions-info d-none">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <select class="form-control debug-sessions">
+
+                            </select>
+                        </div>
+                        <div class="col session-info mt-2">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <ul class="panels list-group d-none">
+            </ul>
+        </div>
+        <div class="col col-9">
+            <div class="card">
+                <div class="card-body">
+                    <div class="router-view">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+        </div>
+        <div class="card col mt-3 enter-target-host d-none">
+            <div class="py-3">
+                <label for="target_host" class="form-label">Enter target host: </label>
+                <input id="target_host" class="form-control target-host px-2">
+                <button class="btn btn-primary connect-target-host my-3">Connect</button>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    let currentDebugSession;
+    let collectors = [];
+
+    (() => {
+        let targetHost = '';
+        let targetPanelsHost = '';
+        let debugSessions;
+
+        document.addEventListener('click', event => {
+            if (event.target.matches('.panel-link')) {
+                event.preventDefault();
+                event.target.disabled = true;
+                let panelLinks = document.querySelectorAll('.panel-link');
+                for (let i = 0; i < panelLinks.length; ++i) {
+                    panelLinks[i].classList.remove('active');
+                }
+                event.target.classList.add('active');
+                document.querySelector(".router-view").innerHTML =
+                    '<div class="spinner-border text-primary" role="status">\n' +
+                    '  <span class="visually-hidden">Loading...</span>\n' +
+                    '</div>';
+                target = targetHost === '' ? location.protocol + '//' + location.host : targetHost;
+                console.log(targetPanelsHost);
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', targetPanelsHost + event.target.getAttribute("href") + '?targetHost=' + target + '&session=' + currentDebugSession);
+                xhr.send();
+                xhr.onload = () => {
+                    if (xhr.status === 200) {
+                        let div = document.createElement('div');
+                        div.innerHTML = xhr.responseText;
+                        let scripts = div.querySelectorAll('script');
+                        for (let i = 0; i < scripts.length; i++) {
+                            div.removeChild(scripts[i]);
+                        }
+                        document.querySelector(".router-view").innerHTML = '';
+                        for (let i = 0; i < scripts.length; i++) {
+                            let script = document.createElement('script');
+                            script.async = false
+                            if (scripts[i].src !== '') {
+                                script.src = scripts[i].src;
+                            } else {
+                                script.defer = true
+                                script.src = `data:text/javascript;base64, ${btoa(scripts[i].innerHTML)}`;
+                            }
+                            div.appendChild(script);
+                        }
+                        document.querySelector(".router-view").appendChild(div);
+                        event.target.disabled = false;
+                    } else {
+                        event.target.disabled = false;
+                        document.querySelector(".router-view").innerHTML = 'An error occurred during loading panel';
+                    }
+                };
+                xhr.onerror = () => document.querySelector(".router-view").innerHTML = 'An error occurred during loading panel';
+            }
+            if (event.target.matches('.connect-target-host')) {
+                let input = document.querySelector('.target-host');
+                document.querySelector(".router-view").innerHTML = '';
+                targetHost = input.value.replace(/\/+$/g, '');
+                document.querySelector(".router-view").innerHTML =
+                    '<div class="spinner-border text-primary" role="status">\n' +
+                    '  <span class="visually-hidden">Loading...</span>\n' +
+                    '</div>';
+                loadDebugData();
+            }
+        });
+
+        loadDebugData();
+
+        function loadDebugData() {
+            const xhr = new XMLHttpRequest();
+            xhr.responseType = 'json';
+            xhr.open('GET', targetHost + '/debug', true);
+            xhr.send();
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    document.querySelector(".enter-target-host").classList.add('d-none');
+                    document.querySelector(".debug-sessions-info").classList.remove('d-none');
+                    let sessions = xhr.response;
+                    debugSessions = sessions.data
+                    currentDebugSession = debugSessions[0].id;
+                    populateDebugSessions();
+                    getCollectors(currentDebugSession, () => getPanels());
+                } else {
+                    document.querySelector(".router-view").innerHTML = 'Debug info not found on target host';
+                    document.querySelector(".enter-target-host").classList.remove('d-none');
+                }
+            };
+            xhr.onerror = () => {
+                document.querySelector(".router-view").innerHTML = 'Debug info not found on target host';
+                document.querySelector(".enter-target-host").classList.remove('d-none');
+            }
+        };
+
+
+        function getPanels() {
+            const xhr = new XMLHttpRequest();
+            xhr.responseType = 'json';
+            xhr.open('GET', '/debug/panels/config');
+            xhr.send();
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    populatePanels(xhr.response);
+                    document.querySelector(".panel-link").click();
+
+                } else {
+                    targetPanelsHost = targetHost;
+                    const xhr = new XMLHttpRequest();
+                    xhr.responseType = 'json';
+                    xhr.open('GET', targetPanelsHost + '/debug/panels/config');
+                    xhr.send();
+                    xhr.onload = () => {
+                        if (xhr.status === 200) {
+                            populatePanels(xhr.response);
+                            document.querySelector(".panel-link").click();
+                        } else {
+                            document.querySelector(".router-view").innerHTML = 'An error occurred during loading panels';
+                        }
+                    };
+                }
+            };
+            xhr.onerror = () => {
+                targetPanelsHost = targetHost;
+                const xhr = new XMLHttpRequest();
+                xhr.responseType = 'json';
+                xhr.open('GET', targetPanelsHost + '/debug/panels/config');
+                xhr.send();
+                xhr.onload = () => {
+                    if (xhr.status === 200) {
+                        populatePanels(xhr.response);
+                        document.querySelector(".panel-link").click();
+                    } else {
+                        document.querySelector(".router-view").innerHTML = 'An error occurred during loading panels';
+                    }
+                };
+            }
+        }
+
+        let select = document.querySelector('.debug-sessions');
+        select.addEventListener('change', (event) => {
+            document.querySelector(".router-view").innerHTML =
+                '<div class="spinner-border text-primary" role="status">\n' +
+                '  <span class="visually-hidden">Loading...</span>\n' +
+                '</div>';
+            currentDebugSession = event.target.value;
+            populateDebugSessionInfo();
+            getCollectors(currentDebugSession, () => document.querySelector('.panel-link.active').click());
+
+        });
+
+        function populateDebugSessions() {
+            debugSessions.forEach((session) => {
+                let date = new Date(session.timestamp * 1000).toLocaleString("en-US");
+                select.insertAdjacentHTML('beforeend',
+                    '<option value="' + session.id + '">' + date + ' ' + session.requestMethod + ' ' + session.requestUrl + '</option>');
+
+            });
+            populateDebugSessionInfo();
+        }
+
+        function populatePanels(panels) {
+            let panel = document.querySelector(".panels");
+            panel.innerHTML = '';
+            for (let id in panels) {
+                panel.insertAdjacentHTML(
+                    'beforeend',
+                    '<a class="list-group-item list-group-item-action panel-link" href="/debug/panels/' + id + '">' + panels[id] + '</a>'
+                );
+            }
+            panel.classList.remove('d-none');
+        }
+
+        function populateDebugSessionInfo() {
+            let session = debugSessions.find(s => s.id === currentDebugSession);
+            let sessionInfo = document.querySelector('.session-info');
+
+            sessionInfo.innerHTML = '';
+            sessionInfo.insertAdjacentHTML('beforeend', '<span class="px-2">Time: <span class="badge bg-primary">' + (session.time).toFixed(4) + '</span></span>');
+            sessionInfo.insertAdjacentHTML('beforeend', '<span class="px-2">Memory: <span class="badge bg-info">' + session.memory + '</span></span>');
+            sessionInfo.insertAdjacentHTML('beforeend', '<span class="px-2">Status: <span class="badge bg-success">' + session.responseStatusCode + '</span></span>');
+            sessionInfo.insertAdjacentHTML('beforeend', '<span class="px-2">Ajax: <span class="badge bg-warning">' + session.requestIsAjax + '</span></span>');
+        }
+
+        function getCollectors(debugSessionId, onsuccess) {
+            if (collectors[currentDebugSession] !== undefined) {
+                onsuccess();
+                return;
+            }
+            const xhr = new XMLHttpRequest();
+            xhr.responseType = 'json';
+            xhr.open('GET', targetHost + '/debug/view/' + debugSessionId, true);
+            xhr.send();
+            xhr.onload = () => {
+                if (xhr.status === 200) {
+                    collectors[currentDebugSession] = xhr.response.data;
+                    onsuccess();
+                } else {
+                    document.querySelector(".router-view").innerHTML = 'An error occurred during loading collectors';
+                }
+            };
+            xhr.onerror = () => document.querySelector(".router-view").innerHTML = 'An error occurred during loading collectors';
+        }
+
+    })();
+</script>
+</body>
+</html>
