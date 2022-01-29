@@ -13,7 +13,7 @@
 
 <script>
     (function () {
-        const logs = collectors[currentDebugSession]["YiisoftYiiDebugCollectorLogCollector"];
+        const logs = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorLogCollector"];
         const table = document.querySelector('.panel-logs-table tbody');
         logs.forEach((log) => {
             table.insertAdjacentHTML('beforeend', '<tr><td>' + log.time + '</td><td>' + log.level + '</td><td>' + log.message + '</td></tr>');

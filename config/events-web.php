@@ -13,9 +13,5 @@ if (!(bool)($params['yiisoft/yii-debug-viewer']['enabled'] ?? false)) {
 }
 
 return [
-    BodyEnd::class => [
-        static function () use ($params) {
-            echo '<div id="yii-debug-toolbar" data-url="' . $params['yiisoft/yii-debug-viewer']['toolbarUrl'] . '" style="display:none" class="yii-debug-toolbar-bottom"></div>';
-        }
-    ]
+
 ];

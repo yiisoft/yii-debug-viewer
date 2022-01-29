@@ -1,4 +1,18 @@
 <div class="yii-debug-toolbar__block">
-  <a href="#" title="">Request <span class="yii-debug-toolbar__label">200</span></a>
+  <a href="#" title="">Status <span class="yii-debug-toolbar__label" data-key="status">200</span></a>
   <a href="#" title="">Time <span class="yii-debug-toolbar__label">0</span></a>
 </div>
+<script>
+  (function () {
+    let badge = document.querySelector('[data-key=status]');
+    let status = YiiDebug.currentSession['responseStatusCode']
+    badge.textContent = status;
+    if (status < 300) {
+      badge.classList.add('yii-debug-toolbar__label_success');
+    } else if (status < 400) {
+      badge.classList.add('yii-debug-toolbar__label_info');
+    } else {
+      badge.classList.add('yii-debug-toolbar__label_important');
+    }
+  })()
+</script>

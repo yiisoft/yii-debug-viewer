@@ -115,10 +115,8 @@
             }
         },
         "config-plugin": {
-            "events-web": "events-web.php",
             "web": "web.php",
             "params": "params.php",
-            "providers-web": "providers-web.php",
             "routes": "routes.php"
         }
     },

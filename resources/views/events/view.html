@@ -10,7 +10,7 @@
 </table>
 <script>
     (function () {
-        const events = collectors[currentDebugSession]["YiisoftYiiDebugCollectorEventCollector"];
+        const events = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorEventCollector"];
         const table = document.querySelector('.panel-events-table tbody');
         events.forEach((event) => {
             table.insertAdjacentHTML('beforeend', '<tr><td>' + event.time + '</td><td>' + event.name + '</td></tr>');

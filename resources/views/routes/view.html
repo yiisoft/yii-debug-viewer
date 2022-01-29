@@ -10,7 +10,7 @@
 </table>
 <script>
     (function () {
-        const routes = collectors[currentDebugSession]["YiisoftYiiDebugCollectorRouterCollector"].routes;
+        const routes = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorRouterCollector"].routes;
         const table = document.querySelector('.panel-routes-table tbody');
         for (let route in routes) {
             table.insertAdjacentHTML('beforeend', '<tr><td>' + route + '</td><td>' + routes[route] + '</td></tr>');

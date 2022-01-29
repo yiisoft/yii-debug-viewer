@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    var findToolbar = function () {
+    let findToolbar = function () {
             return document.querySelector('#yii-debug-toolbar');
         },
         ajax = function (url, settings) {
@@ -9,7 +9,8 @@
             settings = settings || {};
             xhr.open(settings.method || 'GET', url, true);
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Accept', 'text/html');
+            xhr.setRequestHeader('Accept', settings.accept || 'text/html');
+            xhr.setRequestHeader('Content-Type', settings.accept || 'text/html');
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200 && settings.success) {
@@ -21,8 +22,6 @@
             };
             xhr.send(settings.data || '');
         },
-        url,
-        div,
         toolbarEl = findToolbar(),
         toolbarAnimatingClass = 'yii-debug-toolbar_animating',
         logoSelector = '.yii-debug-toolbar__logo',
@@ -46,31 +45,61 @@
         blockActiveClass = 'yii-debug-toolbar__block_active',
         requestStack = [];
 
-    if (toolbarEl) {
-        url = toolbarEl.getAttribute('data-url');
-        ajax(url, {
+    let initToolbar = function (toolbarUrl, debugUrl, position = 'bottom') {
+        let $this = this;
+        ajax(debugUrl, {
             success: function (xhr) {
-                div = document.createElement('div');
-                div.innerHTML = xhr.responseText;
-
-                toolbarEl.parentNode && toolbarEl.parentNode.replaceChild(div, toolbarEl);
-
-                showToolbar(findToolbar());
-
-                let event;
-                if (typeof (Event) === 'function') {
-                    event = new Event('yii.debug.toolbar_attached', {'bubbles': true});
-                } else {
-                    event = document.createEvent('Event');
-                    event.initEvent('yii.debug.toolbar_attached', true, true);
-                }
-
-                div.dispatchEvent(event);
+                const response = JSON.parse(xhr.response);
+                $this.sessions = response.data;
+                $this.currentSession = $this.sessions[0] ? $this.sessions[0].id : '';
             },
             error: function (xhr) {
-                toolbarEl.innerText = xhr.responseText;
-            }
-        });
+                console.error(xhr.responseText);
+            },
+            accept: 'application/json'
+        })
+        if (!toolbarEl) {
+            ajax(toolbarUrl, {
+                success: function (xhr) {
+                    let div = document.createElement('div');
+                    div.innerHTML = xhr.responseText;
+                    div.firstElementChild.classList.add('yii-debug-toolbar_position_' + position);
+                    let scripts = div.getElementsByTagName('script');
+                    for (let i = 0; i < scripts.length; i++) {
+                        let script = document.createElement('script');
+                        script.async = false
+                        if (scripts[i].src !== '') {
+                            script.src = scripts[i].src;
+                        } else {
+                            script.defer = true
+                            script.src = `data:text/javascript;base64, ${btoa(scripts[i].innerHTML)}`;
+                        }
+                        scripts[i].remove();
+                        div.appendChild(script);
+                    }
+                    if (position === 'bottom') {
+                        document.body.appendChild(div);
+                    } else {
+                        document.body.insertAdjacentElement('beforebegin', div);
+                    }
+
+                    showToolbar(findToolbar());
+
+                    let event;
+                    if (typeof (Event) === 'function') {
+                        event = new Event('yii.debug.toolbar_attached', {'bubbles': true});
+                    } else {
+                        event = document.createEvent('Event');
+                        event.initEvent('yii.debug.toolbar_attached', true, true);
+                    }
+
+                    div.dispatchEvent(event);
+                },
+                error: function (xhr) {
+                    toolbarEl.innerText = xhr.responseText;
+                }
+            });
+        }
     }
 
     function showToolbar(toolbarEl) {
@@ -162,10 +191,6 @@
                 }
             };
 
-        let logo = blockEls[0].querySelector(logoSelector);
-        if (logo.length) {
-            logo.href = url;
-        }
         if (restoreStorageState(CACHE_KEY) === ACTIVE_STATE) {
             const transition = toolbarEl.style.transition;
             toolbarEl.style.transition = 'none';
@@ -226,7 +251,8 @@
     }
 
     function findAncestor(el, cls) {
-        while ((el = el.parentElement) && !el.classList.contains(cls)) ;
+        while ((el = el.parentElement) && !el.classList.contains(cls)) {
+        }
         return el;
     }
 
@@ -325,9 +351,12 @@
      * @returns {boolean}
      */
     function shouldTrackRequest(requestUrl) {
+        if (requestUrl.includes('/debug')) {
+            return false;
+        }
         const a = document.createElement('a');
         a.href = requestUrl;
-        const skipAjaxRequestUrls = JSON.parse(toolbarEl.getAttribute('data-skip-urls'));
+        const skipAjaxRequestUrls = toolbarEl ? JSON.parse(toolbarEl.getAttribute('data-skip-urls')) : [];
         if (Array.isArray(skipAjaxRequestUrls) && skipAjaxRequestUrls.length && skipAjaxRequestUrls.includes(requestUrl)) {
             return false;
         }
@@ -415,5 +444,16 @@
             return promise;
         };
     }
-
+    if (window.YiiDebug) {
+        window.YiiDebug.initToolbar = initToolbar;
+    } else {
+        window.YiiDebug = {
+            targetHost: '',
+            baseUrl: '',
+            initToolbar,
+            currentSession: {},
+            sessions: [],
+            collectors: []
+        }
+    }
 })();

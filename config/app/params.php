@@ -19,4 +19,7 @@ return [
             '@views' => '@resources/views',
         ],
     ],
+    'yiisoft/yii-debug-viewer' => [
+        'baseUrl' => ''
+    ]
 ];

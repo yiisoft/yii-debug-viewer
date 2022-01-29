@@ -4,6 +4,6 @@
 
 <script>
     (() => {
-        document.querySelector('#json-renderer').data = collectors[currentDebugSession]["YiisoftYiiDebugCollectorMiddlewareCollector"];
+        document.querySelector('#json-renderer').data = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorMiddlewareCollector"];
     })();
 </script>
