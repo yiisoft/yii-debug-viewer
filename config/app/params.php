@@ -20,6 +20,6 @@ return [
         ],
     ],
     'yiisoft/yii-debug-viewer' => [
-        'baseUrl' => ''
-    ]
+        'baseUrl' => '',
+    ],
 ];
