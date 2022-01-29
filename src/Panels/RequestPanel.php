@@ -10,6 +10,7 @@ final class RequestPanel implements PanelInterface
     {
         return 'Request';
     }
+
     public function renderSummary(): string
     {
         return file_get_contents(dirname(__DIR__, 2) . '/resources/views/request/summary.html');
