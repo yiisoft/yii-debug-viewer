@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Yiisoft\Yii\Debug\Viewer;
 
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Yiisoft\DataResponse\DataResponseFactoryInterface;
 use Yiisoft\Router\CurrentRoute;
+use Yiisoft\Yii\Debug\Viewer\Panels\PanelInterface;
 
 final class IndexController
 {
@@ -27,7 +28,9 @@ final class IndexController
      */
     public function index(): ResponseInterface
     {
-        return $this->responseFactory->createResponse(file_get_contents(dirname(__DIR__) . '/resources/views/index.html'));
+        return $this->responseFactory->createResponse(
+            file_get_contents(dirname(__DIR__) . '/resources/views/index.html')
+        );
     }
 
     public function panel(CurrentRoute $currentRoute, PanelCollection $panelCollection): ResponseInterface
@@ -36,8 +39,19 @@ final class IndexController
         return $this->responseFactory->createResponse($panel->renderDetail());
     }
 
-    public function toolbar(ServerRequestInterface $request)
-    {
-        return $this->responseFactory->createResponse();
+    public function toolbar(
+        ResponseFactoryInterface $responseFactory,
+        PanelCollection $panelCollection
+    ) {
+        $html = file_get_contents(dirname(__DIR__) . '/resources/views/toolbar.html');
+        $panels = array_map(
+            static fn (PanelInterface $panel) => $panel->renderSummary(),
+            $panelCollection->getPanels()
+        );
+        $html = strtr($html, ['{TOOLBAR_BLOCKS}' => implode("\n", $panels)]);
+        $response = $responseFactory->createResponse()
+            ->withHeader('Content-Type', 'text/html');
+        $response->getBody()->write($html);
+        return $response;
     }
 }

@@ -28,7 +28,7 @@ final class ToolbarMiddleware implements MiddlewareInterface
         $this->view->registerJs($js);
         $this->view->registerJs(
             <<<JS
-window.YiiDebug.initToolbar('/debug/viewer/toolbar', '/debug/')
+window.YiiDebug.initToolbar('/debug/toolbar', '/debug/')
 JS
         );
         $this->view->registerCss($css, WebView::POSITION_END);

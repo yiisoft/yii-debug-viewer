@@ -38,6 +38,9 @@ final class PanelCollection
         return $this->panels[$id];
     }
 
+    /**
+     * @return array<string, PanelInterface>
+     */
     public function getPanels(): array
     {
         return $this->panels;

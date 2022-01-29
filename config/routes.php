@@ -9,9 +9,8 @@ use Yiisoft\DataResponse\Middleware\FormatDataResponseAsHtml;
 use Yiisoft\DataResponse\Middleware\FormatDataResponseAsJson;
 use Yiisoft\Router\Group;
 use Yiisoft\Router\Route;
-use Yiisoft\Yii\Debug\Viewer\IndexController;
 use Yiisoft\Yii\Debug\Viewer\ConfigController;
-use Yiisoft\Yii\Debug\Viewer\PanelCollection;
+use Yiisoft\Yii\Debug\Viewer\IndexController;
 
 return [
     Route::get('/debug/viewer[/]')
@@ -29,23 +28,7 @@ return [
             Route::get('/panels/{panel}')
                 ->action([IndexController::class, 'panel'])
                 ->name('debug/panels/panel'),
-            Route::get('/toolbar')->action(
-                static function (
-                    ResponseFactoryInterface $responseFactory,
-                    PanelCollection $panelCollection
-                ) {
-                    $html = file_get_contents(dirname(__DIR__) . '/resources/views/toolbar.html');
-                    $panels = array_map(
-                        static fn (\Yiisoft\Yii\Debug\Viewer\Panels\PanelInterface $panel) => $panel->renderSummary(),
-                        $panelCollection->getPanels()
-                    );
-                    $html = strtr($html, ['{TOOLBAR_BLOCKS}' => implode("\n", $panels)]);
-                    $response = $responseFactory->createResponse()
-                        ->withHeader('Content-Type', 'text/html');
-                    $response->getBody()->write($html);
-                    return $response;
-                }
-            )->name('debug/viewer/toolbar'),
+            Route::get('/toolbar')->action([IndexController::class, 'toolbar'])->name('debug/viewer/toolbar'),
             Route::get('/assets/toolbar.css')->action(static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
                 return $responseFactory->createResponse()->withHeader('Content-Type', 'text/css')->withBody($streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/css/toolbar.css'));
             }),
