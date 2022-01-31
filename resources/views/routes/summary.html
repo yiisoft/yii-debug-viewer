@@ -1,8 +1,17 @@
 <div class="yii-debug-toolbar__block">
-  <a href="#" title="Route Match Time:">Route <span class="yii-debug-toolbar__label" data-key="route">0</span></a>
+    <a href="#" title="Route Match Time:">Route
+        <span class="yii-debug-toolbar__label" data-key="matchedRoute"></span>
+        <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="routeMatchTime">0</span>
+    </a>
 </div>
 <script>
-  (function () {
-    document.querySelector('[data-key="route"]').textContent = '0.002 ms'
-  })()
+    (function () {
+        setTimeout(() => {
+            const timeFormatted = YiiDebug.currentSession.routeMatchTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.routeMatchTime * 1000).toFixed(2)} ms`;
+            const badge = document.querySelector('[data-key=routeMatchTime]');
+            document.querySelector('[data-key=matchedRoute]').textContent = YiiDebug.currentSession.matchedRoute || '';
+            badge.textContent = timeFormatted;
+            badge.parentElement.title = `Route match time: ${timeFormatted}`;
+        });
+    })()
 </script>

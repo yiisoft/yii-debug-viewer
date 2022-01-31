@@ -1,5 +1,13 @@
 <div class="yii-debug-toolbar__block">
-  <a href="#" title="" data-d>Events
-    <span class="yii-debug-toolbar__label" data-key="events">0</span>
-  </a>
+    <a href="#" title="">Events
+        <span class="yii-debug-toolbar__label" data-key="totalEvents">0</span>
+    </a>
 </div>
+<script>
+    (function () {
+        setTimeout(() => {
+            const badge = document.querySelector('[data-key=totalEvents]');
+            badge.textContent = YiiDebug.currentSession.totalEvents || 0;
+        });
+    })()
+</script>
