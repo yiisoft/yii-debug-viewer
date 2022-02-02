@@ -18,6 +18,7 @@ final class PanelCollection
      */
     public function __construct(array $panels)
     {
+        $this->validatePanels($panels);
         $this->panels = $panels;
     }
 
@@ -44,5 +45,16 @@ final class PanelCollection
     public function getPanels(): array
     {
         return $this->panels;
+    }
+
+    private function validatePanels(array $panels): void
+    {
+        foreach ($panels as $panel) {
+            if (!($panel instanceof PanelInterface)) {
+                throw new \RuntimeException(
+                    sprintf("Panel must implement PanelInterface. Got: %s.", get_debug_type($panel))
+                );
+            }
+        }
     }
 }

@@ -8,8 +8,7 @@
         setTimeout(() => {
             document.querySelector('[data-key=totalMiddlewares]').textContent = YiiDebug.currentSession.totalMiddlewares || 0;
             document.querySelector('[data-key=totalMiddlewares]').parentElement.title = `Total middlewares: ${YiiDebug.currentSession.totalMiddlewares || 0}`;
-            document.querySelector('[data-key=totalMiddlewares]').parentElement.href = `${YiiDebug.baseUrl}?panel=middleware`;
-
+            document.querySelector('[data-key=totalMiddlewares]').parentElement.href = `${YiiDebug.baseUrl}/viewer/middleware`;
         });
     })()
 </script>
