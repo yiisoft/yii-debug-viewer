@@ -52,7 +52,7 @@ final class PanelCollection
         foreach ($panels as $panel) {
             if (!($panel instanceof PanelInterface)) {
                 throw new \RuntimeException(
-                    sprintf("Panel must implement PanelInterface. Got: %s.", get_debug_type($panel))
+                    sprintf('Panel must implement PanelInterface. Got: %s.', get_debug_type($panel))
                 );
             }
         }
