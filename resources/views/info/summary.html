@@ -6,8 +6,7 @@
 <script>
     (function () {
         setTimeout(() => {
-            const phpVersion = document.querySelector('[data-key=phpVersion]');
-            phpVersion.textContent = YiiDebug.currentSession.phpVersion || 'n/a';
+            document.querySelector('[data-key=phpVersion]').textContent = YiiDebug.currentSession.phpVersion || 'n/a';
         });
     })()
 </script>

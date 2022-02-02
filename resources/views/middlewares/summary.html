@@ -1,5 +1,5 @@
 <div class="yii-debug-toolbar__block">
-    <a href="#" title="">Middleware
+    <a href="#" title="">Middlewares
         <span class="yii-debug-toolbar__label" data-key="totalMiddlewares">0</span>
     </a>
 </div>
@@ -7,6 +7,9 @@
     (function () {
         setTimeout(() => {
             document.querySelector('[data-key=totalMiddlewares]').textContent = YiiDebug.currentSession.totalMiddlewares || 0;
+            document.querySelector('[data-key=totalMiddlewares]').parentElement.title = `Total middlewares: ${YiiDebug.currentSession.totalMiddlewares || 0}`;
+            document.querySelector('[data-key=totalMiddlewares]').parentElement.href = `${YiiDebug.baseUrl}?panel=middleware`;
+
         });
     })()
 </script>

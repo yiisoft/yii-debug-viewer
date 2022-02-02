@@ -47,6 +47,8 @@
 
     let initToolbar = function (toolbarUrl, debugUrl, position = 'bottom') {
         let $this = this;
+        $this.toolbarUrl = toolbarUrl;
+        $this.baseUrl = debugUrl;
         ajax(debugUrl, {
             success: function (xhr) {
                 const response = JSON.parse(xhr.response);
@@ -206,8 +208,6 @@
                 el.setAttribute('tabindex', "-1");
             });
         }
-
-        toolbarEl.style.display = 'block';
 
         window.onresize = function () {
             if (toolbarEl.classList.contains(iframeActiveClass)) {

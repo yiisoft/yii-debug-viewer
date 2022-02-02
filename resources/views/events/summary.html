@@ -6,8 +6,8 @@
 <script>
     (function () {
         setTimeout(() => {
-            const badge = document.querySelector('[data-key=totalEvents]');
-            badge.textContent = YiiDebug.currentSession.totalEvents || 0;
+            document.querySelector('[data-key=totalEvents]').textContent = YiiDebug.currentSession.totalEvents || 0;
+            document.querySelector('[data-key=totalEvents]').parentElement.title = `Total events: ${YiiDebug.currentSession.totalEvents || 0}`;
         });
     })()
 </script>

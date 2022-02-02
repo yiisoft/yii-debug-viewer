@@ -11,6 +11,8 @@
 }
 
 .yii-debug-toolbar {
+    display: flex;
+    flex-direction: column;
     font: 11px Verdana, Arial, sans-serif;
     text-align: left;
     width: 96px;
@@ -35,6 +37,10 @@
 }
 
 .yii-debug-toolbar__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: stretch;
+    align-items: stretch;
     position: relative;
     padding: 0;
     font: 11px Verdana, Arial, sans-serif;
@@ -97,7 +103,7 @@
     margin: 0;
     border-right: 1px solid rgba(0, 0, 0, 0.11);
     padding: 4px 8px;
-    line-height: 32px;
+    line-height: 30px;
     white-space: nowrap;
 }
 
@@ -114,6 +120,10 @@
     display: inline-block;
     text-decoration: none;
     color: black;
+}
+
+.yii-debug-toolbar:not(.yii-debug-toolbar_active) .yii-debug-toolbar__logo {
+    display: inline-flex;
 }
 
 .yii-debug-toolbar__block img {

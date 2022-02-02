@@ -8,10 +8,9 @@
     (function () {
         setTimeout(() => {
             const timeFormatted = YiiDebug.currentSession.routeMatchTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.routeMatchTime * 1000).toFixed(2)} ms`;
-            const badge = document.querySelector('[data-key=routeMatchTime]');
             document.querySelector('[data-key=matchedRoute]').textContent = YiiDebug.currentSession.matchedRoute || '';
-            badge.textContent = timeFormatted;
-            badge.parentElement.title = `Route match time: ${timeFormatted}`;
+            document.querySelector('[data-key=routeMatchTime]').textContent = timeFormatted;
+            document.querySelector('[data-key=routeMatchTime]').parentElement.title = `Route match time: ${timeFormatted}`;
         });
     })()
 </script>
