@@ -1,0 +1,13 @@
+<div class="yii-debug-toolbar__block">
+    <a href="#" title="">Events
+        <span class="yii-debug-toolbar__label" data-key="totalEvents">0</span>
+    </a>
+</div>
+<script>
+    (function () {
+        setTimeout(() => {
+            document.querySelector('[data-key=totalEvents]').textContent = YiiDebug.currentSession.totalEvents || 0;
+            document.querySelector('[data-key=totalEvents]').parentElement.title = `Total events: ${YiiDebug.currentSession.totalEvents || 0}`;
+        });
+    })()
+</script>

@@ -1,0 +1,22 @@
+<table class="table table-bordered table-striped panel-logs-table">
+    <thead>
+    <tr>
+        <th>Time</th>
+        <th>Level</th>
+        <th>Message</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+<script>
+    (function () {
+        const logs = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorLogCollector"];
+        const table = document.querySelector('.panel-logs-table tbody');
+        logs.forEach((log) => {
+            table.insertAdjacentHTML('beforeend', '<tr><td>' + log.time + '</td><td>' + log.level + '</td><td>' + log.message + '</td></tr>');
+        });
+    })();
+</script>

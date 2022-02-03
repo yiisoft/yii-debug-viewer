@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-use Yiisoft\Yii\Debug\Viewer\Panels\PanelCollection;
+use Yiisoft\Yii\Debug\Viewer\Factory\PanelCollectionFactory;
+use Yiisoft\Yii\Debug\Viewer\PanelCollection;
 
 /** @var array $params */
 
 return [
-    PanelCollection::class => [
-        '__construct()' => [$params['yiisoft/yii-debug-viewer']['panels']],
-    ],
+    PanelCollection::class => new PanelCollectionFactory($params['yiisoft/yii-debug-viewer']['panels']),
 ];

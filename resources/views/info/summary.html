@@ -1,0 +1,12 @@
+<div class="yii-debug-toolbar__block">
+    <a href="#" title="">PHP
+        <span class="yii-debug-toolbar__label" data-key="phpVersion">0</span>
+    </a>
+</div>
+<script>
+    (function () {
+        setTimeout(() => {
+            document.querySelector('[data-key=phpVersion]').textContent = YiiDebug.currentSession.phpVersion || 'n/a';
+        });
+    })()
+</script>

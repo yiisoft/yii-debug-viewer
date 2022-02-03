@@ -2,27 +2,22 @@
 
 declare(strict_types=1);
 
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use Tuupola\Middleware\CorsMiddleware;
 use Yiisoft\DataResponse\Middleware\FormatDataResponseAsHtml;
 use Yiisoft\DataResponse\Middleware\FormatDataResponseAsJson;
 use Yiisoft\Router\Group;
 use Yiisoft\Router\Route;
+use Yiisoft\Yii\Debug\Viewer\ConfigController;
 use Yiisoft\Yii\Debug\Viewer\IndexController;
-use Yiisoft\Yii\Debug\Viewer\Panels\ConfigController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Info\PanelInfoController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Middlewares\PanelMiddlewaresController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Request\PanelRequestController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Routes\PanelRoutesController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Logs\PanelLogsController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Events\PanelEventsController;
-use Yiisoft\Yii\Debug\Viewer\Panels\Services\PanelServicesController;
 
 return [
     Route::get('/debug/viewer[/]')
         ->middleware(FormatDataResponseAsHtml::class)
         ->action([IndexController::class, 'index'])
         ->name('debug/panels/index'),
-    Group::create('/debug/panels')
+    Group::create($params['yiisoft/yii-debug-viewer']['baseUrl'])
         ->middleware(FormatDataResponseAsHtml::class)
         ->middleware(CorsMiddleware::class)
         ->routes(
@@ -30,26 +25,15 @@ return [
                 ->middleware(FormatDataResponseAsJson::class)
                 ->action([ConfigController::class, 'index'])
                 ->name('debug/panels/config'),
-            Route::get('/info')
-                ->action([PanelInfoController::class, 'view'])
-                ->name('debug/panels/info'),
-            Route::get('/routes')
-                ->action([PanelRoutesController::class, 'view'])
-                ->name('debug/panels/routes'),
-            Route::get('/logs')
-                ->action([PanelLogsController::class, 'view'])
-                ->name('debug/panels/logs'),
-            Route::get('/events')
-                ->action([PanelEventsController::class, 'view'])
-                ->name('debug/panels/events'),
-            Route::get('/services')
-                ->action([PanelServicesController::class, 'view'])
-                ->name('debug/panels/services'),
-            Route::get('/middlewares')
-                ->action([PanelMiddlewaresController::class, 'view'])
-                ->name('debug/panels/middlewares'),
-            Route::get('/request')
-                ->action([PanelRequestController::class, 'view'])
-                ->name('debug/panels/request')
+            Route::get('/panels/{panel}')
+                ->action([IndexController::class, 'panel'])
+                ->name('debug/panels/panel'),
+            Route::get('/toolbar')->action([IndexController::class, 'toolbar'])->name('debug/viewer/toolbar'),
+            Route::get('/assets/toolbar.css')->action(static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
+                return $responseFactory->createResponse()->withHeader('Content-Type', 'text/css')->withBody($streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/css/toolbar.css'));
+            }),
+            Route::get('/assets/toolbar.js')->action(static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
+                return $responseFactory->createResponse()->withBody($streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/js/toolbar.js'));
+            })
         ),
 ];

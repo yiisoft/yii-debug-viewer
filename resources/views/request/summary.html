@@ -1,0 +1,33 @@
+<div class="yii-debug-toolbar__block">
+    <a href="#" title="">Status
+        <span class="yii-debug-toolbar__label" data-key="responseStatusCode">200</span>
+    </a>
+    <a href="#" title="">Time
+        <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="time">0</span>
+    </a>
+    <a href="#" title="">Memory
+        <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="memory">0</span>
+    </a>
+</div>
+<script>
+    (function () {
+        setTimeout(() => {
+            const status = YiiDebug.currentSession.responseStatusCode || 200;
+            document.querySelector('[data-key=responseStatusCode]').textContent = status;
+            document.querySelector('[data-key=responseStatusCode]').parentElement.title = `Response status: ${status}`;
+            if (status < 300) {
+                document.querySelector('[data-key=responseStatusCode]').classList.add('yii-debug-toolbar__label_success');
+            } else if (status < 400) {
+                document.querySelector('[data-key=responseStatusCode]').classList.add('yii-debug-toolbar__label_info');
+            } else {
+                document.querySelector('[data-key=responseStatusCode]').classList.add('yii-debug-toolbar__label_important');
+            }
+            const timeFormatted = YiiDebug.currentSession.time === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.time * 1000).toFixed(2)} ms`;
+            document.querySelector('[data-key=time]').textContent = timeFormatted;
+            document.querySelector('[data-key=time]').parentElement.title = `Total request processing time was ${timeFormatted}`;
+            const memoryFormatted = YiiDebug.currentSession.memory === 0 ? '0 MB' : `${Number(YiiDebug.currentSession.memory / 1048576).toFixed(3)} MB`
+            document.querySelector('[data-key=memory]').textContent = memoryFormatted;
+            document.querySelector('[data-key=memory]').parentElement.title = `Peak memory consumption: ${memoryFormatted}`;
+        });
+    })()
+</script>
