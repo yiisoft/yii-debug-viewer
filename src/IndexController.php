@@ -35,13 +35,13 @@ final class IndexController
 
     public function panel(CurrentRoute $currentRoute, PanelCollection $panelCollection): ResponseInterface
     {
-        if ($currentRoute->getArgument('panel') === null) {
+        if (($panel = $currentRoute->getArgument('panel')) === null) {
             return $this->responseFactory->createResponse(
                 'Panel not found',
                 404
             );
         }
-        $panel = $panelCollection->getPanel($currentRoute->getArgument('panel'));
+        $panel = $panelCollection->getPanel($panel);
         return $this->responseFactory->createResponse($panel->renderDetail());
     }
 
