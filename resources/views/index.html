@@ -14,12 +14,12 @@
             <div class="card debug-sessions-info d-none">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col">
+                        <div class="col col-md-10">
                             <select class="form-control debug-sessions">
 
                             </select>
                         </div>
-                        <div class="col session-info mt-2">
+                        <div class="col col-md-2 session-info mt-2">
 
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                     '</div>';
                 const target = YiiDebug.targetHost === '' ? location.protocol + '//' + location.host : YiiDebug.targetHost;
                 const xhr = new XMLHttpRequest();
-                xhr.open('GET', YiiDebug.baseUrl + event.target.getAttribute("href") + '?targetHost=' + target + '&session=' + YiiDebug.currentSession.id);
+                xhr.open('GET', YiiDebug.targetHost + '/debug' + event.target.getAttribute("href") + '?targetHost=' + target + '&session=' + YiiDebug.currentSession.id);
                 xhr.send();
                 xhr.onload = () => {
                     if (xhr.status === 200) {
@@ -125,7 +125,6 @@
         });
 
         loadDebugData();
-        YiiDebug.initToolbar('toolbar', YiiDebug.targetHost + '/debug', 'top');
 
         function loadDebugData() {
             const xhr = new XMLHttpRequest();
@@ -141,6 +140,7 @@
                     YiiDebug.currentSession = YiiDebug.sessions[0];
                     populateDebugSessions();
                     getCollectors(YiiDebug.currentSession.id, () => getPanels());
+                    YiiDebug.initToolbar('toolbar', null, 'top');
                 } else {
                     document.querySelector(".router-view").innerHTML = 'Debug info not found on target host';
                     document.querySelector(".enter-target-host").classList.remove('d-none');
@@ -232,9 +232,6 @@
             let sessionInfo = document.querySelector('.session-info');
 
             sessionInfo.innerHTML = '';
-            sessionInfo.insertAdjacentHTML('beforeend', '<span class="px-2">Time: <span class="badge bg-primary">' + (session.time).toFixed(4) + '</span></span>');
-            sessionInfo.insertAdjacentHTML('beforeend', '<span class="px-2">Memory: <span class="badge bg-info">' + session.memory + '</span></span>');
-            sessionInfo.insertAdjacentHTML('beforeend', '<span class="px-2">Status: <span class="badge bg-success">' + session.responseStatusCode + '</span></span>');
             sessionInfo.insertAdjacentHTML('beforeend', '<span class="px-2">Ajax: <span class="badge bg-warning">' + session.requestIsAjax + '</span></span>');
         }
 

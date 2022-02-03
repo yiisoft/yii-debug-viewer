@@ -103,8 +103,11 @@
     margin: 0;
     border-right: 1px solid rgba(0, 0, 0, 0.11);
     padding: 4px 8px;
-    line-height: 30px;
     white-space: nowrap;
+}
+
+.yii-debug-toolbar__block:not(.yii-debug-toolbar__title) {
+    line-height: 30px;
 }
 
 .yii-debug-toolbar__block_active,

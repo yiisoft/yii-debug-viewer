@@ -49,62 +49,70 @@
         let $this = this;
         $this.toolbarUrl = toolbarUrl;
         $this.baseUrl = debugUrl;
-        ajax(debugUrl, {
-            success: function (xhr) {
-                const response = JSON.parse(xhr.response);
-                $this.sessions = response.data;
-                $this.currentSession = $this.sessions[0] || {};
-                if (!toolbarEl) {
-                    ajax(toolbarUrl, {
-                        success: function (xhr) {
-                            let div = document.createElement('div');
-                            div.innerHTML = xhr.responseText;
-                            div.firstElementChild.classList.add('yii-debug-toolbar_position_' + position);
-                            let scripts = div.querySelectorAll('script');
-                            for (let i = 0; i < scripts.length; i++) {
-                                scripts[i].remove();
-                            }
-                            for (let i = 0; i < scripts.length; i++) {
-                                let script = document.createElement('script');
-                                script.async = false;
-                                if (scripts[i].src !== '') {
-                                    script.src = scripts[i].src;
-                                } else {
-                                    script.defer = true;
-                                    script.src = `data:text/javascript;base64, ${btoa(scripts[i].innerHTML)}`;
-                                }
-                                scripts[i].remove();
-                                div.appendChild(script);
-                            }
-                            if (position === 'bottom') {
-                                document.body.appendChild(div);
-                            } else {
-                                document.body.insertAdjacentElement('beforebegin', div);
-                            }
+        if (debugUrl !== null) {
+            ajax(debugUrl, {
+                success: function (xhr) {
+                    const response = JSON.parse(xhr.response);
+                    $this.sessions = response.data;
+                    $this.currentSession = $this.sessions[0] || {};
+                    attachToolbar(toolbarUrl, position);
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                },
+                accept: 'application/json'
+            })
+        } else {
+            attachToolbar(toolbarUrl, position);
+        }
+    }
 
-                            showToolbar(findToolbar());
-
-                            let event;
-                            if (typeof (Event) === 'function') {
-                                event = new Event('yii.debug.toolbar_attached', {'bubbles': true});
-                            } else {
-                                event = document.createEvent('Event');
-                                event.initEvent('yii.debug.toolbar_attached', true, true);
-                            }
-
-                            div.dispatchEvent(event);
-                        },
-                        error: function (xhr) {
-                            toolbarEl.innerText = xhr.responseText;
+    function attachToolbar(toolbarUrl, position) {
+        if (!toolbarEl) {
+            ajax(toolbarUrl, {
+                success: function (xhr) {
+                    let div = document.createElement('div');
+                    div.innerHTML = xhr.responseText;
+                    div.firstElementChild.classList.add('yii-debug-toolbar_position_' + position);
+                    let scripts = div.querySelectorAll('script');
+                    for (let i = 0; i < scripts.length; i++) {
+                        scripts[i].remove();
+                    }
+                    for (let i = 0; i < scripts.length; i++) {
+                        let script = document.createElement('script');
+                        script.async = false;
+                        if (scripts[i].src !== '') {
+                            script.src = scripts[i].src;
+                        } else {
+                            script.defer = true;
+                            script.src = `data:text/javascript;base64, ${btoa(scripts[i].innerHTML)}`;
                         }
-                    });
+                        scripts[i].remove();
+                        div.appendChild(script);
+                    }
+                    if (position === 'bottom') {
+                        document.body.appendChild(div);
+                    } else {
+                        document.body.insertAdjacentElement('beforebegin', div);
+                    }
+
+                    showToolbar(findToolbar());
+
+                    let event;
+                    if (typeof (Event) === 'function') {
+                        event = new Event('yii.debug.toolbar_attached', {'bubbles': true});
+                    } else {
+                        event = document.createEvent('Event');
+                        event.initEvent('yii.debug.toolbar_attached', true, true);
+                    }
+
+                    div.dispatchEvent(event);
+                },
+                error: function (xhr) {
+                    toolbarEl.innerText = xhr.responseText;
                 }
-            },
-            error: function (xhr) {
-                console.error(xhr.responseText);
-            },
-            accept: 'application/json'
-        })
+            });
+        }
     }
 
     function showToolbar(toolbarEl) {
