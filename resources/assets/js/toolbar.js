@@ -74,6 +74,9 @@
                     let div = document.createElement('div');
                     div.innerHTML = xhr.responseText;
                     div.firstElementChild.classList.add('yii-debug-toolbar_position_' + position);
+                    if (position === 'bottom') {
+                        div.firstElementChild.style = null;
+                    }
                     let scripts = div.querySelectorAll('script');
                     for (let i = 0; i < scripts.length; i++) {
                         scripts[i].remove();

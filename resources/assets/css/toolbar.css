@@ -125,6 +125,10 @@
     color: black;
 }
 
+.yii-debug-toolbar__block a:hover {
+    color: black;
+}
+
 .yii-debug-toolbar:not(.yii-debug-toolbar_active) .yii-debug-toolbar__logo {
     display: inline-flex;
 }
