@@ -110,7 +110,13 @@
                         document.querySelector(".router-view").innerHTML = 'An error occurred during loading panel';
                     }
                 };
-                xhr.onerror = () => document.querySelector(".router-view").innerHTML = 'An error occurred during loading panel';
+                xhr.onerror = () => {
+                    if (xhr.status === 404) {
+                        document.querySelector(".router-view").innerHTML = xhr.responseText;
+                    } else {
+                        document.querySelector(".router-view").innerHTML = 'An error occurred during loading panel';
+                    }
+                }
             }
             if (event.target.matches('.connect-target-host')) {
                 let input = document.querySelector('.target-host');

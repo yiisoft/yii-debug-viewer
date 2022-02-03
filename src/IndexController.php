@@ -35,6 +35,12 @@ final class IndexController
 
     public function panel(CurrentRoute $currentRoute, PanelCollection $panelCollection): ResponseInterface
     {
+        if ($currentRoute->getArgument('panel') === null) {
+            return $this->responseFactory->createResponse(
+                'Panel not found',
+                404
+            );
+        }
         $panel = $panelCollection->getPanel($currentRoute->getArgument('panel'));
         return $this->responseFactory->createResponse($panel->renderDetail());
     }
@@ -42,7 +48,7 @@ final class IndexController
     public function toolbar(
         ResponseFactoryInterface $responseFactory,
         PanelCollection $panelCollection
-    ) {
+    ): ResponseInterface {
         $html = file_get_contents(dirname(__DIR__) . '/resources/views/toolbar.html');
         $panels = array_map(
             static fn (PanelInterface $panel) => $panel->renderSummary(),
