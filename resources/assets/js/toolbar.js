@@ -73,10 +73,10 @@
                 success: function (xhr) {
                     let div = document.createElement('div');
                     div.innerHTML = xhr.responseText;
-                    div.firstElementChild.classList.add('yii-debug-toolbar_position_' + position);
-                    if (position === 'bottom') {
+                    if (window.location === window.parent.location) {
                         div.firstElementChild.style = null;
                     }
+                    div.firstElementChild.classList.add('yii-debug-toolbar_position_' + position);
                     let scripts = div.querySelectorAll('script');
                     for (let i = 0; i < scripts.length; i++) {
                         scripts[i].remove();
@@ -96,7 +96,7 @@
                     if (position === 'bottom') {
                         document.body.appendChild(div);
                     } else {
-                        document.body.insertAdjacentElement('beforebegin', div);
+                        document.body.insertBefore(div, document.body.firstChild);
                     }
 
                     showToolbar(findToolbar());
