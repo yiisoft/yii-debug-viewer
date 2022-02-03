@@ -7,6 +7,7 @@
     (function () {
         setTimeout(() => {
             document.querySelector('[data-key=phpVersion]').textContent = YiiDebug.currentSession.phpVersion || 'n/a';
+            document.querySelector('[data-key=phpVersion]').parentElement.href = YiiDebug.baseUrl + 'viewer';
         });
     })()
 </script>
