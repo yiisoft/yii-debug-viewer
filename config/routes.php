@@ -50,11 +50,19 @@ return [
             Route::get('/toolbar')->action([IndexController::class, 'toolbar'])->name('debug/viewer/toolbar'),
         ),
     Group::create($params['yiisoft/yii-debug-viewer']['baseUrl'])->routes(
-        Route::get('/assets/toolbar.css')->action(static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
-            return $responseFactory->createResponse()->withHeader('Content-Type', 'text/css')->withBody($streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/css/toolbar.css'));
-        }),
-        Route::get('/assets/toolbar.js')->action(static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
-            return $responseFactory->createResponse()->withBody($streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/js/toolbar.js'));
-        })
-    )
+        Route::get('/assets/toolbar.css')->action(
+            static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
+                return $responseFactory->createResponse()->withHeader('Content-Type', 'text/css')->withBody(
+                    $streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/css/toolbar.css')
+                );
+            }
+        )->name('debug/toolbar/css'),
+        Route::get('/assets/toolbar.js')->action(
+            static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
+                return $responseFactory->createResponse()->withBody(
+                    $streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/js/toolbar.js')
+                );
+            }
+        )->name('debug/toolbar/js')
+    ),
 ];
