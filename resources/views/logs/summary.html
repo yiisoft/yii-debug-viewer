@@ -8,7 +8,7 @@
         setTimeout(() => {
             document.querySelector('[data-key=totalLogs]').textContent = YiiDebug.currentSession.totalLogs || 0;
             document.querySelector('[data-key=totalLogs]').parentElement.title = `Total logs: ${YiiDebug.currentSession.totalLogs || 0}`;
-            document.querySelector('[data-key=totalLogs]').parentElement.href = YiiDebug.baseUrl + 'viewer';
+            document.querySelector('[data-key=totalLogs]').parentElement.href = YiiDebug.viewerUrl + '/logs';
         });
     })()
 </script>

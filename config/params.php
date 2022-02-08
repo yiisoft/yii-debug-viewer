@@ -15,6 +15,7 @@ return [
         'enabled' => true,
         'targetHost' => '/',
         'baseUrl' => '/debug',
+        'viewerUrl' => '/debug/viewer',
         'panels' => [
             'info' => InfoPanel::class,
             'request' => RequestPanel::class,

@@ -21,5 +21,6 @@ return [
     ],
     'yiisoft/yii-debug-viewer' => [
         'baseUrl' => '',
+        'viewerUrl' => '',
     ],
 ];

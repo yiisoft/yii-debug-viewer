@@ -30,7 +30,7 @@
             const memoryFormatted = YiiDebug.currentSession.memory === 0 ? '0 MB' : `${Number(YiiDebug.currentSession.memory / 1048576).toFixed(3)} MB`
             document.querySelector('[data-key=memory]').textContent = memoryFormatted;
             document.querySelector('[data-key=memory]').parentElement.title = `Peak memory consumption: ${memoryFormatted}`;
-            document.querySelector('[data-key=memory]').parentElement.href = YiiDebug.baseUrl + 'viewer';
+            document.querySelector('[data-key=memory]').parentElement.href = YiiDebug.viewerUrl + '/request';
         });
     })()
 </script>
