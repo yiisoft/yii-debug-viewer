@@ -8,9 +8,6 @@
             const xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             settings = settings || {};
             xhr.open(settings.method || 'GET', url, true);
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Accept', settings.accept || 'text/html');
-            xhr.setRequestHeader('Content-Type', settings.accept || 'text/html');
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200 && settings.success) {
@@ -60,7 +57,7 @@
                 error: function (xhr) {
                     console.error(xhr.responseText);
                 },
-                accept: 'application/json'
+                responseType: 'json'
             })
         } else {
             attachToolbar(viewerUrl + '/toolbar', position);

@@ -18,7 +18,7 @@ $panels = array_keys($params['yiisoft/yii-debug-viewer']['panels']);
 return [
     Group::create($params['yiisoft/yii-debug-viewer']['viewerUrl'])
         ->middleware(FormatDataResponseAsHtml::class)
-        ->middleware(CorsMiddleware::class)
+        ->withCors(CorsMiddleware::class)
         ->routes(
             Route::get('[/[{panel:' . implode('|', $panels) . '}]]')
                 ->middleware(FormatDataResponseAsHtml::class)
