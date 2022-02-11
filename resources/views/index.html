@@ -210,13 +210,11 @@
                     '<div class="spinner-border text-primary" role="status">\n' +
                     '  <span class="visually-hidden">Loading...</span>\n' +
                     '</div>';
-                loadDebugData();
+                setTimeout(() => loadDebugData());
             }
         });
 
         function loadDebugData() {
-            const xhr = new XMLHttpRequest();
-            xhr.responseType = 'json';
             ajax(YiiDebug.targetHost + '/debug', {
                 responseType: 'json',
                 success: (xhr) => {
@@ -363,7 +361,7 @@
             if (YiiDebug.currentPanel && YiiDebug.currentPanel.length) {
                 loadPanel();
             } else {
-                // document.querySelector(".panel-link").click();
+                document.querySelector(".panel-link").click();
             }
         }
 
