@@ -184,14 +184,26 @@
         fetchConfig();
         document.addEventListener('yii.debug.config', ev => {
             loadDebugData();
+        });
+        window.addEventListener('popstate', ev => {
+            let panelLinks = document.querySelectorAll('.panel-link');
+            for (let i = 0; i < panelLinks.length; ++i) {
+                if (panelLinks[i].href.includes(ev.state.panel)) {
+                    panelLinks[i].click();
+                    break;
+                }
+            }
         })
         document.addEventListener('click', event => {
             if (event.target.matches('.panel-link')) {
+                console.log(event);
                 event.preventDefault();
                 event.target.disabled = true;
                 const [_, panel] = event.target.getAttribute('href').split('/');
                 YiiDebug.currentPanel = panel;
-                window.history.pushState(null, "", YiiDebug.viewerUrl + '/' + panel);
+                if (window.location.pathname !== YiiDebug.viewerUrl + '/' + panel) {
+                    window.history.pushState({panel}, "", YiiDebug.viewerUrl + '/' + panel);
+                }
                 let panelLinks = document.querySelectorAll('.panel-link');
                 for (let i = 0; i < panelLinks.length; ++i) {
                     panelLinks[i].classList.remove('active');
