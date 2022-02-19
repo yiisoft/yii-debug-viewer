@@ -11,6 +11,9 @@ use Yiisoft\Yii\Debug\Viewer\PanelCollection;
 return [
     PanelCollection::class => new PanelCollectionFactory($params['yiisoft/yii-debug-viewer']['panels']),
     ToolbarMiddleware::class => [
-        '__construct()' => ['toolbarUrl' => $params['yiisoft/yii-debug-viewer']['viewerUrl']],
+        '__construct()' => [
+            'toolbarUrl' => $params['yiisoft/yii-debug-viewer']['viewerUrl'],
+            'apiUrl' => $params['yiisoft/yii-debug-viewer']['apiUrl'],
+        ],
     ],
 ];

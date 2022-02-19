@@ -33,7 +33,7 @@ return [
                     ) use ($params) {
                         $params = $params['yiisoft/yii-debug-viewer'];
                         $config = [
-                            'baseUrl' => $params['baseUrl'],
+                            'apiUrl' => $params['apiUrl'],
                             'viewerUrl' => $params['viewerUrl'],
                             'panels' => [],
                         ];
@@ -47,9 +47,9 @@ return [
             Route::get('/panels/{panel}')
                 ->action([IndexController::class, 'panel'])
                 ->name('debug/panels/panel'),
-            Route::get('/toolbar')->action([IndexController::class, 'toolbar'])->name('debug/viewer/toolbar'),
+            Route::get('/toolbar')->action([IndexController::class, 'toolbar'])->name('debug/toolbar'),
         ),
-    Group::create($params['yiisoft/yii-debug-viewer']['baseUrl'])->routes(
+    Group::create($params['yiisoft/yii-debug-viewer']['viewerUrl'])->routes(
         Route::get('/assets/toolbar.css')->action(
             static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
                 return $responseFactory->createResponse()->withHeader('Content-Type', 'text/css')->withBody(

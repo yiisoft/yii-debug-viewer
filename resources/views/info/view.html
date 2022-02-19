@@ -12,7 +12,7 @@
 
 <script>
     (function () {
-        const appInfo = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorWebAppInfoCollector"];
+        const appInfo = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorWebAppInfoCollector"] || YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorConsoleAppInfoCollector"];
         const table = document.querySelector('.panel-info-table tbody');
         for (let info in appInfo) {
             table.insertAdjacentHTML('beforeend', '<tr><td>' + info + '</td><td>' + appInfo[info] + '</td></tr>');
