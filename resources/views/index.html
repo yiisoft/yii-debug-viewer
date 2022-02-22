@@ -61,41 +61,41 @@
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
-            <a href="#" title="Response status: 200">Status
+            <a href="#" title="">Status
                 <span class="yii-debug-toolbar__label yii-debug-toolbar__label_success" data-key="responseStatusCode">200</span>
             </a>
-            <a href="#" title="Total request processing time was 15.17 ms">Time
+            <a href="#" title="">Time
                 <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="time">0</span>
             </a>
-            <a href="#" title="Peak memory consumption: 11.656 MB">Memory
+            <a href="#" title="">Memory
                 <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="memory">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
-            <a href="#" title="Route match time: 1.74 ms">Route
+            <a href="#" title="">Route
                 <span class="yii-debug-toolbar__label" data-key="matchedRoute"></span>
                 <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="routeMatchTime">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
-            <a href="#" title="Total logs: 0">Logs
+            <a href="#" title="">Logs
                 <span class="yii-debug-toolbar__label" data-key="totalLogs">0</span>
             </a>
         </div>
 
 
         <div class="yii-debug-toolbar__block">
-            <a href="#" title="Total events: 22">Events
+            <a href="#" title="">Events
                 <span class="yii-debug-toolbar__label" data-key="totalEvents">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
-            <a href="#" title="Total services: 44">Services
+            <a href="#" title="">Services
                 <span class="yii-debug-toolbar__label" data-key="totalServices">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
-            <a href="#" title="Total middlewares: 11">Middlewares
+            <a href="#" title="">Middlewares
                 <span class="yii-debug-toolbar__label" data-key="totalMiddlewares">0</span>
             </a>
         </div>
@@ -103,7 +103,7 @@
         </div>
     </div>
 </div>
-<main class="container container-xxl">
+<main class="container-fluid">
     <div class="row mb-3 py-4">
         <div class="col">
             <div class="card debug-sessions-info d-none">
@@ -196,7 +196,6 @@
         })
         document.addEventListener('click', event => {
             if (event.target.matches('.panel-link')) {
-                console.log(event);
                 event.preventDefault();
                 event.target.disabled = true;
                 const [_, panel] = event.target.getAttribute('href').split('/');
@@ -285,11 +284,7 @@
                 },
                 error: (xhr) => {
                     event.target.disabled = false;
-                    if (xhr.status === 404) {
-                        document.querySelector(".router-view").innerHTML = xhr.responseText;
-                    } else {
-                        document.querySelector(".router-view").innerHTML = 'An error occurred during loading panel';
-                    }
+                    document.querySelector(".router-view").innerHTML = xhr.responseText;
                 }
             });
         }
