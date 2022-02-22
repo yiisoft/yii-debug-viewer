@@ -13,7 +13,9 @@
         const events = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorEventCollector"];
         const table = document.querySelector('.panel-events-table tbody');
         events.forEach((event) => {
-            table.insertAdjacentHTML('beforeend', '<tr><td>' + event.time + '</td><td>' + event.name + '</td></tr>');
+            const [file, line] = event.line.split(':');
+            const link = `ide://open?url=file://${file}&line=${line}`;
+            table.insertAdjacentHTML('beforeend', `<tr><td>${event.time}</td><td><a href="${link}">${event.name}</a></td></tr>`);
         });
     })();
 </script>
