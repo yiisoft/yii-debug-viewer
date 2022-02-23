@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Yiisoft\DataResponse\DataResponseFactoryInterface;
 use Yiisoft\Router\CurrentRoute;
+use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\Yii\Debug\Viewer\Panels\PanelInterface;
 
 final class IndexController
@@ -26,11 +27,18 @@ final class IndexController
     /**
      * @return ResponseInterface
      */
-    public function index(): ResponseInterface
+    public function index(UrlGeneratorInterface $urlGenerator): ResponseInterface
     {
-        return $this->responseFactory->createResponse(
-            file_get_contents(dirname(__DIR__) . '/resources/views/index.html')
+        $content = file_get_contents(dirname(__DIR__) . '/resources/views/index.html');
+        $content = strtr(
+            $content,
+            [
+                '{TOOLBAR_CSS}' => $urlGenerator->generate('debug/toolbar/css'),
+                '{CONFIG_URL}' => $urlGenerator->generate('debug/panels/config'),
+            ]
         );
+
+        return $this->responseFactory->createResponse($content);
     }
 
     public function panel(CurrentRoute $currentRoute, PanelCollection $panelCollection): ResponseInterface

@@ -14,7 +14,8 @@ return [
     'yiisoft/yii-debug-viewer' => [
         'enabled' => true,
         'targetHost' => '/',
-        'baseUrl' => '/debug',
+        'apiUrl' => '/debug/api',
+        'viewerUrl' => '/debug',
         'panels' => [
             'info' => InfoPanel::class,
             'request' => RequestPanel::class,

@@ -1,11 +1,11 @@
 <table class="table table-bordered table-striped panel-events-table">
+    <thead>
+    <tr>
+        <th>Time</th>
+        <th>Event</th>
+    </tr>
+    </thead>
     <tbody>
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Event</th>
-            </tr>
-        </thead>
     </tbody>
 </table>
 <script>
@@ -13,7 +13,12 @@
         const events = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorEventCollector"];
         const table = document.querySelector('.panel-events-table tbody');
         events.forEach((event) => {
-            table.insertAdjacentHTML('beforeend', '<tr><td>' + event.time + '</td><td>' + event.name + '</td></tr>');
+            const [file, line] = event.line.split(':');
+            const link = `phpstorm://open?url=file://${file}&line=${line}`;
+            table.insertAdjacentHTML(
+                'beforeend',
+                `<tr><td>${event.time}</td><td>${event.name}<br><a class="small" href="${link}">${event.line}</a></td></tr>`
+            );
         });
     })();
 </script>

@@ -8,9 +8,6 @@
             const xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
             settings = settings || {};
             xhr.open(settings.method || 'GET', url, true);
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Accept', settings.accept || 'text/html');
-            xhr.setRequestHeader('Content-Type', settings.accept || 'text/html');
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200 && settings.success) {
@@ -45,25 +42,25 @@
         blockActiveClass = 'yii-debug-toolbar__block_active',
         requestStack = [];
 
-    let initToolbar = function (toolbarUrl, debugUrl, position = 'bottom') {
+    let initToolbar = function (viewerUrl, debugUrl, position = 'bottom') {
         let $this = this;
-        $this.toolbarUrl = toolbarUrl;
-        $this.baseUrl = debugUrl;
+        $this.viewerUrl = viewerUrl;
+        $this.toolbarUrl = viewerUrl + '/toolbar';
         if (debugUrl !== null) {
             ajax(debugUrl, {
                 success: function (xhr) {
                     const response = JSON.parse(xhr.response);
                     $this.sessions = response.data;
                     $this.currentSession = $this.sessions[0] || {};
-                    attachToolbar(toolbarUrl, position);
+                    attachToolbar(viewerUrl + '/toolbar', position);
                 },
                 error: function (xhr) {
                     console.error(xhr.responseText);
                 },
-                accept: 'application/json'
+                responseType: 'json'
             })
         } else {
-            attachToolbar(toolbarUrl, position);
+            attachToolbar(viewerUrl + '/toolbar', position);
         }
     }
 
@@ -73,10 +70,10 @@
                 success: function (xhr) {
                     let div = document.createElement('div');
                     div.innerHTML = xhr.responseText;
-                    if (window.location === window.parent.location) {
+                    div.firstElementChild.classList.add('yii-debug-toolbar_position_' + position);
+                    if (position === 'bottom') {
                         div.firstElementChild.style = null;
                     }
-                    div.firstElementChild.classList.add('yii-debug-toolbar_position_' + position);
                     let scripts = div.querySelectorAll('script');
                     for (let i = 0; i < scripts.length; i++) {
                         scripts[i].remove();
@@ -96,7 +93,7 @@
                     if (position === 'bottom') {
                         document.body.appendChild(div);
                     } else {
-                        document.body.insertBefore(div, document.body.firstChild);
+                        document.body.insertAdjacentElement('beforebegin', div);
                     }
 
                     showToolbar(findToolbar());
@@ -463,7 +460,6 @@
     } else {
         window.YiiDebug = {
             targetHost: '',
-            baseUrl: '',
             initToolbar,
             currentSession: {},
             sessions: [],

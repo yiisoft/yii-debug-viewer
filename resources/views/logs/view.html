@@ -4,10 +4,10 @@
         <th>Time</th>
         <th>Level</th>
         <th>Message</th>
+        <th>Context</th>
     </tr>
     </thead>
     <tbody>
-
     </tbody>
 </table>
 
@@ -16,7 +16,12 @@
         const logs = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorLogCollector"];
         const table = document.querySelector('.panel-logs-table tbody');
         logs.forEach((log) => {
-            table.insertAdjacentHTML('beforeend', '<tr><td>' + log.time + '</td><td>' + log.level + '</td><td>' + log.message + '</td></tr>');
+            const [file, line] = log.line.split(':');
+            const link = `phpstorm://open?url=file://${file}&line=${line}`;
+            table.insertAdjacentHTML(
+                'beforeend',
+                `<tr><td>${log.time}</td><td>${log.level}</td><td>${log.message}<br><a class="small" href="${link}">${log.line}</a></td><td>${JSON.stringify(log.context)}</td></tr>`
+            );
         });
     })();
 </script>
