@@ -14,10 +14,11 @@
         const table = document.querySelector('.panel-events-table tbody');
         events.forEach((event) => {
             const [file, line] = event.line.split(':');
-            const link = `phpstorm://open?url=file://${file}&line=${line}`;
+            const lineLink = `phpstorm://open?url=file://${file}&line=${line}`;
+            const classLink = `phpstorm://open?url=file://${event.file}`;
             table.insertAdjacentHTML(
                 'beforeend',
-                `<tr><td>${event.time}</td><td>${event.name}<br><a class="small" href="${link}">${event.line}</a></td></tr>`
+                `<tr><td>${event.time}</td><td><a href="${classLink}" class="text-dark">${event.name}</a><br><a class="small" href="${lineLink}">${event.line}</a></td></tr>`
             );
         });
     })();
