@@ -63,9 +63,12 @@ final class IndexController
             $panelCollection->getPanels()
         );
         $html = strtr($html, ['{TOOLBAR_BLOCKS}' => implode("\n", $panels)]);
-        $response = $responseFactory->createResponse()
+        $response = $responseFactory
+            ->createResponse()
             ->withHeader('Content-Type', 'text/html');
-        $response->getBody()->write($html);
+        $response
+            ->getBody()
+            ->write($html);
         return $response;
     }
 }

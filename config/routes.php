@@ -47,22 +47,33 @@ return [
             Route::get('/panels/{panel}')
                 ->action([IndexController::class, 'panel'])
                 ->name('debug/panels/panel'),
-            Route::get('/toolbar')->action([IndexController::class, 'toolbar'])->name('debug/toolbar'),
+            Route::get('/toolbar')
+                ->action([IndexController::class, 'toolbar'])
+                ->name('debug/toolbar'),
         ),
     Group::create($params['yiisoft/yii-debug-viewer']['viewerUrl'])->routes(
-        Route::get('/assets/toolbar.css')->action(
-            static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
-                return $responseFactory->createResponse()->withHeader('Content-Type', 'text/css')->withBody(
-                    $streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/css/toolbar.css')
-                );
-            }
-        )->name('debug/toolbar/css'),
-        Route::get('/assets/toolbar.js')->action(
-            static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
-                return $responseFactory->createResponse()->withBody(
-                    $streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/js/toolbar.js')
-                );
-            }
-        )->name('debug/toolbar/js')
+        Route::get('/assets/toolbar.css')
+            ->action(
+                static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
+                    return $responseFactory
+                        ->createResponse()
+                        ->withHeader('Content-Type', 'text/css')
+                        ->withBody(
+                            $streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/css/toolbar.css')
+                        );
+                }
+            )
+            ->name('debug/toolbar/css'),
+        Route::get('/assets/toolbar.js')
+            ->action(
+                static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
+                    return $responseFactory
+                        ->createResponse()
+                        ->withBody(
+                            $streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/js/toolbar.js')
+                        );
+                }
+            )
+            ->name('debug/toolbar/js')
     ),
 ];
