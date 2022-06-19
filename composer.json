@@ -52,7 +52,7 @@
         "yiisoft/yii-event": "^1.0",
         "yiisoft/yii-http": "^1.0",
         "yiisoft/yii-runner-console": "^1.0",
-        "yiisoft/yii-runner-http": "^1.0"
+        "yiisoft/yii-runner-http": "^1.1"
     },
     "autoload": {
         "psr-4": {
