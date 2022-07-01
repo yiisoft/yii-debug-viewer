@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use Tuupola\Middleware\CorsMiddleware;
 use Yiisoft\DataResponse\DataResponseFactoryInterface;
 use Yiisoft\DataResponse\Middleware\FormatDataResponseAsHtml;
 use Yiisoft\DataResponse\Middleware\FormatDataResponseAsJson;
 use Yiisoft\Router\Group;
 use Yiisoft\Router\Route;
 use Yiisoft\Yii\Debug\Viewer\IndexController;
+use Yiisoft\Yii\Debug\Viewer\Middleware\Cors;
 use Yiisoft\Yii\Debug\Viewer\PanelCollection;
 
 $panels = array_keys($params['yiisoft/yii-debug-viewer']['panels']);
@@ -18,7 +18,7 @@ $panels = array_keys($params['yiisoft/yii-debug-viewer']['panels']);
 return [
     Group::create($params['yiisoft/yii-debug-viewer']['viewerUrl'])
         ->middleware(FormatDataResponseAsHtml::class)
-        ->withCors(CorsMiddleware::class)
+        ->withCors(Cors::class)
         ->routes(
             Route::get('[/[{panel:' . implode('|', $panels) . '}]]')
                 ->middleware(FormatDataResponseAsHtml::class)
