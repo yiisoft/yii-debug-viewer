@@ -13,6 +13,10 @@ use Yiisoft\Yii\Debug\Viewer\IndexController;
 use Yiisoft\Yii\Debug\Viewer\Middleware\Cors;
 use Yiisoft\Yii\Debug\Viewer\PanelCollection;
 
+/**
+ * @var array $params
+ */
+
 $panels = array_keys($params['yiisoft/yii-debug-viewer']['panels']);
 
 return [

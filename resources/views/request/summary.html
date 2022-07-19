@@ -1,36 +1,40 @@
 <div class="yii-debug-toolbar__block">
     <a href="#" title="">Status
-        <span class="yii-debug-toolbar__label" data-key="responseStatusCode">200</span>
+        <span class="yii-debug-toolbar__label" data-key="response.statusCode">200</span>
     </a>
     <a href="#" title="">Time
-        <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="time">0</span>
+        <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="startTime">0</span>
     </a>
     <a href="#" title="">Memory
-        <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="memory">0</span>
+        <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="memory.peakUsage">0</span>
     </a>
 </div>
 <script>
     (function () {
         setTimeout(() => {
-            const status = YiiDebug.currentSession.responseStatusCode || 200;
-            document.querySelector('[data-key=responseStatusCode]').textContent = status;
-            document.querySelector('[data-key=responseStatusCode]').parentElement.title = `Response status: ${status}`;
-            document.querySelector('[data-key=responseStatusCode]').parentElement.href = YiiDebug.viewerUrl + '/request';
+            const status = YiiDebug.currentSession.response.statusCode || 'n/a';
+            document.querySelector('[data-key="response.statusCode"]').textContent = status;
+            document.querySelector('[data-key="response.statusCode"]').parentElement.title = `Response status: ${status}`;
+            document.querySelector('[data-key="response.statusCode"]').parentElement.href = YiiDebug.viewerUrl + '/request';
             if (status < 300) {
-                document.querySelector('[data-key=responseStatusCode]').classList.add('yii-debug-toolbar__label_success');
+                document.querySelector('[data-key="response.statusCode"]').classList.add('yii-debug-toolbar__label_success');
             } else if (status < 400) {
-                document.querySelector('[data-key=responseStatusCode]').classList.add('yii-debug-toolbar__label_info');
+                document.querySelector('[data-key="response.statusCode"]').classList.add('yii-debug-toolbar__label_info');
             } else {
-                document.querySelector('[data-key=responseStatusCode]').classList.add('yii-debug-toolbar__label_important');
+                document.querySelector('[data-key="response.statusCode"]').classList.add('yii-debug-toolbar__label_important');
             }
-            const timeFormatted = YiiDebug.currentSession.time === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.time * 1000).toFixed(2)} ms`;
-            document.querySelector('[data-key=time]').textContent = timeFormatted;
-            document.querySelector('[data-key=time]').parentElement.title = `Total request processing time was ${timeFormatted}`;
-            document.querySelector('[data-key=time]').parentElement.href = YiiDebug.viewerUrl + '/request';
-            const memoryFormatted = YiiDebug.currentSession.memory === 0 ? '0 MB' : `${Number(YiiDebug.currentSession.memory / 1048576).toFixed(3)} MB`
-            document.querySelector('[data-key=memory]').textContent = memoryFormatted;
-            document.querySelector('[data-key=memory]').parentElement.title = `Peak memory consumption: ${memoryFormatted}`;
-            document.querySelector('[data-key=memory]').parentElement.href = YiiDebug.viewerUrl + '/request';
+            const timeFormatted = YiiDebug.currentSession.web
+                ? YiiDebug.currentSession.web.request.startTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.web.request.startTime * 1000).toFixed(2)} ms`
+                : YiiDebug.currentSession.console.request.startTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.console.request.startTime * 1000).toFixed(2)} ms`
+            document.querySelector('[data-key="startTime"]').textContent = timeFormatted;
+            document.querySelector('[data-key="startTime"]').parentElement.title = `Total request processing time was ${timeFormatted}`;
+            document.querySelector('[data-key="startTime"]').parentElement.href = YiiDebug.viewerUrl + '/request';
+            const memoryFormatted = YiiDebug.currentSession.web
+                ? YiiDebug.currentSession.web.memory.peakUsage === 0 ? '0 MB' : `${Number(YiiDebug.currentSession.web.memory.peakUsage / 1048576).toFixed(3)} MB`
+                : YiiDebug.currentSession.console.memory.peakUsage === 0 ? '0 MB' : `${Number(YiiDebug.currentSession.console.memory.peakUsage / 1048576).toFixed(3)} MB`
+            document.querySelector('[data-key="memory.peakUsage"]').textContent = memoryFormatted;
+            document.querySelector('[data-key="memory.peakUsage"]').parentElement.title = `Peak memory consumption: ${memoryFormatted}`;
+            document.querySelector('[data-key="memory.peakUsage"]').parentElement.href = YiiDebug.viewerUrl + '/request';
         });
     })()
 </script>

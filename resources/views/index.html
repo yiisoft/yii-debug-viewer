@@ -39,41 +39,41 @@
         </div>
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Status
-                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_success" data-key="responseStatusCode">200</span>
+                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_success" data-key="response.statusCode">0</span>
             </a>
             <a href="#" title="">Time
-                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="time">0</span>
+                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="startTime">0</span>
             </a>
             <a href="#" title="">Memory
-                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="memory">0</span>
+                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="memory.peakUsage">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Route
-                <span class="yii-debug-toolbar__label" data-key="matchedRoute"></span>
-                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="routeMatchTime">0</span>
+                <span class="yii-debug-toolbar__label" data-key="router.matchedRoute"></span>
+                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="router.matchTime">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Logs
-                <span class="yii-debug-toolbar__label" data-key="totalLogs">0</span>
+                <span class="yii-debug-toolbar__label" data-key="logger.total">0</span>
             </a>
         </div>
 
 
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Events
-                <span class="yii-debug-toolbar__label" data-key="totalEvents">0</span>
+                <span class="yii-debug-toolbar__label" data-key="event.total">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Services
-                <span class="yii-debug-toolbar__label" data-key="totalServices">0</span>
+                <span class="yii-debug-toolbar__label" data-key="service.total">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Middlewares
-                <span class="yii-debug-toolbar__label" data-key="totalMiddlewares">0</span>
+                <span class="yii-debug-toolbar__label" data-key="middleware.total">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block_last">
@@ -271,34 +271,38 @@
             toolbar.style.display = 'flex';
 
             document.querySelector('[data-key=phpVersion]').textContent = YiiDebug.currentSession.phpVersion || 'n/a';
-            const status = YiiDebug.currentSession.responseStatusCode || 200;
-            document.querySelector('[data-key=responseStatusCode]').textContent = status;
-            document.querySelector('[data-key=responseStatusCode]').parentElement.title = `Response status: ${status}`;
+            const status = YiiDebug.currentSession.response.statusCode || 'n/a';
+            document.querySelector('[data-key="response.statusCode"]').textContent = status;
+            document.querySelector('[data-key="response.statusCode"]').parentElement.title = `Response status: ${status}`;
             if (status < 300) {
-                document.querySelector('[data-key=responseStatusCode]').classList.add('yii-debug-toolbar__label_success');
+                document.querySelector('[data-key="response.statusCode"]').classList.add('yii-debug-toolbar__label_success');
             } else if (status < 400) {
-                document.querySelector('[data-key=responseStatusCode]').classList.add('yii-debug-toolbar__label_info');
+                document.querySelector('[data-key="response.statusCode"]').classList.add('yii-debug-toolbar__label_info');
             } else {
-                document.querySelector('[data-key=responseStatusCode]').classList.add('yii-debug-toolbar__label_important');
+                document.querySelector('[data-key="response.statusCode"]').classList.add('yii-debug-toolbar__label_important');
             }
-            const timeFormatted = YiiDebug.currentSession.time === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.time * 1000).toFixed(2)} ms`;
-            document.querySelector('[data-key=time]').textContent = timeFormatted;
-            document.querySelector('[data-key=time]').parentElement.title = `Total request processing time was ${timeFormatted}`;
-            const memoryFormatted = YiiDebug.currentSession.memory === 0 ? '0 MB' : `${Number(YiiDebug.currentSession.memory / 1048576).toFixed(3)} MB`
-            document.querySelector('[data-key=memory]').textContent = memoryFormatted;
-            document.querySelector('[data-key=memory]').parentElement.title = `Peak memory consumption: ${memoryFormatted}`;
-            const routeTimeFormatted = YiiDebug.currentSession.routeMatchTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.routeMatchTime * 1000).toFixed(2)} ms`;
-            document.querySelector('[data-key=matchedRoute]').textContent = YiiDebug.currentSession.matchedRoute || '';
-            document.querySelector('[data-key=routeMatchTime]').textContent = routeTimeFormatted;
-            document.querySelector('[data-key=routeMatchTime]').parentElement.title = `Route match time: ${routeTimeFormatted}`;
-            document.querySelector('[data-key=totalLogs]').textContent = YiiDebug.currentSession.totalLogs || 0;
-            document.querySelector('[data-key=totalLogs]').parentElement.title = `Total logs: ${YiiDebug.currentSession.totalLogs || 0}`;
-            document.querySelector('[data-key=totalMiddlewares]').textContent = YiiDebug.currentSession.totalMiddlewares || 0;
-            document.querySelector('[data-key=totalMiddlewares]').parentElement.title = `Total middlewares: ${YiiDebug.currentSession.totalMiddlewares || 0}`;
-            document.querySelector('[data-key=totalEvents]').textContent = YiiDebug.currentSession.totalEvents || 0;
-            document.querySelector('[data-key=totalEvents]').parentElement.title = `Total events: ${YiiDebug.currentSession.totalEvents || 0}`;
-            document.querySelector('[data-key=totalServices]').textContent = YiiDebug.currentSession.totalServices || 0;
-            document.querySelector('[data-key=totalServices]').parentElement.title = `Total services: ${YiiDebug.currentSession.totalServices || 0}`;
+            const timeFormatted = YiiDebug.currentSession.web
+                ? YiiDebug.currentSession.web.request.startTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.web.request.startTime * 1000).toFixed(2)} ms`
+                : YiiDebug.currentSession.console.request.startTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.console.request.startTime * 1000).toFixed(2)} ms`
+            document.querySelector('[data-key="startTime"]').textContent = timeFormatted;
+            document.querySelector('[data-key="startTime"]').parentElement.title = `Total request processing time was ${timeFormatted}`;
+            const memoryFormatted = YiiDebug.currentSession.web
+                ? YiiDebug.currentSession.web.memory.peakUsage === 0 ? '0 MB' : `${Number(YiiDebug.currentSession.web.memory.peakUsage / 1048576).toFixed(3)} MB`
+                : YiiDebug.currentSession.console.memory.peakUsage === 0 ? '0 MB' : `${Number(YiiDebug.currentSession.console.memory.peakUsage / 1048576).toFixed(3)} MB`
+            document.querySelector('[data-key="memory.peakUsage"]').textContent = memoryFormatted;
+            document.querySelector('[data-key="memory.peakUsage"]').parentElement.title = `Peak memory consumption: ${memoryFormatted}`;
+            const routeTimeFormatted = YiiDebug.currentSession.router.matchTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.router.matchTime * 1000).toFixed(2)} ms`;
+            document.querySelector('[data-key="router.matchedRoute"]').textContent = YiiDebug.currentSession.router.matchedRoute || '';
+            document.querySelector('[data-key="router.matchTime"]').textContent = routeTimeFormatted;
+            document.querySelector('[data-key="router.matchTime"]').parentElement.title = `Route match time: ${routeTimeFormatted}`;
+            document.querySelector('[data-key="logger.total"]').textContent = YiiDebug.currentSession.logger.total || 0;
+            document.querySelector('[data-key="logger.total"]').parentElement.title = `Total logs: ${YiiDebug.currentSession.logger.total || 0}`;
+            document.querySelector('[data-key="middleware.total"]').textContent = YiiDebug.currentSession.middleware.total || 0;
+            document.querySelector('[data-key="middleware.total"]').parentElement.title = `Total middlewares: ${YiiDebug.currentSession.middleware.total || 0}`;
+            document.querySelector('[data-key="event.total"]').textContent = YiiDebug.currentSession.event.total || 0;
+            document.querySelector('[data-key="event.total"]').parentElement.title = `Total events: ${YiiDebug.currentSession.event.total || 0}`;
+            document.querySelector('[data-key="service.total"]').textContent = YiiDebug.currentSession.service.total || 0;
+            document.querySelector('[data-key="service.total"]').parentElement.title = `Total services: ${YiiDebug.currentSession.service.total || 0}`;
         }
 
         function fetchConfig() {

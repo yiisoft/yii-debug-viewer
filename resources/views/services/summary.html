@@ -1,14 +1,14 @@
 <div class="yii-debug-toolbar__block">
   <a href="#" title="">Services
-    <span class="yii-debug-toolbar__label" data-key="totalServices">0</span>
+    <span class="yii-debug-toolbar__label" data-key="service.total">0</span>
   </a>
 </div>
 <script>
     (function () {
         setTimeout(() => {
-            document.querySelector('[data-key=totalServices]').textContent = YiiDebug.currentSession.totalServices || 0;
-            document.querySelector('[data-key=totalServices]').parentElement.title = `Total services: ${YiiDebug.currentSession.totalServices || 0}`;
-            document.querySelector('[data-key=totalServices]').parentElement.href = YiiDebug.viewerUrl + '/services';
+            document.querySelector('[data-key="service.total"]').textContent = YiiDebug.currentSession.service.total || 0;
+            document.querySelector('[data-key="service.total"]').parentElement.title = `Total services: ${YiiDebug.currentSession.service.total || 0}`;
+            document.querySelector('[data-key="service.total"]').parentElement.href = YiiDebug.viewerUrl + '/services';
         });
     })()
 </script>
