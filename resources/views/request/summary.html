@@ -24,8 +24,8 @@
                 document.querySelector('[data-key="response.statusCode"]').classList.add('yii-debug-toolbar__label_important');
             }
             const timeFormatted = YiiDebug.currentSession.web
-                ? YiiDebug.currentSession.web.request.startTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.web.request.startTime * 1000).toFixed(2)} ms`
-                : YiiDebug.currentSession.console.request.startTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.console.request.startTime * 1000).toFixed(2)} ms`
+                ? YiiDebug.currentSession.web.request.processingTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.web.request.processingTime * 1000).toFixed(2)} ms`
+                : YiiDebug.currentSession.console.request.processingTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.console.request.processingTime * 1000).toFixed(2)} ms`
             document.querySelector('[data-key="startTime"]').textContent = timeFormatted;
             document.querySelector('[data-key="startTime"]').parentElement.title = `Total request processing time was ${timeFormatted}`;
             document.querySelector('[data-key="startTime"]').parentElement.href = YiiDebug.viewerUrl + '/request';
