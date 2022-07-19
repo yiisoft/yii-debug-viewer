@@ -50,7 +50,7 @@
         </div>
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Route
-                <span class="yii-debug-toolbar__label" data-key="router.matchedRoute"></span>
+                <span class="yii-debug-toolbar__label" data-key="request.fullPath"></span>
                 <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="router.matchTime">0</span>
             </a>
         </div>
@@ -292,7 +292,7 @@
             document.querySelector('[data-key="memory.peakUsage"]').textContent = memoryFormatted;
             document.querySelector('[data-key="memory.peakUsage"]').parentElement.title = `Peak memory consumption: ${memoryFormatted}`;
             const routeTimeFormatted = YiiDebug.currentSession.router.matchTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.router.matchTime * 1000).toFixed(2)} ms`;
-            document.querySelector('[data-key="router.matchedRoute"]').textContent = YiiDebug.currentSession.router.matchedRoute || '';
+            document.querySelector('[data-key="request.fullPath"]').textContent = YiiDebug.currentSession.request.path + (YiiDebug.currentSession.request.query ? '?' + YiiDebug.currentSession.request.query : '') || '';
             document.querySelector('[data-key="router.matchTime"]').textContent = routeTimeFormatted;
             document.querySelector('[data-key="router.matchTime"]').parentElement.title = `Route match time: ${routeTimeFormatted}`;
             document.querySelector('[data-key="logger.total"]').textContent = YiiDebug.currentSession.logger.total || 0;
@@ -374,7 +374,7 @@
             YiiDebug.sessions.forEach((session) => {
                 let date = new Date((session.web.request.processingTime ?? session.console.request.processingTime) * 1000).toLocaleString("en-US");
                 select.insertAdjacentHTML('beforeend',
-                    '<option value="' + session.id + '">' + date + ' ' + (session.request.method || session.console.command.class || '') + ' ' + (session.request.url || session.console.command.input) + '</option>');
+                    '<option value="' + session.id + '">' + date + ' ' + (session.request.method || session.console?.command?.class || '') + ' ' + (session.request.url || session.console.command.input) + '</option>');
 
             });
             populateDebugSessionInfo();
