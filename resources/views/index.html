@@ -34,46 +34,46 @@
         </div>
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">PHP
-                <span class="yii-debug-toolbar__label" data-key="phpVersion"></span>
+                <span class="yii-debug-toolbar__label" data-key="php.version"></span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Status
-                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_success" data-key="responseStatusCode">200</span>
+                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_success" data-key="response.statusCode">0</span>
             </a>
             <a href="#" title="">Time
-                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="time">0</span>
+                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="startTime">0</span>
             </a>
             <a href="#" title="">Memory
-                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="memory">0</span>
+                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="memory.peakUsage">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Route
-                <span class="yii-debug-toolbar__label" data-key="matchedRoute"></span>
-                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="routeMatchTime">0</span>
+                <span class="yii-debug-toolbar__label" data-key="request.fullPath"></span>
+                <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="router.matchTime">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Logs
-                <span class="yii-debug-toolbar__label" data-key="totalLogs">0</span>
+                <span class="yii-debug-toolbar__label" data-key="logger.total">0</span>
             </a>
         </div>
 
 
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Events
-                <span class="yii-debug-toolbar__label" data-key="totalEvents">0</span>
+                <span class="yii-debug-toolbar__label" data-key="event.total">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Services
-                <span class="yii-debug-toolbar__label" data-key="totalServices">0</span>
+                <span class="yii-debug-toolbar__label" data-key="service.total">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block">
             <a href="#" title="">Middlewares
-                <span class="yii-debug-toolbar__label" data-key="totalMiddlewares">0</span>
+                <span class="yii-debug-toolbar__label" data-key="middleware.total">0</span>
             </a>
         </div>
         <div class="yii-debug-toolbar__block_last">
@@ -266,39 +266,59 @@
             });
         }
 
+        function findElementByDataKey(key) {
+            return document.querySelector(`[data-key="${key}"]`);
+        }
+
+        function setContentAndTitle(element, content, title) {
+            element.textContent = content;
+            element.parentElement.title = title;
+        }
+
         function populateToolbarData() {
             const toolbar = document.querySelector('#yii-debug-toolbar');
             toolbar.style.display = 'flex';
 
-            document.querySelector('[data-key=phpVersion]').textContent = YiiDebug.currentSession.phpVersion || 'n/a';
-            const status = YiiDebug.currentSession.responseStatusCode || 200;
-            document.querySelector('[data-key=responseStatusCode]').textContent = status;
-            document.querySelector('[data-key=responseStatusCode]').parentElement.title = `Response status: ${status}`;
+            const currentSession = YiiDebug.currentSession;
+            const web = currentSession.web;
+            const console = currentSession.console;
+            const time = (web || console) ? (web ? web.request?.processingTime : console.request?.processingTime) : 0
+            const memory = (web || console) ? (web ? web.memory.peakUsage : console.memory.peakUsage) : 0
+            const timeFormatted = time === 0 ? '0 ms' : `${Number(time * 1000).toFixed(2)} ms`
+            const memoryFormatted = memory === 0 ? '0 MB' : `${Number(memory / 1048576).toFixed(3)} MB`
+            const routeTimeFormatted = currentSession.router.matchTime === 0 ? '0 ms' : `${Number(currentSession.router.matchTime * 1000).toFixed(2)} ms`;
+            const status = currentSession.response.statusCode || 'n/a';
+
+            const phpVersionElement = findElementByDataKey('php.version');
+            const responseStatusCodeElement = findElementByDataKey("response.statusCode");
+            const memoryPeakUsageElement = findElementByDataKey("memory.peakUsage");
+            const startTimeElement = findElementByDataKey("startTime");
+            const requestFullPathElement = findElementByDataKey("request.fullPath");
+            const routerMatchTimeElement = findElementByDataKey("router.matchTime");
+            const loggerTotalElement = findElementByDataKey("logger.total");
+            const middlewareTotalElement = findElementByDataKey("middleware.total");
+            const eventTotalElement = findElementByDataKey("event.total");
+            const serviceTotalElement = findElementByDataKey("service.total");
+
+            phpVersionElement.textContent = web?.php?.version || console?.php?.version || 'n/a';
+            requestFullPathElement.textContent = currentSession.request.path + (currentSession.request.query ? '?' + currentSession.request.query : '') || '';
+
             if (status < 300) {
-                document.querySelector('[data-key=responseStatusCode]').classList.add('yii-debug-toolbar__label_success');
+                responseStatusCodeElement.classList.add('yii-debug-toolbar__label_success');
             } else if (status < 400) {
-                document.querySelector('[data-key=responseStatusCode]').classList.add('yii-debug-toolbar__label_info');
+                responseStatusCodeElement.classList.add('yii-debug-toolbar__label_info');
             } else {
-                document.querySelector('[data-key=responseStatusCode]').classList.add('yii-debug-toolbar__label_important');
+                responseStatusCodeElement.classList.add('yii-debug-toolbar__label_important');
             }
-            const timeFormatted = YiiDebug.currentSession.time === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.time * 1000).toFixed(2)} ms`;
-            document.querySelector('[data-key=time]').textContent = timeFormatted;
-            document.querySelector('[data-key=time]').parentElement.title = `Total request processing time was ${timeFormatted}`;
-            const memoryFormatted = YiiDebug.currentSession.memory === 0 ? '0 MB' : `${Number(YiiDebug.currentSession.memory / 1048576).toFixed(3)} MB`
-            document.querySelector('[data-key=memory]').textContent = memoryFormatted;
-            document.querySelector('[data-key=memory]').parentElement.title = `Peak memory consumption: ${memoryFormatted}`;
-            const routeTimeFormatted = YiiDebug.currentSession.routeMatchTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.routeMatchTime * 1000).toFixed(2)} ms`;
-            document.querySelector('[data-key=matchedRoute]').textContent = YiiDebug.currentSession.matchedRoute || '';
-            document.querySelector('[data-key=routeMatchTime]').textContent = routeTimeFormatted;
-            document.querySelector('[data-key=routeMatchTime]').parentElement.title = `Route match time: ${routeTimeFormatted}`;
-            document.querySelector('[data-key=totalLogs]').textContent = YiiDebug.currentSession.totalLogs || 0;
-            document.querySelector('[data-key=totalLogs]').parentElement.title = `Total logs: ${YiiDebug.currentSession.totalLogs || 0}`;
-            document.querySelector('[data-key=totalMiddlewares]').textContent = YiiDebug.currentSession.totalMiddlewares || 0;
-            document.querySelector('[data-key=totalMiddlewares]').parentElement.title = `Total middlewares: ${YiiDebug.currentSession.totalMiddlewares || 0}`;
-            document.querySelector('[data-key=totalEvents]').textContent = YiiDebug.currentSession.totalEvents || 0;
-            document.querySelector('[data-key=totalEvents]').parentElement.title = `Total events: ${YiiDebug.currentSession.totalEvents || 0}`;
-            document.querySelector('[data-key=totalServices]').textContent = YiiDebug.currentSession.totalServices || 0;
-            document.querySelector('[data-key=totalServices]').parentElement.title = `Total services: ${YiiDebug.currentSession.totalServices || 0}`;
+
+            setContentAndTitle(responseStatusCodeElement, status, `Response status: ${status}`);
+            setContentAndTitle(startTimeElement, timeFormatted, `Total request processing time was ${timeFormatted}`);
+            setContentAndTitle(memoryPeakUsageElement, memoryFormatted, `Peak memory consumption: ${memoryFormatted}`);
+            setContentAndTitle(routerMatchTimeElement, routeTimeFormatted, `Route match time: ${routeTimeFormatted}`);
+            setContentAndTitle(loggerTotalElement, currentSession.logger.total || 0, `Total logs: ${currentSession.logger.total || 0}`);
+            setContentAndTitle(middlewareTotalElement, currentSession.middleware.total || 0, `Total middlewares: ${currentSession.middleware.total || 0}`);
+            setContentAndTitle(eventTotalElement, currentSession.event.total || 0, `Total events: ${currentSession.event.total || 0}`);
+            setContentAndTitle(serviceTotalElement, currentSession.service.total || 0, `Total services: ${currentSession.service.total || 0}`);
         }
 
         function fetchConfig() {
@@ -368,9 +388,9 @@
 
         function populateDebugSessions() {
             YiiDebug.sessions.forEach((session) => {
-                let date = new Date(session.timestamp * 1000).toLocaleString("en-US");
+                let date = new Date((session.web.request.processingTime ?? session.console.request.processingTime) * 1000).toLocaleString("en-US");
                 select.insertAdjacentHTML('beforeend',
-                    '<option value="' + session.id + '">' + date + ' ' + (session.requestMethod || '') + ' ' + (session.requestUrl || session.command) + '</option>');
+                    '<option value="' + session.id + '">' + date + ' ' + (session.request.method || session.console?.command?.class || '') + ' ' + (session.request.url || session.console.command.input) + '</option>');
 
             });
             populateDebugSessionInfo();
