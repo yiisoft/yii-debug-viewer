@@ -6,7 +6,11 @@
 <script>
     (function () {
         setTimeout(() => {
-            document.querySelector('[data-key="php.version"]').textContent = YiiDebug.currentSession.web.php.version || 'n/a';
+            const web = YiiDebug.currentSession.web;
+            const console = YiiDebug.currentSession.console;
+            document.querySelector('[data-key="php.version"]').textContent = (web || console)
+            ? (web ? web.php?.version : console.php?.version)
+            : 'n/a';
             document.querySelector('[data-key="php.version"]').parentElement.href = YiiDebug.viewerUrl + '/info';
         });
     })()

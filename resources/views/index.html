@@ -266,43 +266,59 @@
             });
         }
 
+        function findElementByDataKey(key) {
+            return document.querySelector(`[data-key="${key}"]`);
+        }
+
+        function setContentAndTitle(element, content, title) {
+            element.textContent = content;
+            element.parentElement.title = title;
+        }
+
         function populateToolbarData() {
             const toolbar = document.querySelector('#yii-debug-toolbar');
             toolbar.style.display = 'flex';
 
-            document.querySelector('[data-key="php.version"]').textContent = YiiDebug.currentSession.web.php.version || YiiDebug.currentSession.console.php.version || 'n/a';
-            const status = YiiDebug.currentSession.response.statusCode || 'n/a';
-            document.querySelector('[data-key="response.statusCode"]').textContent = status;
-            document.querySelector('[data-key="response.statusCode"]').parentElement.title = `Response status: ${status}`;
+            const currentSession = YiiDebug.currentSession;
+            const web = currentSession.web;
+            const console = currentSession.console;
+            const time = (web || console) ? (web ? web.request?.processingTime : console.request?.processingTime) : 0
+            const memory = (web || console) ? (web ? web.memory.peakUsage : console.memory.peakUsage) : 0
+            const timeFormatted = time === 0 ? '0 ms' : `${Number(time * 1000).toFixed(2)} ms`
+            const memoryFormatted = memory === 0 ? '0 MB' : `${Number(memory / 1048576).toFixed(3)} MB`
+            const routeTimeFormatted = currentSession.router.matchTime === 0 ? '0 ms' : `${Number(currentSession.router.matchTime * 1000).toFixed(2)} ms`;
+            const status = currentSession.response.statusCode || 'n/a';
+
+            const phpVersionElement = findElementByDataKey('php.version');
+            const responseStatusCodeElement = findElementByDataKey("response.statusCode");
+            const memoryPeakUsageElement = findElementByDataKey("memory.peakUsage");
+            const startTimeElement = findElementByDataKey("startTime");
+            const requestFullPathElement = findElementByDataKey("request.fullPath");
+            const routerMatchTimeElement = findElementByDataKey("router.matchTime");
+            const loggerTotalElement = findElementByDataKey("logger.total");
+            const middlewareTotalElement = findElementByDataKey("middleware.total");
+            const eventTotalElement = findElementByDataKey("event.total");
+            const serviceTotalElement = findElementByDataKey("service.total");
+
+            phpVersionElement.textContent = web?.php?.version || console?.php?.version || 'n/a';
+            requestFullPathElement.textContent = currentSession.request.path + (currentSession.request.query ? '?' + currentSession.request.query : '') || '';
+
             if (status < 300) {
-                document.querySelector('[data-key="response.statusCode"]').classList.add('yii-debug-toolbar__label_success');
+                responseStatusCodeElement.classList.add('yii-debug-toolbar__label_success');
             } else if (status < 400) {
-                document.querySelector('[data-key="response.statusCode"]').classList.add('yii-debug-toolbar__label_info');
+                responseStatusCodeElement.classList.add('yii-debug-toolbar__label_info');
             } else {
-                document.querySelector('[data-key="response.statusCode"]').classList.add('yii-debug-toolbar__label_important');
+                responseStatusCodeElement.classList.add('yii-debug-toolbar__label_important');
             }
-            const timeFormatted = YiiDebug.currentSession.web
-                ? YiiDebug.currentSession.web.request.processingTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.web.request.processingTime * 1000).toFixed(2)} ms`
-                : YiiDebug.currentSession.console.request.processingTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.console.request.processingTime * 1000).toFixed(2)} ms`
-            document.querySelector('[data-key="startTime"]').textContent = timeFormatted;
-            document.querySelector('[data-key="startTime"]').parentElement.title = `Total request processing time was ${timeFormatted}`;
-            const memoryFormatted = YiiDebug.currentSession.web
-                ? YiiDebug.currentSession.web.memory.peakUsage === 0 ? '0 MB' : `${Number(YiiDebug.currentSession.web.memory.peakUsage / 1048576).toFixed(3)} MB`
-                : YiiDebug.currentSession.console.memory.peakUsage === 0 ? '0 MB' : `${Number(YiiDebug.currentSession.console.memory.peakUsage / 1048576).toFixed(3)} MB`
-            document.querySelector('[data-key="memory.peakUsage"]').textContent = memoryFormatted;
-            document.querySelector('[data-key="memory.peakUsage"]').parentElement.title = `Peak memory consumption: ${memoryFormatted}`;
-            const routeTimeFormatted = YiiDebug.currentSession.router.matchTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.router.matchTime * 1000).toFixed(2)} ms`;
-            document.querySelector('[data-key="request.fullPath"]').textContent = YiiDebug.currentSession.request.path + (YiiDebug.currentSession.request.query ? '?' + YiiDebug.currentSession.request.query : '') || '';
-            document.querySelector('[data-key="router.matchTime"]').textContent = routeTimeFormatted;
-            document.querySelector('[data-key="router.matchTime"]').parentElement.title = `Route match time: ${routeTimeFormatted}`;
-            document.querySelector('[data-key="logger.total"]').textContent = YiiDebug.currentSession.logger.total || 0;
-            document.querySelector('[data-key="logger.total"]').parentElement.title = `Total logs: ${YiiDebug.currentSession.logger.total || 0}`;
-            document.querySelector('[data-key="middleware.total"]').textContent = YiiDebug.currentSession.middleware.total || 0;
-            document.querySelector('[data-key="middleware.total"]').parentElement.title = `Total middlewares: ${YiiDebug.currentSession.middleware.total || 0}`;
-            document.querySelector('[data-key="event.total"]').textContent = YiiDebug.currentSession.event.total || 0;
-            document.querySelector('[data-key="event.total"]').parentElement.title = `Total events: ${YiiDebug.currentSession.event.total || 0}`;
-            document.querySelector('[data-key="service.total"]').textContent = YiiDebug.currentSession.service.total || 0;
-            document.querySelector('[data-key="service.total"]').parentElement.title = `Total services: ${YiiDebug.currentSession.service.total || 0}`;
+
+            setContentAndTitle(responseStatusCodeElement, status, `Response status: ${status}`);
+            setContentAndTitle(startTimeElement, timeFormatted, `Total request processing time was ${timeFormatted}`);
+            setContentAndTitle(memoryPeakUsageElement, memoryFormatted, `Peak memory consumption: ${memoryFormatted}`);
+            setContentAndTitle(routerMatchTimeElement, routeTimeFormatted, `Route match time: ${routeTimeFormatted}`);
+            setContentAndTitle(loggerTotalElement, currentSession.logger.total || 0, `Total logs: ${currentSession.logger.total || 0}`);
+            setContentAndTitle(middlewareTotalElement, currentSession.middleware.total || 0, `Total middlewares: ${currentSession.middleware.total || 0}`);
+            setContentAndTitle(eventTotalElement, currentSession.event.total || 0, `Total events: ${currentSession.event.total || 0}`);
+            setContentAndTitle(serviceTotalElement, currentSession.service.total || 0, `Total services: ${currentSession.service.total || 0}`);
         }
 
         function fetchConfig() {
