@@ -14,8 +14,13 @@ use Yiisoft\Yii\Debug\Viewer\Asset\ToolbarAsset;
 
 final class ToolbarMiddleware implements MiddlewareInterface
 {
-    public function __construct(private string $toolbarUrl, private string $apiUrl, private AssetManager $assetManager, private WebView $view)
-    {
+    public function __construct(
+        private string $toolbarUrl,
+        private string $apiUrl,
+        private string $editorUrl,
+        private AssetManager $assetManager,
+        private WebView $view,
+    ) {
     }
 
     /**
@@ -26,7 +31,7 @@ final class ToolbarMiddleware implements MiddlewareInterface
         $this->assetManager->register(ToolbarAsset::class);
         $this->view->registerJs(
             <<<JS
-window.YiiDebug.initToolbar('$this->toolbarUrl', '$this->apiUrl')
+window.YiiDebug.initToolbar('$this->toolbarUrl', '$this->apiUrl', '$this->editorUrl')
 JS
         );
 
