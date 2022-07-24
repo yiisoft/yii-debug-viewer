@@ -13,9 +13,13 @@
         const events = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorEventCollector"];
         const table = document.querySelector('.panel-events-table tbody');
         events.forEach((event) => {
-            const [file, line] = event.line.split(':');
-            const lineLink = `phpstorm://open?url=file://${file}&line=${line}`;
-            const classLink = `phpstorm://open?url=file://${event.file}`;
+            const items = event.line.split(':');
+            const line = items.pop();
+            const file = items.join(':');
+
+            const lineLink = YiiDebug.editorUrl.replace('{file}', file).replace('{line}', line);
+            const classLink = YiiDebug.editorUrl.replace('{file}', event.file).replace('{line}', 1);
+
             table.insertAdjacentHTML(
                 'beforeend',
                 `<tr><td>${event.time}</td><td><a href="${classLink}" class="text-dark">${event.name}</a><br><a class="small" href="${lineLink}">${event.line}</a></td></tr>`

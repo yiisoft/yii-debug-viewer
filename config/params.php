@@ -16,6 +16,7 @@ return [
         'targetHost' => '/',
         'apiUrl' => '/debug/api',
         'viewerUrl' => '/debug',
+        'editorUrl' => 'phpstorm://open?url=file://{file}&line={line}',
         'panels' => [
             'info' => InfoPanel::class,
             'request' => RequestPanel::class,
