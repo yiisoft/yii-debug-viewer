@@ -39,6 +39,7 @@ return [
                         $config = [
                             'apiUrl' => $params['apiUrl'],
                             'viewerUrl' => $params['viewerUrl'],
+                            'editorUrl' => $params['editorUrl'],
                             'panels' => [],
                         ];
                         foreach ($panelCollection->getPanels() as $id => $panel) {

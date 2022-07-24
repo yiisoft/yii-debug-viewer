@@ -388,9 +388,9 @@
 
         function populateDebugSessions() {
             YiiDebug.sessions.forEach((session) => {
-                let date = new Date((session.web.request.processingTime ?? session.console.request.processingTime) * 1000).toLocaleString("en-US");
+                let date = new Date((session.web?.request?.processingTime ?? session.console?.request?.processingTime) * 1000).toLocaleString("en-US");
                 select.insertAdjacentHTML('beforeend',
-                    '<option value="' + session.id + '">' + date + ' ' + (session.request.method || session.console?.command?.class || '') + ' ' + (session.request.url || session.console.command.input) + '</option>');
+                    '<option value="' + session.id + '">' + date + ' ' + (session.request?.method || session.console?.command?.class || '') + ' ' + (session.request?.url || session.console?.command?.input) + '</option>');
 
             });
             populateDebugSessionInfo();

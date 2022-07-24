@@ -15,10 +15,11 @@ use Yiisoft\Yii\Debug\Viewer\Panels\{
 
 return [
     'yiisoft/yii-debug-viewer' => [
-        'enabled'       => true,
-        'targetHost'    => '/',
-        'apiUrl'        => '/debug/api',
-        'viewerUrl'     => '/debug',
+        'enabled' => true,
+        'targetHost' => '/',
+        'apiUrl' => '/debug/api',
+        'viewerUrl' => '/debug',
+        'editorUrl' => 'phpstorm://open?url=file://{file}&line={line}',
         'panels' => [
             'info'          => InfoPanel::class,
             'request'       => RequestPanel::class,

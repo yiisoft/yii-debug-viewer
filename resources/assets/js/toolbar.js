@@ -42,10 +42,11 @@
         blockActiveClass = 'yii-debug-toolbar__block_active',
         requestStack = [];
 
-    let initToolbar = function (viewerUrl, debugUrl, position = 'bottom') {
+    let initToolbar = function (viewerUrl, debugUrl, editorUrl, position = 'bottom') {
         let $this = this;
         $this.viewerUrl = viewerUrl;
         $this.toolbarUrl = viewerUrl + '/toolbar';
+        $this.editorUrl = editorUrl;
         if (debugUrl !== null) {
             ajax(debugUrl, {
                 success: function (xhr) {

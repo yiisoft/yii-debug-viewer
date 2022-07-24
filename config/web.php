@@ -14,6 +14,7 @@ return [
         '__construct()' => [
             'toolbarUrl' => $params['yiisoft/yii-debug-viewer']['viewerUrl'],
             'apiUrl' => $params['yiisoft/yii-debug-viewer']['apiUrl'],
+            'editorUrl' => $params['yiisoft/yii-debug-viewer']['editorUrl'],
         ],
     ],
 ];
