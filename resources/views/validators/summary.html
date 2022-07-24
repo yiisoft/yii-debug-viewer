@@ -1,5 +1,5 @@
 <div class="yii-debug-toolbar__block">
-    <a href="#" title="vvv">Validators
+    <a href="#" title="">Validators
         <span class="yii-debug-toolbar__label" data-key="validator.total">0</span>
         <span class="yii-debug-toolbar__label yii-debug-toolbar__label_success" data-key="validator.valid">0</span>
         <span class="yii-debug-toolbar__label yii-debug-toolbar__label_error" data-key="validator.invalid">0</span>
@@ -10,7 +10,7 @@
         setTimeout(() => {
             const validator = YiiDebug.currentSession.validator
             const el = document.querySelector('[data-key="validator.total"]')
-            if (undefined === validator.total || 0 === validator.total) {
+            if (!validator.total) {
                 el.parentElement.parentElement.style.display = "none"
                 return;
             }

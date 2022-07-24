@@ -388,8 +388,8 @@ a.yii-debug-toolbar__label:focus {
     color: white;
 }
 .yii-debug-toolbar__row_error {
-    background-color: #b94a48!important;
+    background-color: #b94a48 !important;
 }
 .yii-debug-toolbar__row_success {
-    background-color: #468847!important;
+    background-color: #468847 !important;
 }
