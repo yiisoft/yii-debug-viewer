@@ -382,3 +382,14 @@ a.yii-debug-toolbar__label:focus {
 .yii-debug-toolbar__logo svg {
     width: 25px;
 }
+
+.yii-debug-toolbar__row_error,
+.yii-debug-toolbar__row_success {
+    color: white;
+}
+.yii-debug-toolbar__row_error {
+    background-color: #b94a48 !important;
+}
+.yii-debug-toolbar__row_success {
+    background-color: #468847 !important;
+}

@@ -9,6 +9,7 @@ use Yiisoft\Yii\Debug\Viewer\Panels\MiddlewaresPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\RequestPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\RoutesPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\ServicesPanel;
+use Yiisoft\Yii\Debug\Viewer\Panels\ValidatorsPanel;
 
 return [
     'yiisoft/yii-debug-viewer' => [
@@ -16,7 +17,6 @@ return [
         'targetHost' => '/',
         'apiUrl' => '/debug/api',
         'viewerUrl' => '/debug',
-        'editorUrl' => 'phpstorm://open?url=file://{file}&line={line}',
         'panels' => [
             'info' => InfoPanel::class,
             'request' => RequestPanel::class,
@@ -25,6 +25,7 @@ return [
             'events' => EventsPanel::class,
             'services' => ServicesPanel::class,
             'middlewares' => MiddlewaresPanel::class,
+            'validators' => ValidatorsPanel::class,
         ],
     ],
 ];
