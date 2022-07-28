@@ -1,0 +1,36 @@
+<script src="https://unpkg.com/@alenaksu/json-viewer@0.3.4/dist/index.js"></script>
+<table class="table table-bordered table-striped panel-routes-table">
+    <thead>
+    <tr>
+        <th>Class name</th>
+        <th>Object</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<json-viewer class="panel-view" id="json-renderer" data="{}"></json-viewer>
+
+<script>
+    async function loadObject(button, className) {
+        console.log(className, encodeURI(className))
+        const result = await fetch('/inspect/api/object?classname='+encodeURI(className))
+        const response = await result.json();
+        button.outerHTML = `<json-viewer class="panel-view" id="json-renderer" data="${response.data}"></json-viewer>`
+    }
+    (async function () {
+        const result = await fetch('/inspect/api/classes')
+        const response = await result.json();
+
+        const table = document.querySelector('.panel-routes-table tbody');
+
+        for (let className of response.data) {
+            const encodedClassName = className.replaceAll('\\', '\\\\');
+            let titleHtml = `<tr><td>${className}</td><td><button onclick="loadObject(this,'${encodedClassName}')">Load</button></td></tr> `;
+            let valueHtml = ``;
+
+            table.insertAdjacentHTML('beforeend', titleHtml + valueHtml);
+        }
+
+        // document.querySelector('#json-renderer').data = response.data;
+    })();
+</script>

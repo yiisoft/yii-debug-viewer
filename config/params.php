@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Yiisoft\Yii\Debug\Viewer\Panels\EventsPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\InfoPanel;
+use Yiisoft\Yii\Debug\Viewer\Panels\InspectorPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\LogsPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\MiddlewaresPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\RequestPanel;
@@ -27,6 +28,7 @@ return [
             'services' => ServicesPanel::class,
             'middlewares' => MiddlewaresPanel::class,
             'validators' => ValidatorsPanel::class,
+            'inspector' => InspectorPanel::class,
         ],
     ],
 ];
