@@ -10,7 +10,7 @@
     <tbody></tbody>
 </table>
 
-<button id="button-load-params">Load params</button>
+<button id="button-load-params">Parameters</button>
 <table class="table table-bordered table-striped panel-params-table">
     <thead>
     <tr>
@@ -21,7 +21,7 @@
     <tbody></tbody>
 </table>
 
-<button id="button-load-config">Load config</button>
+<button id="button-load-config">Configuration</button>
 <table class="table table-bordered table-striped panel-config-table">
     <thead>
     <tr>
@@ -32,7 +32,7 @@
     <tbody></tbody>
 </table>
 
-<button id="button-load-container">Load container</button>
+<button id="button-load-container">Container</button>
 <table class="table table-bordered table-striped panel-container-table">
     <thead>
     <tr>
@@ -63,12 +63,21 @@
             table.innerHTML = ''
             for (let event of tests) {
                 const testName = [event.suite].concat(event.test).filter(v => !!v).join('::')
-                let titleHtml = `<tr>
+                const encodedStacktrace = JSON.stringify(event.stacktrace);
+
+                let color = event.status === 'ok' ? 'green' : 'red';
+                let body = `<span style="color: ${color}">${event.status}</span>`;
+
+                if (event.status !== 'ok') {
+                    body += `
+<button class="button-show-stacktrace" onclick="this.nextElementSibling.classList.toggle('d-none')">Stacktrace</button>
+<json-viewer class="d-none">${encodedStacktrace}</json-viewer>
+`
+                }
+
+                const titleHtml = `<tr>
 <td>${testName}</td>
-<td>
-${event.status}
-<button class="button-show-stacktrace">Stacktrace</button>
-</td>
+<td>${body}</td>
 </tr>`;
 
                 table.insertAdjacentHTML('beforeend', titleHtml);
