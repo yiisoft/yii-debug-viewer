@@ -21,6 +21,17 @@
     <tbody></tbody>
 </table>
 
+<button id="button-load-config">Load config</button>
+<table class="table table-bordered table-striped panel-config-table">
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Value</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
 <table class="table table-bordered table-striped panel-objects-table">
     <thead>
     <tr>
@@ -91,6 +102,26 @@ ${event.status}
             const result = await fetch('/inspect/api/params')
             const response = await result.json();
             const table = document.querySelector('.panel-params-table tbody');
+
+            table.innerHTML = '';
+            for (const [parameter, value] of Object.entries(response.data)) {
+                const encodedValue = JSON.stringify(value);
+                const titleHtml = `<tr>
+<td>${parameter}</td>
+<td><json-viewer>${encodedValue}</json-viewer></td>
+</tr>`;
+
+                table.insertAdjacentHTML('beforeend', titleHtml);
+            }
+        }
+
+        const loadConfigButton = document.querySelector('#button-load-config');
+        loadConfigButton.addEventListener('click', loadConfig)
+
+        async function loadConfig() {
+            const result = await fetch('/inspect/api/config')
+            const response = await result.json();
+            const table = document.querySelector('.panel-config-table tbody');
 
             table.innerHTML = '';
             for (const [parameter, value] of Object.entries(response.data)) {
