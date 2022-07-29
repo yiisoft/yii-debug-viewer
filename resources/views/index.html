@@ -286,8 +286,10 @@
             const memory = (web || console) ? (web ? web.memory.peakUsage : console.memory.peakUsage) : 0
             const timeFormatted = time === 0 ? '0 ms' : `${Number(time * 1000).toFixed(2)} ms`
             const memoryFormatted = memory === 0 ? '0 MB' : `${Number(memory / 1048576).toFixed(3)} MB`
-            const routeTimeFormatted = currentSession.router.matchTime === 0 ? '0 ms' : `${Number(currentSession.router.matchTime * 1000).toFixed(2)} ms`;
-            const status = currentSession.response.statusCode || 'n/a';
+            const routeTimeFormatted = web
+            ? currentSession.router.matchTime === 0 ? '0 ms' : `${Number(currentSession.router.matchTime * 1000).toFixed(2)} ms`
+            : 'console';
+            const status = web ? currentSession.response.statusCode : 'n/a';
 
             const phpVersionElement = findElementByDataKey('php.version');
             const responseStatusCodeElement = findElementByDataKey("response.statusCode");
@@ -299,9 +301,12 @@
             const middlewareTotalElement = findElementByDataKey("middleware.total");
             const eventTotalElement = findElementByDataKey("event.total");
             const serviceTotalElement = findElementByDataKey("service.total");
+            const middlewaresCount = web ? currentSession.middleware.total : 0;
 
             phpVersionElement.textContent = web?.php?.version || console?.php?.version || 'n/a';
-            requestFullPathElement.textContent = currentSession.request.path + (currentSession.request.query ? '?' + currentSession.request.query : '') || '';
+            requestFullPathElement.textContent = web
+                ? currentSession.request.path + (currentSession.request.query ? '?' + currentSession.request.query : '')
+                : 'console';
 
             if (status < 300) {
                 responseStatusCodeElement.classList.add('yii-debug-toolbar__label_success');
@@ -316,7 +321,7 @@
             setContentAndTitle(memoryPeakUsageElement, memoryFormatted, `Peak memory consumption: ${memoryFormatted}`);
             setContentAndTitle(routerMatchTimeElement, routeTimeFormatted, `Route match time: ${routeTimeFormatted}`);
             setContentAndTitle(loggerTotalElement, currentSession.logger.total || 0, `Total logs: ${currentSession.logger.total || 0}`);
-            setContentAndTitle(middlewareTotalElement, currentSession.middleware.total || 0, `Total middlewares: ${currentSession.middleware.total || 0}`);
+            setContentAndTitle(middlewareTotalElement, middlewaresCount, `Total middlewares: ${middlewaresCount}`);
             setContentAndTitle(eventTotalElement, currentSession.event.total || 0, `Total events: ${currentSession.event.total || 0}`);
             setContentAndTitle(serviceTotalElement, currentSession.service.total || 0, `Total services: ${currentSession.service.total || 0}`);
         }
