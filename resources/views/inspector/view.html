@@ -10,6 +10,17 @@
     <tbody></tbody>
 </table>
 
+<button id="button-load-params">Load params</button>
+<table class="table table-bordered table-striped panel-params-table">
+    <thead>
+    <tr>
+        <th>Parameter</th>
+        <th>Value</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
 <table class="table table-bordered table-striped panel-objects-table">
     <thead>
     <tr>
@@ -19,15 +30,19 @@
     </thead>
     <tbody></tbody>
 </table>
-<json-viewer class="panel-view" id="json-renderer" data="{}"></json-viewer>
 
 <script>
+    async function loadObject(button, className) {
+        const result = await fetch('/inspect/api/object?classname=' + encodeURI(className))
+        const response = await result.json();
+        const encodedData = JSON.stringify(response.data);
+
+        button.outerHTML = `<json-viewer>${encodedData}</json-viewer>`
+    }
     (function () {
         async function runTests() {
             const result = await fetch('/inspect/api/command')
             const response = await result.json();
-
-            console.log(response)
 
             const tests = response.data
 
@@ -49,14 +64,8 @@ ${event.status}
         }
 
         const runTestsButton = document.querySelector('#button-run-tests');
-        runTestsButton.addEventListener('click', runTests)
+        runTestsButton.addEventListener('click', runTests);
 
-        async function loadObject(button, className) {
-            console.log(className, encodeURI(className))
-            const result = await fetch('/inspect/api/object?classname=' + encodeURI(className))
-            const response = await result.json();
-            button.outerHTML = `<json-viewer class="panel-view" id="json-renderer" data="${response.data}"></json-viewer>`
-        }
 
         (async function () {
             const result = await fetch('/inspect/api/classes')
@@ -66,11 +75,33 @@ ${event.status}
 
             for (let className of response.data) {
                 const encodedClassName = className.replaceAll('\\', '\\\\');
-                let titleHtml = `<tr><td>${className}</td><td><button onclick="loadObject(this,'${encodedClassName}')">Load</button></td></tr> `;
-                let valueHtml = ``;
+                let titleHtml = `<tr>
+<td>${className}</td>
+<td><button onclick="loadObject(this,'${encodedClassName}')">Load</button></td>
+</tr> `;
 
-                table.insertAdjacentHTML('beforeend', titleHtml + valueHtml);
+                table.insertAdjacentHTML('beforeend', titleHtml);
             }
         })();
+
+        const loadParamsButton = document.querySelector('#button-load-params');
+        loadParamsButton.addEventListener('click', loadParams)
+
+        async function loadParams() {
+            const result = await fetch('/inspect/api/params')
+            const response = await result.json();
+            const table = document.querySelector('.panel-params-table tbody');
+
+            table.innerHTML = '';
+            for (const [parameter, value] of Object.entries(response.data)) {
+                const encodedValue = JSON.stringify(value);
+                const titleHtml = `<tr>
+<td>${parameter}</td>
+<td><json-viewer>${encodedValue}</json-viewer></td>
+</tr>`;
+
+                table.insertAdjacentHTML('beforeend', titleHtml);
+            }
+        }
     })();
 </script>
