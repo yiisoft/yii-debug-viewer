@@ -32,7 +32,8 @@
     <tbody></tbody>
 </table>
 
-<table class="table table-bordered table-striped panel-objects-table">
+<button id="button-load-container">Load container</button>
+<table class="table table-bordered table-striped panel-container-table">
     <thead>
     <tr>
         <th>Class name</th>
@@ -77,12 +78,15 @@ ${event.status}
         const runTestsButton = document.querySelector('#button-run-tests');
         runTestsButton.addEventListener('click', runTests);
 
+        const loadContainerButton = document.querySelector('#button-load-container');
+        loadContainerButton.addEventListener('click', loadContainer)
 
-        (async function () {
+        async function loadContainer() {
             const result = await fetch('/inspect/api/classes')
             const response = await result.json();
+            const table = document.querySelector('.panel-container-table tbody');
 
-            const table = document.querySelector('.panel-objects-table tbody');
+            table.innerHTML = '';
 
             for (let className of response.data) {
                 const encodedClassName = className.replaceAll('\\', '\\\\');
@@ -93,7 +97,7 @@ ${event.status}
 
                 table.insertAdjacentHTML('beforeend', titleHtml);
             }
-        })();
+        }
 
         const loadParamsButton = document.querySelector('#button-load-params');
         loadParamsButton.addEventListener('click', loadParams)
