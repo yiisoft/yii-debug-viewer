@@ -1,5 +1,16 @@
 <script src="https://unpkg.com/@alenaksu/json-viewer@0.3.4/dist/index.js"></script>
-<table class="table table-bordered table-striped panel-routes-table">
+<button id="button-run-tests">Run tests</button>
+<table class="table table-bordered table-striped panel-tests-table">
+    <thead>
+    <tr>
+        <th>Test</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<table class="table table-bordered table-striped panel-objects-table">
     <thead>
     <tr>
         <th>Class name</th>
@@ -11,26 +22,55 @@
 <json-viewer class="panel-view" id="json-renderer" data="{}"></json-viewer>
 
 <script>
-    async function loadObject(button, className) {
-        console.log(className, encodeURI(className))
-        const result = await fetch('/inspect/api/object?classname='+encodeURI(className))
-        const response = await result.json();
-        button.outerHTML = `<json-viewer class="panel-view" id="json-renderer" data="${response.data}"></json-viewer>`
-    }
-    (async function () {
-        const result = await fetch('/inspect/api/classes')
-        const response = await result.json();
+    (function () {
+        async function runTests() {
+            const result = await fetch('/inspect/api/command')
+            const response = await result.json();
 
-        const table = document.querySelector('.panel-routes-table tbody');
+            console.log(response)
 
-        for (let className of response.data) {
-            const encodedClassName = className.replaceAll('\\', '\\\\');
-            let titleHtml = `<tr><td>${className}</td><td><button onclick="loadObject(this,'${encodedClassName}')">Load</button></td></tr> `;
-            let valueHtml = ``;
+            const tests = response.data
 
-            table.insertAdjacentHTML('beforeend', titleHtml + valueHtml);
+            const table = document.querySelector('.panel-tests-table tbody');
+
+            table.innerHTML = ''
+            for (let event of tests) {
+                const testName = [event.suite].concat(event.test).filter(v => !!v).join('::')
+                let titleHtml = `<tr>
+<td>${testName}</td>
+<td>
+${event.status}
+<button class="button-show-stacktrace">Stacktrace</button>
+</td>
+</tr>`;
+
+                table.insertAdjacentHTML('beforeend', titleHtml);
+            }
         }
 
-        // document.querySelector('#json-renderer').data = response.data;
+        const runTestsButton = document.querySelector('#button-run-tests');
+        runTestsButton.addEventListener('click', runTests)
+
+        async function loadObject(button, className) {
+            console.log(className, encodeURI(className))
+            const result = await fetch('/inspect/api/object?classname=' + encodeURI(className))
+            const response = await result.json();
+            button.outerHTML = `<json-viewer class="panel-view" id="json-renderer" data="${response.data}"></json-viewer>`
+        }
+
+        (async function () {
+            const result = await fetch('/inspect/api/classes')
+            const response = await result.json();
+
+            const table = document.querySelector('.panel-objects-table tbody');
+
+            for (let className of response.data) {
+                const encodedClassName = className.replaceAll('\\', '\\\\');
+                let titleHtml = `<tr><td>${className}</td><td><button onclick="loadObject(this,'${encodedClassName}')">Load</button></td></tr> `;
+                let valueHtml = ``;
+
+                table.insertAdjacentHTML('beforeend', titleHtml + valueHtml);
+            }
+        })();
     })();
 </script>
