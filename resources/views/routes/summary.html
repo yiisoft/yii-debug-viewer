@@ -7,8 +7,16 @@
 <script>
     (function () {
         setTimeout(() => {
-            const timeFormatted = YiiDebug.currentSession.router.matchTime === 0 ? '0 ms' : `${Number(YiiDebug.currentSession.router.matchTime * 1000).toFixed(2)} ms`;
-            document.querySelector('[data-key="router.matchedRoute"]').textContent = YiiDebug.currentSession.router.matchedRoute || '';
+            const currentSession = YiiDebug.currentSession;
+            const web = currentSession.web;
+
+            if (!web) {
+                return;
+            }
+            const router = currentSession.router;
+
+            const timeFormatted = router.matchTime === 0 ? '0 ms' : `${Number(router.matchTime * 1000).toFixed(2)} ms`;
+            document.querySelector('[data-key="router.matchedRoute"]').textContent = router.matchedRoute || '';
             document.querySelector('[data-key="router.matchedRoute"]').parentElement.href = YiiDebug.viewerUrl + '/routes';
             document.querySelector('[data-key="router.matchTime"]').textContent = timeFormatted;
             document.querySelector('[data-key="router.matchTime"]').parentElement.title = `Route match time: ${timeFormatted}`;

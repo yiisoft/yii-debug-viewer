@@ -10,6 +10,13 @@
 </table>
 <script>
     (function () {
+        const currentSession = YiiDebug.currentSession;
+        const web = currentSession.web;
+
+        if (!web) {
+            return;
+        }
+
         const routes = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorRouterCollector"].routes;
         const table = document.querySelector('.panel-routes-table tbody');
         for (let route in routes) {
