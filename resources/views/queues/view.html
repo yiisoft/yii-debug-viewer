@@ -1,0 +1,105 @@
+<div class="panel-queues">
+
+    <div>
+        <strong class="titleProcessingMessages">Processing messages: <span>0</span></strong>
+        <table class="table table-bordered table-striped tableProcessingMessages">
+            <thead>
+            <tr>
+                <th>Queue</th>
+                <th>Message</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div>
+        <strong class="titlePushes">Pusched <span>0</span> jobs</strong>
+        <table class="table table-bordered table-striped tablePushes">
+            <tbody></tbody>
+        </table>
+    </div>
+    <div>
+        <strong class="titleStatuses">Statuses: <span>0</span></strong>
+        <table class="table table-bordered table-striped tableStatuses">
+            <tbody></tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<script>
+    (function () {
+        const queueCollector = YiiDebug.collectors[YiiDebug.currentSession.id]['YiisoftYiiDebugCollectorQueueCollector'];
+
+        const titleProcessingMessages = document.querySelector('.panel-queues .titleProcessingMessages')
+        const titlePushes = document.querySelector('.panel-queues .titlePushes')
+        const titleStatuses = document.querySelector('.panel-queues .titleStatuses')
+
+        const tableProcessingMessages = document.querySelector('.panel-queues .tableProcessingMessages tbody');
+        const tablePushes = document.querySelector('.panel-queues .tablePushes tbody')
+        const tableStatuses = document.querySelector('.panel-queues .tableStatuses tbody')
+
+        if (Object.keys(queueCollector.processingMessages).length) {
+            let countProcessingMessages = 0
+            let rows = ''
+            for (let queue in queueCollector.processingMessages) {
+                queueCollector.processingMessages[queue].forEach(
+                    (messagw) => {
+                        rows += '<tr>'
+                        rows += '<td>' + queue + '</td>'
+                        rows += '<td>' + (messagw.split('@')[1].split('#')[0] ?? messagw) + '</td>'
+                        rows += '</tr>'
+                        countProcessingMessages++
+                    }
+                )
+            }
+            titleProcessingMessages.querySelector('span').textContent = countProcessingMessages
+            tableProcessingMessages.insertAdjacentHTML('beforeend', rows)
+        } else {
+            tableProcessingMessages.parentElement.style.display = "none"
+        }
+
+        const countPushes = Object.keys(queueCollector.pushes).length
+        if (countPushes)
+        {
+            titlePushes.querySelector('span').textContent = countPushes
+            let rows = ''
+            for (let channel in queueCollector.pushes) {
+                rows += '<tr>'
+                rows += '<td><b>Channel: ' + channel + '</b></td>'
+                rows += '</tr>'
+
+                queueCollector.pushes[channel].forEach(
+                    push => {
+                        rows += '<tr>'
+                        rows += '<td>' + push.split('@')[1].split('#')[0] ?? push + '</td>'
+                        rows += '</tr>'
+                    }
+                );
+            }
+            tablePushes.insertAdjacentHTML('beforeend', rows)
+        } else {
+            tablePushes.parentElement.style.display = "none"
+        }
+
+        const countStatuses = queueCollector.statuses.length
+        if (countPushes)
+        {
+            titleStatuses.querySelector('span').textContent = countStatuses
+            let rows = ''
+            queueCollector.statuses.forEach(
+                status => {
+                    rows += '<tr>'
+                    rows += '<td>' + status + '</td>'
+                    rows += '</tr>'
+                }
+            )
+            tableStatuses.insertAdjacentHTML('beforeend', rows)
+        } else {
+            tableStatuses.parentElement.style.display = "none"
+        }
+
+
+    })();
+</script>
