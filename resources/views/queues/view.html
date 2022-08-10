@@ -45,10 +45,10 @@
             let rows = ''
             for (let queue in queueCollector.processingMessages) {
                 queueCollector.processingMessages[queue].forEach(
-                    (messagw) => {
+                    (message) => {
                         rows += '<tr>'
                         rows += '<td>' + queue + '</td>'
-                        rows += '<td>' + (messagw.split('@')[1].split('#')[0] ?? messagw) + '</td>'
+                        rows += '<td>' + (message.split('@')[1].split('#')[0] ?? message) + '</td>'
                         rows += '</tr>'
                         countProcessingMessages++
                     }
