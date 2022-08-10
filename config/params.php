@@ -10,6 +10,7 @@ use Yiisoft\Yii\Debug\Viewer\Panels\MiddlewaresPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\RequestPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\RoutesPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\ServicesPanel;
+use Yiisoft\Yii\Debug\Viewer\Panels\QueuesPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\ValidatorsPanel;
 
 return [
@@ -27,6 +28,7 @@ return [
             'events' => EventsPanel::class,
             'services' => ServicesPanel::class,
             'middlewares' => MiddlewaresPanel::class,
+            'queues' => QueuesPanel::class,
             'validators' => ValidatorsPanel::class,
             'inspector' => InspectorPanel::class,
         ],

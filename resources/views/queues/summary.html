@@ -1,0 +1,35 @@
+<div class="yii-debug-toolbar__block">
+    <a href="#" title="" data-key="queue.link">Queues
+        <span class="yii-debug-toolbar__label yii-debug-toolbar__label_success" data-key="queue.messages">0</span>
+        <span class="yii-debug-toolbar__label yii-debug-toolbar__label_warning" data-key="queue.pushes">0</span>
+        <span class="yii-debug-toolbar__label yii-debug-toolbar__label_info" data-key="queue.statuses">0</span>
+    </a>
+</div>
+<script>
+(function () {
+    setTimeout(() => {
+        const queue = YiiDebug.currentSession.queue
+        const link = document.querySelector('[data-key="queue.link"]')
+        const cMessages = queue.countProcessingMessages
+        const cPushes = queue.countPushes
+        const cStatuses = queue.countStatuses
+
+        if (0 === cMessages && 0 === cPushes && 0 === cStatuses)
+            link.parentElement.style.display = "none"
+
+        const tMessages = document.querySelector('[data-key="queue.messages"]')
+        const tPushes = document.querySelector('[data-key="queue.pushes"]')
+        const tStatuses = document.querySelector('[data-key="queue.statuses"]')
+
+        tMessages.textContent = cMessages
+        tPushes.textContent = cPushes
+        tStatuses.textContent = cStatuses
+
+        tMessages.title = 'Count processing messages: ' + cMessages
+        tPushes.title = 'Count pushes: ' + cPushes
+        tStatuses.title = 'Count statuses: ' + cStatuses
+
+        link.href = YiiDebug.viewerUrl + '/queues'
+    })
+}())
+</script>
