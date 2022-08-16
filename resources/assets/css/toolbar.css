@@ -47,6 +47,7 @@
     text-align: left;
     overflow: hidden;
     box-sizing: content-box;
+    user-select: none;
 
     background: rgb(255, 255, 255);
     background: -moz-linear-gradient(top, rgb(255, 255, 255) 0%, rgb(247, 247, 247) 100%); /* FF3.6-15 */
@@ -102,8 +103,9 @@
     float: left;
     margin: 0;
     border-right: 1px solid rgba(0, 0, 0, 0.11);
-    padding: 4px 8px;
     white-space: nowrap;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .yii-debug-toolbar__block:not(.yii-debug-toolbar__title) {
@@ -121,12 +123,14 @@
 
 .yii-debug-toolbar__block a {
     display: inline-block;
+    padding: 4px 8px 3px;
     text-decoration: none;
     color: black;
 }
 
 .yii-debug-toolbar__block a:hover {
     color: black;
+    background: linear-gradient(to bottom, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%);
 }
 
 .yii-debug-toolbar:not(.yii-debug-toolbar_active) .yii-debug-toolbar__logo {
