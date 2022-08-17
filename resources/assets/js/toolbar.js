@@ -20,6 +20,7 @@
             xhr.send(settings.data || '');
         },
         toolbarEl = findToolbar(),
+        toolbarResizerSelector = '.yii-debug-toolbar__resizer',
         toolbarAnimatingClass = 'yii-debug-toolbar_animating',
         logoSelector = '.yii-debug-toolbar__logo',
         barSelector = '.yii-debug-toolbar__bar',
@@ -117,7 +118,8 @@
     }
 
     function showToolbar(toolbarEl) {
-        var barEl = toolbarEl.querySelector(barSelector),
+        var resizerEl = toolbarEl.querySelector(toolbarResizerSelector),
+            barEl = toolbarEl.querySelector(barSelector),
             viewEl = toolbarEl.querySelector(viewSelector),
             toggleEl = toolbarEl.querySelector(toggleSelector),
             externalEl = toolbarEl.querySelector(externalSelector),
@@ -132,7 +134,7 @@
             },
             resizeIframe = function (mouse) {
                 const availableHeight = window.innerHeight - barEl.clientHeight;
-                viewEl.style.height = Math.min(availableHeight, availableHeight - mouse.y) + "px";
+                viewEl.style.height = Math.min(availableHeight, availableHeight - mouse.y - 6) + "px";
             },
             showIframe = function (href) {
                 toolbarEl.classList.add(iframeAnimatingClass);
@@ -224,17 +226,18 @@
             }
         };
 
-        toolbarEl.addEventListener("mousedown", function (e) {
-            if (isIframeActive() && (e.y - toolbarEl.offsetTop < 4 /* 4px click zone */)) {
-                document.addEventListener("mousemove", resizeIframe, false);
-            }
-        }, false);
-
-        document.addEventListener("mouseup", function () {
-            if (isIframeActive()) {
-                document.removeEventListener("mousemove", resizeIframe, false);
-            }
-        }, false);
+        if (resizerEl !== null) {
+            resizerEl.addEventListener("mousedown", function() {
+                if (isIframeActive()) {
+                    document.addEventListener('mousemove', resizeIframe, false);
+                }
+            }, false);
+            document.addEventListener("mouseup", function() {
+                if (isIframeActive()) {
+                    document.removeEventListener("mousemove", resizeIframe, false);
+                }
+            }, false);
+        }
 
         barEl.onclick = function (e) {
             let target = e.target;
