@@ -17,7 +17,7 @@
             return;
         }
 
-        const routes = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorRouterCollector"].routes;
+        const routes = YiiDebug.collectors[YiiDebug.currentSession.id]["Yiisoft\\Yii\\Debug\\Collector\\RouterCollector"].routes;
         const table = document.querySelector('.panel-routes-table tbody');
         for (let route in routes) {
             table.insertAdjacentHTML('beforeend', '<tr><td>' + route + '</td><td>' + routes[route] + '</td></tr>');

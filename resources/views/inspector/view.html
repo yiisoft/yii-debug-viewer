@@ -48,8 +48,9 @@
         const result = await fetch('/inspect/api/object?classname=' + encodeURI(className))
         const response = await result.json();
         const encodedData = JSON.stringify(response.data);
+        console.log(encodedData)
 
-        button.outerHTML = `<json-viewer>${encodedData}</json-viewer>`
+        button.outerHTML = `<json-viewer name="false">${encodedData}</json-viewer>`
     }
     (function () {
         async function runTests() {
