@@ -13,20 +13,13 @@ use Yiisoft\Yii\Debug\Viewer\Panels\PanelInterface;
 
 final class IndexController
 {
-    private DataResponseFactoryInterface $responseFactory;
-
     /**
      * IndexController constructor.
      */
-    public function __construct(
-        DataResponseFactoryInterface $responseFactory
-    ) {
-        $this->responseFactory = $responseFactory;
+    public function __construct(private DataResponseFactoryInterface $responseFactory)
+    {
     }
 
-    /**
-     * @return ResponseInterface
-     */
     public function index(UrlGeneratorInterface $urlGenerator): ResponseInterface
     {
         $content = file_get_contents(dirname(__DIR__) . '/resources/views/index.html');
