@@ -10,7 +10,7 @@
 </table>
 <script>
     (function () {
-        const events = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorEventCollector"];
+        const events = YiiDebug.collectors[YiiDebug.currentSession.id]["Yiisoft\\Yii\\Debug\\Collector\\EventCollector"];
         const table = document.querySelector('.panel-events-table tbody');
         events.forEach((event) => {
             const items = event.line.split(':');
