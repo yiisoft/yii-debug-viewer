@@ -13,7 +13,7 @@
 
 <script>
     (function () {
-        const logs = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorLogCollector"];
+        const logs = YiiDebug.collectors[YiiDebug.currentSession.id]["Yiisoft\\Yii\\Debug\\Collector\\LogCollector"];
         const table = document.querySelector('.panel-logs-table tbody');
         logs.forEach((log) => {
             const items = log.line.split(':');

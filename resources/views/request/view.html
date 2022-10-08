@@ -12,7 +12,7 @@
 
 <script>
     (function () {
-        const request = YiiDebug.collectors[YiiDebug.currentSession.id]["YiisoftYiiDebugCollectorRequestCollector"];
+        const request = YiiDebug.collectors[YiiDebug.currentSession.id]["Yiisoft\\Yii\\Debug\\Collector\\RequestCollector"];
         const table = document.querySelector('.panel-request-table tbody');
         for (let info in request) {
             table.insertAdjacentHTML('beforeend', '<tr><td>' + info + '</td><td>' + request[info] + '</td></tr>');
