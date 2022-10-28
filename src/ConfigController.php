@@ -9,23 +9,13 @@ use Yiisoft\DataResponse\DataResponseFactoryInterface;
 
 final class ConfigController
 {
-    private DataResponseFactoryInterface $responseFactory;
-    private PanelCollection $panelCollection;
-
     /**
      * ConfigController constructor.
      */
-    public function __construct(
-        DataResponseFactoryInterface $responseFactory,
-        PanelCollection $panelCollection
-    ) {
-        $this->responseFactory = $responseFactory;
-        $this->panelCollection = $panelCollection;
+    public function __construct(private DataResponseFactoryInterface $responseFactory, private PanelCollection $panelCollection)
+    {
     }
 
-    /**
-     * @return ResponseInterface
-     */
     public function index(): ResponseInterface
     {
         $res = [];
