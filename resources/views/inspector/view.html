@@ -52,16 +52,23 @@
         button.outerHTML = `<json-viewer>${encodedData}</json-viewer>`
     }
     (function () {
-        async function runTests() {
-            const result = await fetch('/inspect/api/command')
-            const response = await result.json();
+        async function runTests(event) {
+            event.target.disabled = true;
+            const res = await fetch('/inspect/api/command?command=test/codeception', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const response = await res.json();
+            event.target.disabled = false;
 
-            const tests = response.data
+            const {result} = response.data
 
             const table = document.querySelector('.panel-tests-table tbody');
 
             table.innerHTML = ''
-            for (let event of tests) {
+            for (let event of result) {
                 const testName = [event.suite].concat(event.test).filter(v => !!v).join('::')
                 const encodedStacktrace = JSON.stringify(event.stacktrace);
 
