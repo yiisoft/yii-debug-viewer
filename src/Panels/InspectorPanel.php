@@ -13,7 +13,7 @@ final class InspectorPanel implements PanelInterface
 
     public function renderSummary(): string
     {
-        return '';
+        return file_get_contents(dirname(__DIR__, 2) . '/resources/views/inspector/summary.html');
     }
 
     public function renderDetail(): string

@@ -13,7 +13,7 @@
      style="display: none;">
     <div class="yii-debug-toolbar__bar">
         <div class="yii-debug-toolbar__block yii-debug-toolbar__title">
-            <a href="/debug/viewer" class="yii-debug-toolbar__logo">
+            <a href="/debug" class="yii-debug-toolbar__logo">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650.832 800"
                      style="enable-background:new 0 0 650.832 800" xml:space="preserve">
                     <path
@@ -228,9 +228,11 @@
         function loadPanel() {
             const target = YiiDebug.targetHost === '' ? location.origin : YiiDebug.targetHost;
             let panelLinks = document.querySelectorAll('.panel-link');
+            let activePanelLink;
             for (let i = 0; i < panelLinks.length; ++i) {
                 if (panelLinks[i].getAttribute('href').includes(YiiDebug.currentPanel)) {
                     panelLinks[i].classList.add('active');
+                    activePanelLink = panelLinks[i];
                 }
             }
             ajax('panels/' + YiiDebug.currentPanel + '?targetHost=' + target + '&session=' + YiiDebug.currentSession.id, {
@@ -257,10 +259,10 @@
                         div.classList.add('table-responsive')
                     }
                     document.querySelector(".router-view").appendChild(div);
-                    event.target.disabled = false;
+                    activePanelLink.disabled = false;
                 },
                 error: (xhr) => {
-                    event.target.disabled = false;
+                    activePanelLink.disabled = false;
                     document.querySelector(".router-view").innerHTML = xhr.responseText;
                 }
             });
