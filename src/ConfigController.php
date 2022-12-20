@@ -12,8 +12,10 @@ final class ConfigController
     /**
      * ConfigController constructor.
      */
-    public function __construct(private DataResponseFactoryInterface $responseFactory, private PanelCollection $panelCollection)
-    {
+    public function __construct(
+        private DataResponseFactoryInterface $responseFactory,
+        private PanelCollection $panelCollection
+    ) {
     }
 
     public function index(): ResponseInterface
