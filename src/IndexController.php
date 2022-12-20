@@ -16,8 +16,9 @@ final class IndexController
     /**
      * IndexController constructor.
      */
-    public function __construct(private DataResponseFactoryInterface $responseFactory)
-    {
+    public function __construct(
+        private DataResponseFactoryInterface $responseFactory
+    ) {
     }
 
     public function index(UrlGeneratorInterface $urlGenerator): ResponseInterface

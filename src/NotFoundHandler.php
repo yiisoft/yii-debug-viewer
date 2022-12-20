@@ -13,8 +13,10 @@ use Yiisoft\Http\Status;
 
 final class NotFoundHandler implements RequestHandlerInterface
 {
-    public function __construct(private DataResponseFormatterInterface $formatter, private DataResponseFactoryInterface $dataResponseFactory)
-    {
+    public function __construct(
+        private DataResponseFormatterInterface $formatter,
+        private DataResponseFactoryInterface $dataResponseFactory
+    ) {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
