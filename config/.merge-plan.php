@@ -31,53 +31,53 @@ return [
                 'params.php',
             ],
         ],
-        'web' => [
+        'di-web' => [
             'yiisoft/assets' => [
-                'config/web.php',
+                'config/di-web.php',
             ],
             'yiisoft/data-response' => [
-                'config/web.php',
+                'config/di-web.php',
             ],
             'yiisoft/view' => [
-                'config/web.php',
+                'config/di-web.php',
             ],
             'yiisoft/router-fastroute' => [
-                'config/web.php',
+                'config/di-web.php',
             ],
             'yiisoft/error-handler' => [
-                'config/web.php',
+                'config/di-web.php',
             ],
             'yiisoft/middleware-dispatcher' => [
-                'config/web.php',
+                'config/di-web.php',
             ],
             'yiisoft/yii-event' => [
-                'config/web.php',
+                'config/di-web.php',
             ],
             '/' => [
-                'web.php',
+                'di-web.php',
             ],
         ],
-        'common' => [
+        'di' => [
             'yiisoft/view' => [
-                'config/common.php',
+                'config/di.php',
             ],
             'yiisoft/router-fastroute' => [
-                'config/common.php',
+                'config/di.php',
             ],
             'yiisoft/aliases' => [
-                'config/common.php',
+                'config/di.php',
             ],
             'yiisoft/cache' => [
-                'config/common.php',
+                'config/di.php',
             ],
             'yiisoft/log-target-file' => [
-                'config/common.php',
+                'config/di.php',
             ],
             'yiisoft/router' => [
-                'config/common.php',
+                'config/di.php',
             ],
             'yiisoft/yii-event' => [
-                'config/common.php',
+                'config/di.php',
             ],
         ],
         'events-console' => [
@@ -101,17 +101,17 @@ return [
                 'config/events-web.php',
             ],
         ],
-        'console' => [
+        'di-console' => [
             'yiisoft/yii-console' => [
-                'config/console.php',
+                'config/di-console.php',
             ],
             'yiisoft/yii-event' => [
-                'config/console.php',
+                'config/di-console.php',
             ],
         ],
-        'providers-console' => [
+        'di-providers-console' => [
             'yiisoft/yii-console' => [
-                'config/providers-console.php',
+                'config/di-providers-console.php',
             ],
         ],
         'events' => [
@@ -126,9 +126,9 @@ return [
         ],
     ],
     'yii-debug-viewer-app' => [
-        'common' => [
+        'di' => [
             '/' => [
-                'app/common.php',
+                'app/di.php',
             ],
         ],
         'params' => [
@@ -136,72 +136,57 @@ return [
                 'app/params.php',
             ],
         ],
-        'console' => [
+        'di-console' => [
             '/' => [
-                '$common',
-                'app/console.php',
+                '$di',
             ],
         ],
-        'web' => [
+        'di-web' => [
             '/' => [
-                '$common',
-                'app/web.php',
+                '$di',
+                'app/di-web.php',
             ],
         ],
         'events' => [
-            '/' => [
-                'app/events.php',
-            ],
+            '/' => [],
         ],
         'events-web' => [
             '/' => [
                 '$events',
-                'app/events-web.php',
             ],
         ],
         'events-console' => [
             '/' => [
                 '$events',
-                'app/events-console.php',
             ],
         ],
-        'providers' => [
+        'di-providers' => [
+            '/' => [],
+        ],
+        'di-providers-web' => [
             '/' => [
-                'app/providers.php',
+                '$di-providers',
             ],
         ],
-        'providers-web' => [
+        'di-providers-console' => [
             '/' => [
-                '$providers',
-                'app/providers-web.php',
-            ],
-        ],
-        'providers-console' => [
-            '/' => [
-                '$providers',
-                'app/providers-console.php',
+                '$di-providers',
             ],
         ],
         'routes' => [
-            '/' => [
-                'app/routes.php',
-            ],
+            '/' => [],
         ],
         'bootstrap' => [
-            '/' => [
-                'app/bootstrap.php',
-            ],
+            '/' => [],
         ],
         'bootstrap-web' => [
             '/' => [
                 '$bootstrap',
-                'app/bootstrap-web.php',
             ],
         ],
         'bootstrap-console' => [
             '/' => [
                 '$bootstrap',
-                'app/bootstrap-console.php',
             ],
         ],
     ],
