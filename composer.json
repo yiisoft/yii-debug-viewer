@@ -73,50 +73,29 @@
         },
         "config-plugin-environments": {
             "yii-debug-viewer-app": {
-                "common": "app/common.php",
                 "params": [
                     "app/params.php"
                 ],
-                "console": [
-                    "$common",
-                    "app/console.php"
-                ],
-                "web": [
-                    "$common",
+                "di": "app/di.php",
+                "di-console": "$di",
+                "di-web": [
+                    "$di",
                     "app/web.php"
                 ],
-                "events": "app/events.php",
-                "events-web": [
-                    "$events",
-                    "app/events-web.php"
-                ],
-                "events-console": [
-                    "$events",
-                    "app/events-console.php"
-                ],
-                "providers": "app/providers.php",
-                "providers-web": [
-                    "$providers",
-                    "app/providers-web.php"
-                ],
-                "providers-console": [
-                    "$providers",
-                    "app/providers-console.php"
-                ],
-                "routes": "app/routes.php",
-                "bootstrap": "app/bootstrap.php",
-                "bootstrap-web": [
-                    "$bootstrap",
-                    "app/bootstrap-web.php"
-                ],
-                "bootstrap-console": [
-                    "$bootstrap",
-                    "app/bootstrap-console.php"
-                ]
+                "events": [],
+                "events-web": "$events",
+                "events-console": "$events",
+                "di-providers": [],
+                "di-providers-web": "$di-providers",
+                "di-providers-console": "$di-providers",
+                "routes": [],
+                "bootstrap": [],
+                "bootstrap-web": "$bootstrap",
+                "bootstrap-console": "$bootstrap"
             }
         },
         "config-plugin": {
-            "web": "web.php",
+            "di-web": "di-web.php",
             "params": "params.php",
             "routes": "routes.php"
         }
