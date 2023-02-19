@@ -31,50 +31,50 @@ return [
                 'params.php',
             ],
         ],
-        'web' => [
+        'di-web' => [
             'yiisoft/assets' => [
-                'config/web.php',
+                'config/di-web.php',
             ],
             'yiisoft/data-response' => [
-                'config/web.php',
+                'config/di-web.php',
             ],
             'yiisoft/view' => [
-                'config/web.php',
+                'config/di-web.php',
             ],
             'yiisoft/router-fastroute' => [
-                'config/web.php',
+                'config/di-web.php',
             ],
             'yiisoft/error-handler' => [
-                'config/web.php',
-            ],
-            'yiisoft/middleware-dispatcher' => [
-                'config/web.php',
+                'config/di-web.php',
             ],
             'yiisoft/yii-event' => [
-                'config/web.php',
+                'config/di-web.php',
+            ],
+            '/' => [
+                'di-web.php',
             ],
         ],
-        'common' => [
+        'di' => [
             'yiisoft/view' => [
-                'config/common.php',
+                'config/di.php',
             ],
             'yiisoft/router-fastroute' => [
-                'config/common.php',
+                'config/di.php',
             ],
             'yiisoft/aliases' => [
-                'config/common.php',
+                'config/di.php',
             ],
             'yiisoft/cache' => [
-                'config/common.php',
+                'config/di.php',
             ],
             'yiisoft/log-target-file' => [
-                'config/common.php',
+                'config/di.php',
             ],
             'yiisoft/router' => [
-                'config/common.php',
+                'config/di.php',
             ],
             'yiisoft/yii-event' => [
-                'config/common.php',
+                'config/di.php',
             ],
         ],
         'events-console' => [
@@ -84,41 +84,18 @@ return [
             'yiisoft/yii-console' => [
                 'config/events-console.php',
             ],
-            'yiisoft/yii-event' => [
-                '$events',
-                'config/events-console.php',
-            ],
         ],
         'events-web' => [
             'yiisoft/log' => [
                 'config/events-web.php',
             ],
-            'yiisoft/yii-event' => [
-                '$events',
-                'config/events-web.php',
-            ],
         ],
-        'console' => [
+        'di-console' => [
             'yiisoft/yii-console' => [
-                'config/console.php',
+                'config/di-console.php',
             ],
             'yiisoft/yii-event' => [
-                'config/console.php',
-            ],
-        ],
-        'providers-console' => [
-            'yiisoft/yii-console' => [
-                'config/providers-console.php',
-            ],
-        ],
-        'events' => [
-            'yiisoft/yii-event' => [
-                'config/events.php',
-            ],
-        ],
-        'di-web' => [
-            '/' => [
-                'di-web.php',
+                'config/di-console.php',
             ],
         ],
         'routes' => [
