@@ -31,7 +31,7 @@ return [
     Yiisoft\Yii\Http\Application::class => [
         '__construct()' => [
             'dispatcher' => DynamicReference::to(static function (Injector $injector) {
-                return ($injector->make(MiddlewareDispatcher::class))
+                return $injector->make(MiddlewareDispatcher::class)
                     ->withMiddlewares(
                         [
                             Router::class,
