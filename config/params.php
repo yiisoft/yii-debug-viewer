@@ -7,10 +7,10 @@ use Yiisoft\Yii\Debug\Viewer\Panels\InfoPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\InspectorPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\LogsPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\MiddlewaresPanel;
+use Yiisoft\Yii\Debug\Viewer\Panels\QueuesPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\RequestPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\RoutesPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\ServicesPanel;
-use Yiisoft\Yii\Debug\Viewer\Panels\QueuesPanel;
 use Yiisoft\Yii\Debug\Viewer\Panels\ValidatorsPanel;
 
 return [
@@ -19,6 +19,7 @@ return [
         'targetHost' => '/',
         'apiUrl' => '/debug/api',
         'viewerUrl' => '/debug',
+        'containerId' => 'yii-debug-toolbar',
         'editorUrl' => 'phpstorm://open?url=file://{file}&line={line}',
         'panels' => [
             'info' => InfoPanel::class,

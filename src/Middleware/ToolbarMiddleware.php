@@ -18,6 +18,7 @@ final class ToolbarMiddleware implements MiddlewareInterface
         private string $toolbarUrl,
         private string $apiUrl,
         private string $editorUrl,
+        private string $containerId,
         private AssetManager $assetManager,
         private WebView $view,
     ) {
@@ -31,8 +32,14 @@ final class ToolbarMiddleware implements MiddlewareInterface
         $this->assetManager->register(ToolbarAsset::class);
         $this->view->registerJs(
             <<<JS
-window.YiiDebug.initToolbar('$this->toolbarUrl', '$this->apiUrl', '$this->editorUrl')
-JS
+            const toolbarContainerId = '{$this->containerId}';
+            const toolbar = document.createElement('div');
+            toolbar.setAttribute('id', toolbarContainerId);
+            toolbar.style.flex= "1";
+            document.body.append(toolbar);
+            window.ToolbarWidget.init(toolbarContainerId);
+            JS,
+            WebView::POSITION_LOAD,
         );
 
         return $handler->handle($request);

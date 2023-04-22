@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Message\StreamFactoryInterface;
 use Yiisoft\DataResponse\DataResponseFactoryInterface;
 use Yiisoft\DataResponse\Middleware\FormatDataResponseAsHtml;
 use Yiisoft\DataResponse\Middleware\FormatDataResponseAsJson;
@@ -56,29 +54,4 @@ return [
                 ->action([IndexController::class, 'toolbar'])
                 ->name('debug/toolbar'),
         ),
-    Group::create($params['yiisoft/yii-debug-viewer']['viewerUrl'])->routes(
-        Route::get('/assets/toolbar.css')
-            ->action(
-                static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
-                    return $responseFactory
-                        ->createResponse()
-                        ->withHeader('Content-Type', 'text/css')
-                        ->withBody(
-                            $streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/css/toolbar.css')
-                        );
-                }
-            )
-            ->name('debug/toolbar/css'),
-        Route::get('/assets/toolbar.js')
-            ->action(
-                static function (ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory) {
-                    return $responseFactory
-                        ->createResponse()
-                        ->withBody(
-                            $streamFactory->createStreamFromFile(dirname(__DIR__) . '/resources/assets/js/toolbar.js')
-                        );
-                }
-            )
-            ->name('debug/toolbar/js')
-    ),
 ];

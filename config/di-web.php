@@ -15,6 +15,7 @@ return [
             'toolbarUrl' => $params['yiisoft/yii-debug-viewer']['viewerUrl'],
             'apiUrl' => $params['yiisoft/yii-debug-viewer']['apiUrl'],
             'editorUrl' => $params['yiisoft/yii-debug-viewer']['editorUrl'],
+            'containerId' => $params['yiisoft/yii-debug-viewer']['containerId'],
         ],
     ],
 ];
