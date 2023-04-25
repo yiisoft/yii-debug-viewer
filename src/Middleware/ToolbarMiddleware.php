@@ -15,9 +15,6 @@ use Yiisoft\Yii\Debug\Viewer\Asset\ToolbarAsset;
 final class ToolbarMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private string $toolbarUrl,
-        private string $apiUrl,
-        private string $editorUrl,
         private string $containerId,
         private AssetManager $assetManager,
         private WebView $view,

@@ -1,9 +1,0 @@
-<script src="https://unpkg.com/@alenaksu/json-viewer@0.3.4/dist/index.js"></script>
-
-<json-viewer class="panel-view" id="json-renderer" data="{}"></json-viewer>
-
-<script>
-    (() => {
-        document.querySelector('#json-renderer').data = YiiDebug.collectors[YiiDebug.currentSession.id]["Yiisoft\\Yii\\Debug\\Collector\\MiddlewareCollector"];
-    })();
-</script>
