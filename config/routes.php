@@ -6,8 +6,8 @@ use Yiisoft\DataResponse\Middleware\FormatDataResponseAsHtml;
 use Yiisoft\Router\Group;
 use Yiisoft\Router\Route;
 use Yiisoft\Yii\Debug\Viewer\IndexController;
-use Yiisoft\Yii\Debug\Viewer\Middleware\Cors;
 use Yiisoft\Yii\Debug\Viewer\Middleware\ToolbarMiddleware;
+use Yiisoft\Yii\Middleware\CorsAllowAll;
 
 /**
  * @var array $params
@@ -16,7 +16,7 @@ use Yiisoft\Yii\Debug\Viewer\Middleware\ToolbarMiddleware;
 return [
     Group::create($params['yiisoft/yii-debug-viewer']['viewerUrl'])
         ->middleware(FormatDataResponseAsHtml::class)
-        ->withCors(Cors::class)
+        ->withCors(CorsAllowAll::class)
         ->disableMiddleware(ToolbarMiddleware::class)
         ->routes(
             Route::get('[/]')
