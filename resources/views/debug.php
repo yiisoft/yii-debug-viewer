@@ -42,12 +42,11 @@ $this->beginPage();
         <meta name="theme-color" content="#01617b">
         <link rel="manifest" href="https://yiisoft.github.io/yii-dev-panel/manifest.json"/>
         <title>Yii Dev Panel</title>
-        <?php
-        $this->head() ?>
+        <?php $this->head() ?>
     </head>
     <body style="display:flex;flex-direction:column;min-height:100vh;justify-content:space-between">
     <?php
-    $this->beginBody(); ?>
+    $this->beginBody() ?>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root" style="flex:1"></div>
     <?php
