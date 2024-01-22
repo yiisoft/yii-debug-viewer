@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Yii Debug Viewer",
     "keywords": [
-        "yii", "debug"
+        "yii", "debug", "dev"
     ],
     "homepage": "https://www.yiiframework.com/",
     "license": "BSD-3-Clause",
