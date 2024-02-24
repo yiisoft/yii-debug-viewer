@@ -24,9 +24,6 @@ return [
             'yiisoft/log-target-file' => [
                 'config/params.php',
             ],
-            'yiisoft/yii-console' => [
-                'config/params.php',
-            ],
             '/' => [
                 'params.php',
             ],
@@ -90,12 +87,25 @@ return [
                 'config/events-web.php',
             ],
         ],
+        'params-console' => [
+            'yiisoft/yii-console' => [
+                'config/params-console.php',
+            ],
+            'yiisoft/yii-event' => [
+                'config/params-console.php',
+            ],
+        ],
         'di-console' => [
             'yiisoft/yii-console' => [
                 'config/di-console.php',
             ],
             'yiisoft/yii-event' => [
                 'config/di-console.php',
+            ],
+        ],
+        'params-web' => [
+            'yiisoft/yii-event' => [
+                'config/params-web.php',
             ],
         ],
         'routes' => [
