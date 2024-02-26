@@ -26,6 +26,7 @@
     "require-dev": {
         "httpsoft/http-message": "^1.0.5",
         "jetbrains/phpstorm-attributes": "^1.0",
+        "maglnet/composer-require-checker": "^4.2",
         "phpunit/phpunit": "^9.5",
         "psr/container": "^2.0",
         "psr/http-factory": "^1.0",
