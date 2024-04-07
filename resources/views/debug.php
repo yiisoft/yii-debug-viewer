@@ -9,8 +9,6 @@ use Yiisoft\Yii\Debug\Viewer\Asset\DevPanelAsset;
  * @var AssetManager $assetManager
  */
 
-$assetManager->register(DevPanelAsset::class);
-
 $this->addCssFiles($assetManager->getCssFiles());
 $this->addCssStrings($assetManager->getCssStrings());
 $this->addJsFiles($assetManager->getJsFiles());
@@ -48,7 +46,6 @@ $this->beginPage();
     <?php
     $this->beginBody() ?>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root" style="flex:1"></div>
     <?php
     $this->endBody() ?>
     </body>
