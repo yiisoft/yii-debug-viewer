@@ -32,7 +32,7 @@ final class DevPanelMiddleware implements MiddlewareInterface
             const devPanelContainerId = 'yii-dev-panel';
             const devPanel = document.createElement('div');
             devPanel.setAttribute('id', devPanelContainerId);
-            devPanel.style.flex= "1";
+            devPanel.style.flex = "1";
             document.body.append(devPanel);
 
             console.log('window.YiiDevPanelWidget', window.YiiDevPanelWidget)
