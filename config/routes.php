@@ -19,7 +19,7 @@ return [
         ->withCors(CorsAllowAll::class)
         ->disableMiddleware(ToolbarMiddleware::class)
         ->routes(
-            Route::get('[/]')
+            Route::get('{path:.*}')
                 ->middleware(FormatDataResponseAsHtml::class)
                 ->action([IndexController::class, 'index'])
                 ->name('debug/index'),
