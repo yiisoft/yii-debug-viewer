@@ -11,7 +11,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Assets\AssetManager;
 use Yiisoft\View\WebView;
 use Yiisoft\Yii\Debug\Viewer\Asset\DevPanelAsset;
-use Yiisoft\Yii\Debug\Viewer\Asset\ToolbarAsset;
 
 final class DevPanelMiddleware implements MiddlewareInterface
 {
