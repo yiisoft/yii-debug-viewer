@@ -16,7 +16,7 @@ final class ToolbarAsset extends AssetBundle
         [
             'http://localhost:4173/toolbar/bundle.js',
             WebView::POSITION_END,
-            'type' => 'module'
+            'type' => 'module',
         ],
     ];
 
