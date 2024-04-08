@@ -11,11 +11,14 @@ return [
     ToolbarMiddleware::class => [
         '__construct()' => [
             'containerId' => $params['yiisoft/yii-debug-viewer']['containerId'],
+            'viewerUrl' => $params['yiisoft/yii-debug-viewer']['viewerUrl'],
+            'backendUrl' => $params['yiisoft/yii-debug-viewer']['backendUrl'],
         ],
     ],
     DevPanelMiddleware::class => [
         '__construct()' => [
             'viewerUrl' => $params['yiisoft/yii-debug-viewer']['viewerUrl'],
+            'backendUrl' => $params['yiisoft/yii-debug-viewer']['backendUrl'],
         ],
     ],
 ];

@@ -16,6 +16,8 @@ final class ToolbarMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private string $containerId,
+        private string $viewerUrl,
+        private string $backendUrl,
         private AssetManager $assetManager,
         private WebView $view,
     ) {
@@ -29,12 +31,25 @@ final class ToolbarMiddleware implements MiddlewareInterface
         $this->assetManager->register(ToolbarAsset::class);
         $this->view->registerJs(
             <<<JS
-            const toolbarContainerId = '{$this->containerId}';
-            const toolbar = document.createElement('div');
-            toolbar.setAttribute('id', toolbarContainerId);
-            toolbar.style.flex= "1";
-            document.body.append(toolbar);
-            window.ToolbarWidget.init(toolbarContainerId);
+            const containerId = '{$this->containerId}';
+            const container = document.createElement('div');
+            container.setAttribute('id', containerId);
+            container.style.flex = "1";
+            document.body.append(container);
+
+            console.log('window.YiiDevPanelToolbarWidget', window.YiiDevPanelToolbarWidget)
+            window['YiiDevPanelToolbarWidget'] = window['YiiDevPanelToolbarWidget'] ?? {};
+            window['YiiDevPanelToolbarWidget'].config = {
+                containerId: containerId,
+                options: {
+                    router: {
+                        basename: '{$this->viewerUrl}',
+                    },
+                    backend: {
+                        baseUrl: '{$this->backendUrl}',
+                    }
+                },
+            };
             JS,
             WebView::POSITION_LOAD,
         );

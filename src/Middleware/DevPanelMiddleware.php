@@ -11,12 +11,12 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Assets\AssetManager;
 use Yiisoft\View\WebView;
 use Yiisoft\Yii\Debug\Viewer\Asset\DevPanelAsset;
-use Yiisoft\Yii\Debug\Viewer\Asset\ToolbarAsset;
 
 final class DevPanelMiddleware implements MiddlewareInterface
 {
     public function __construct(
         private string $viewerUrl,
+        private string $backendUrl,
         private AssetManager $assetManager,
         private WebView $view,
     ) {
@@ -30,19 +30,22 @@ final class DevPanelMiddleware implements MiddlewareInterface
         $this->assetManager->register(DevPanelAsset::class);
         $this->view->registerJs(
             <<<JS
-            const devPanelContainerId = 'yii-dev-panel';
-            const devPanel = document.createElement('div');
-            devPanel.setAttribute('id', devPanelContainerId);
-            devPanel.style.flex= "1";
-            document.body.append(devPanel);
+            const containerId = 'yii-dev-panel';
+            const container = document.createElement('div');
+            container.setAttribute('id', containerId);
+            container.style.flex = "1";
+            document.body.append(container);
 
             console.log('window.YiiDevPanelWidget', window.YiiDevPanelWidget)
             window['YiiDevPanelWidget'] = window['YiiDevPanelWidget'] ?? {};
             window['YiiDevPanelWidget'].config = {
-                containerId: devPanelContainerId,
+                containerId: containerId,
                 options: {
                     router: {
                         basename: '{$this->viewerUrl}',
+                    },
+                    backend: {
+                        baseUrl: '{$this->backendUrl}',
                     }
                 },
             };
