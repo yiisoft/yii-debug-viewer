@@ -2,7 +2,6 @@
 
 use Yiisoft\Assets\AssetManager;
 use Yiisoft\View\WebView;
-use Yiisoft\Yii\Debug\Viewer\Asset\DevPanelAsset;
 
 /**
  * @var WebView $this
@@ -38,7 +37,7 @@ $this->beginPage();
         <meta name="application-name" content="Yii Dev Panel">
         <meta name="msapplication-TileColor" content="#01617b">
         <meta name="theme-color" content="#01617b">
-        <link rel="manifest" href="https://yiisoft.github.io/yii-dev-panel/manifest.json"/>
+<!--        <link rel="manifest" href="https://yiisoft.github.io/yii-dev-panel/manifest.json"/>-->
         <title>Yii Dev Panel</title>
         <?php $this->head() ?>
     </head>
