@@ -43,6 +43,7 @@ final class DevPanelMiddleware implements MiddlewareInterface
                 options: {
                     router: {
                         basename: '{$this->viewerUrl}',
+                        useHashRouter: false,
                     },
                     backend: {
                         baseUrl: '{$this->backendUrl}',

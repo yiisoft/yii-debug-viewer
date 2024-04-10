@@ -34,22 +34,26 @@ final class ToolbarMiddleware implements MiddlewareInterface
             const containerId = '{$this->containerId}';
             const container = document.createElement('div');
             container.setAttribute('id', containerId);
-            container.style.flex = "1";
+            container.style.flex = "0";
             document.body.append(container);
 
-            console.log('window.YiiDevPanelToolbarWidget', window.YiiDevPanelToolbarWidget)
+            const isLoaderInitialized = window['YiiDevPanelToolbarWidget'] !== undefined;
             window['YiiDevPanelToolbarWidget'] = window['YiiDevPanelToolbarWidget'] ?? {};
             window['YiiDevPanelToolbarWidget'].config = {
                 containerId: containerId,
                 options: {
                     router: {
-                        basename: '{$this->viewerUrl}',
+                        basename: '',
+                        useHashRouter: false,
                     },
                     backend: {
                         baseUrl: '{$this->backendUrl}',
                     }
                 },
             };
+            if (isLoaderInitialized) {
+                window['YiiDevPanelToolbarWidget'].init()
+            }
             JS,
             WebView::POSITION_LOAD,
         );
