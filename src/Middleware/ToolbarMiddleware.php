@@ -19,6 +19,7 @@ final class ToolbarMiddleware implements MiddlewareInterface
         private string $viewerUrl,
         private string $backendUrl,
         private string $editorUrl,
+        private string $staticUrl,
         private AssetManager $assetManager,
         private WebView $view,
     ) {
@@ -29,7 +30,7 @@ final class ToolbarMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $this->assetManager->register(ToolbarAsset::class);
+        $this->assetManager->registerCustomized(ToolbarAsset::class, ['baseUrl' => $this->staticUrl]);
         $this->view->registerJs(
             <<<JS
             const containerId = '{$this->containerId}';

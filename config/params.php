@@ -14,6 +14,5 @@ return [
         // for dev purposes http://localhost:4173
         'devPanelStaticUrl' => 'https://yiisoft.github.io/yii-dev-panel',
         'toolbarStaticUrl' => 'https://yiisoft.github.io/yii-dev-panel/toolbar',
-        'registerServiceWorker' => false,
     ],
 ];
