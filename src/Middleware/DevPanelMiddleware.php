@@ -15,8 +15,10 @@ use Yiisoft\Yii\Debug\Viewer\Asset\DevPanelAsset;
 final class DevPanelMiddleware implements MiddlewareInterface
 {
     public function __construct(
+        private string $containerId,
         private string $viewerUrl,
         private string $backendUrl,
+        private string $editorUrl,
         private AssetManager $assetManager,
         private WebView $view,
     ) {
@@ -30,17 +32,19 @@ final class DevPanelMiddleware implements MiddlewareInterface
         $this->assetManager->register(DevPanelAsset::class);
         $this->view->registerJs(
             <<<JS
-            const containerId = 'yii-dev-panel';
+            const containerId = '{$this->containerId}';
             const container = document.createElement('div');
             container.setAttribute('id', containerId);
             container.style.flex = "1";
             document.body.append(container);
 
-            console.log('window.YiiDevPanelWidget', window.YiiDevPanelWidget)
             window['YiiDevPanelWidget'] = window['YiiDevPanelWidget'] ?? {};
             window['YiiDevPanelWidget'].config = {
                 containerId: containerId,
                 options: {
+                    application: {
+                        editorUrl: '{$this->editorUrl}',
+                    },
                     router: {
                         basename: '{$this->viewerUrl}',
                         useHashRouter: false,

@@ -7,18 +7,23 @@ use Yiisoft\Yii\Debug\Viewer\Middleware\ToolbarMiddleware;
 
 /** @var array $params */
 
+$viewerParams = $params['yiisoft/yii-debug-viewer'];
+
 return [
     ToolbarMiddleware::class => [
         '__construct()' => [
-            'containerId' => $params['yiisoft/yii-debug-viewer']['containerId'],
-            'viewerUrl' => $params['yiisoft/yii-debug-viewer']['viewerUrl'],
-            'backendUrl' => $params['yiisoft/yii-debug-viewer']['backendUrl'],
+            'containerId' => $viewerParams['toolbarContainerId'],
+            'viewerUrl' => $viewerParams['viewerUrl'],
+            'backendUrl' => $viewerParams['backendUrl'],
+            'editorUrl' => $viewerParams['editorUrl'],
         ],
     ],
     DevPanelMiddleware::class => [
         '__construct()' => [
-            'viewerUrl' => $params['yiisoft/yii-debug-viewer']['viewerUrl'],
-            'backendUrl' => $params['yiisoft/yii-debug-viewer']['backendUrl'],
+            'containerId' => $viewerParams['devPanelContainerId'],
+            'viewerUrl' => $viewerParams['viewerUrl'],
+            'backendUrl' => $viewerParams['backendUrl'],
+            'editorUrl' => $viewerParams['editorUrl'],
         ],
     ],
 ];

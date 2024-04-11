@@ -18,6 +18,7 @@ final class ToolbarMiddleware implements MiddlewareInterface
         private string $containerId,
         private string $viewerUrl,
         private string $backendUrl,
+        private string $editorUrl,
         private AssetManager $assetManager,
         private WebView $view,
     ) {
@@ -41,6 +42,9 @@ final class ToolbarMiddleware implements MiddlewareInterface
             window['YiiDevPanelToolbarWidget'].config = {
                 containerId: containerId,
                 options: {
+                    application: {
+                        editorUrl: '{$this->editorUrl}',
+                    },
                     router: {
                         basename: '',
                         useHashRouter: false,
