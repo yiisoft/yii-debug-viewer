@@ -10,20 +10,17 @@ use Yiisoft\View\WebView;
 final class DevPanelAsset extends AssetBundle
 {
     public bool $cdn = true;
+    public array $js = [];
+    public array $css = [];
 
-    public array $js = [
-        [
-            //'https://yiisoft.github.io/yii-dev-panel/bundle.js',
-            'http://localhost:4173/bundle.js',
-            WebView::POSITION_END,
-            'type' => 'module',
-        ],
-        //'https://yiisoft.github.io/yii-dev-panel/registerSW.js',
-        'http://localhost:4173/registerSW.js',
-    ];
+    public function __construct(string $staticUrl, bool $registerServiceWorker)
+    {
+        $this->js[] = [$staticUrl . '/bundle.js', WebView::POSITION_END, 'type' => 'module'];
 
-    public array $css = [
-        //'https://yiisoft.github.io/yii-dev-panel/bundle.css',
-        'http://localhost:4173/bundle.css',
-    ];
+        if ($registerServiceWorker) {
+            $this->js[] = $staticUrl . '/registerSW.js';
+        }
+
+        $this->css[] = $staticUrl . '/bundle.css';
+    }
 }
