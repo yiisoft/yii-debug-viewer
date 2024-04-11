@@ -37,7 +37,6 @@ final class ToolbarMiddleware implements MiddlewareInterface
             container.style.flex = "0";
             document.body.append(container);
 
-            const isLoaderInitialized = window['YiiDevPanelToolbarWidget'] !== undefined;
             window['YiiDevPanelToolbarWidget'] = window['YiiDevPanelToolbarWidget'] ?? {};
             window['YiiDevPanelToolbarWidget'].config = {
                 containerId: containerId,
@@ -51,9 +50,6 @@ final class ToolbarMiddleware implements MiddlewareInterface
                     }
                 },
             };
-            if (isLoaderInitialized) {
-                window['YiiDevPanelToolbarWidget'].init()
-            }
             JS,
             WebView::POSITION_LOAD,
         );
