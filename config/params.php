@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 return [
     'yiisoft/yii-debug-viewer' => [
-        'viewerUrl' => 'debug',
+        'viewerUrl' => '/debug',
         'backendUrl' => 'http://127.0.0.1:8080',
         'editorUrl' => 'phpstorm://open?url=file://{file}&line={line}',
 
