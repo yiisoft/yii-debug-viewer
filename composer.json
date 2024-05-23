@@ -94,14 +94,14 @@
                     "$di",
                     "app/web.php"
                 ],
-                "events": [ ],
+                "events": [],
                 "events-web": "$events",
                 "events-console": "$events",
-                "di-providers": [ ],
+                "di-providers": [],
                 "di-providers-web": "$di-providers",
                 "di-providers-console": "$di-providers",
-                "routes": [ ],
-                "bootstrap": [ ],
+                "routes": [],
+                "bootstrap": [],
                 "bootstrap-web": "$bootstrap",
                 "bootstrap-console": "$bootstrap"
             }
