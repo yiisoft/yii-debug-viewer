@@ -84,6 +84,9 @@ return [
             'yiisoft/aliases' => [
                 'config/di.php',
             ],
+            'yiisoft/router' => [
+                'config/di.php',
+            ],
             'yiisoft/view' => [
                 'config/di.php',
             ],
@@ -91,9 +94,6 @@ return [
                 'config/di.php',
             ],
             'yiisoft/log-target-file' => [
-                'config/di.php',
-            ],
-            'yiisoft/router' => [
                 'config/di.php',
             ],
             'yiisoft/yii-event' => [
