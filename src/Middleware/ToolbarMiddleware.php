@@ -9,6 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Yiisoft\Assets\AssetManager;
+use Yiisoft\Router\UrlGeneratorInterface;
 use Yiisoft\View\WebView;
 use Yiisoft\Yii\Debug\Viewer\Asset\ToolbarAsset;
 
@@ -22,6 +23,7 @@ final class ToolbarMiddleware implements MiddlewareInterface
         private string $staticUrl,
         private AssetManager $assetManager,
         private WebView $view,
+        private UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
@@ -30,6 +32,7 @@ final class ToolbarMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $baseUriPrefix = $this->urlGenerator->getUriPrefix();
         $this->assetManager->registerCustomized(ToolbarAsset::class, ['baseUrl' => $this->staticUrl]);
         $this->view->registerJs(
             <<<JS
@@ -47,11 +50,11 @@ final class ToolbarMiddleware implements MiddlewareInterface
                         editorUrl: '{$this->editorUrl}',
                     },
                     router: {
-                        basename: '',
+                        basename: '{$baseUriPrefix}',
                         useHashRouter: false,
                     },
                     backend: {
-                        baseUrl: '{$this->backendUrl}',
+                        baseUrl: '{$this->backendUrl}{$baseUriPrefix}',
                     }
                 },
             };
