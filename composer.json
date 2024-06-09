@@ -33,7 +33,8 @@
         "yiisoft/assets": "^4.0",
         "yiisoft/data-response": "^2.0",
         "yiisoft/http": "^1.1",
-        "yiisoft/view": "^8.0"
+        "yiisoft/view": "^8.0",
+        "yiisoft/yii-view": "^6.1"
     },
     "require-dev": {
         "httpsoft/http-message": "^1.0.5",

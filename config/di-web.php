@@ -2,19 +2,32 @@
 
 declare(strict_types=1);
 
-use Yiisoft\Yii\Debug\Viewer\Factory\PanelCollectionFactory;
+use Yiisoft\Yii\Debug\Viewer\Middleware\DevPanelMiddleware;
 use Yiisoft\Yii\Debug\Viewer\Middleware\ToolbarMiddleware;
-use Yiisoft\Yii\Debug\Viewer\PanelCollection;
 
 /** @var array $params */
 
+$viewerParams = $params['yiisoft/yii-debug-viewer'];
+
 return [
-    PanelCollection::class => new PanelCollectionFactory($params['yiisoft/yii-debug-viewer']['panels']),
     ToolbarMiddleware::class => [
         '__construct()' => [
-            'toolbarUrl' => $params['yiisoft/yii-debug-viewer']['viewerUrl'],
-            'apiUrl' => $params['yiisoft/yii-debug-viewer']['apiUrl'],
-            'editorUrl' => $params['yiisoft/yii-debug-viewer']['editorUrl'],
+            'containerId' => $viewerParams['toolbarContainerId'],
+            'viewerUrl' => $viewerParams['viewerUrl'],
+            'backendUrl' => $viewerParams['backendUrl'],
+            'editorUrl' => $viewerParams['editorUrl'],
+
+            'staticUrl' => $viewerParams['toolbarStaticUrl'],
+        ],
+    ],
+    DevPanelMiddleware::class => [
+        '__construct()' => [
+            'containerId' => $viewerParams['devPanelContainerId'],
+            'viewerUrl' => $viewerParams['viewerUrl'],
+            'backendUrl' => $viewerParams['backendUrl'],
+            'editorUrl' => $viewerParams['editorUrl'],
+
+            'staticUrl' => $viewerParams['devPanelStaticUrl'],
         ],
     ],
 ];
