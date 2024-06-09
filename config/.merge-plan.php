@@ -9,10 +9,7 @@ return [
             'yiisoft/assets' => [
                 'config/params.php',
             ],
-            'yiisoft/data-response' => [
-                'config/params.php',
-            ],
-            'yiisoft/view' => [
+            'yiisoft/yii-view' => [
                 'config/params.php',
             ],
             'yiisoft/router-fastroute' => [
@@ -21,7 +18,19 @@ return [
             'yiisoft/aliases' => [
                 'config/params.php',
             ],
+            'yiisoft/data-response' => [
+                'config/params.php',
+            ],
+            'yiisoft/view' => [
+                'config/params.php',
+            ],
+            'yiisoft/csrf' => [
+                'config/params.php',
+            ],
             'yiisoft/log-target-file' => [
+                'config/params.php',
+            ],
+            'yiisoft/session' => [
                 'config/params.php',
             ],
             '/' => [
@@ -32,16 +41,25 @@ return [
             'yiisoft/assets' => [
                 'config/di-web.php',
             ],
+            'yiisoft/yii-view' => [
+                'config/di-web.php',
+            ],
+            'yiisoft/router-fastroute' => [
+                'config/di-web.php',
+            ],
             'yiisoft/data-response' => [
                 'config/di-web.php',
             ],
             'yiisoft/view' => [
                 'config/di-web.php',
             ],
-            'yiisoft/router-fastroute' => [
+            'yiisoft/csrf' => [
                 'config/di-web.php',
             ],
             'yiisoft/error-handler' => [
+                'config/di-web.php',
+            ],
+            'yiisoft/session' => [
                 'config/di-web.php',
             ],
             'yiisoft/yii-event' => [
@@ -51,14 +69,22 @@ return [
                 'di-web.php',
             ],
         ],
-        'di' => [
-            'yiisoft/view' => [
-                'config/di.php',
+        'events-web' => [
+            'yiisoft/yii-view' => [
+                'config/events-web.php',
             ],
+            'yiisoft/log' => [
+                'config/events-web.php',
+            ],
+        ],
+        'di' => [
             'yiisoft/router-fastroute' => [
                 'config/di.php',
             ],
             'yiisoft/aliases' => [
+                'config/di.php',
+            ],
+            'yiisoft/view' => [
                 'config/di.php',
             ],
             'yiisoft/cache' => [
@@ -80,11 +106,6 @@ return [
             ],
             'yiisoft/yii-console' => [
                 'config/events-console.php',
-            ],
-        ],
-        'events-web' => [
-            'yiisoft/log' => [
-                'config/events-web.php',
             ],
         ],
         'params-console' => [
