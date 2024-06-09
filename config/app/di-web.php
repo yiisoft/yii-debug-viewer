@@ -2,13 +2,6 @@
 
 declare(strict_types=1);
 
-use Yiisoft\Yii\Debug\Viewer\NotFoundHandler;
-use Yiisoft\ErrorHandler\Middleware\ErrorCatcher;
-use Yiisoft\Injector\Injector;
-use Yiisoft\Middleware\Dispatcher\MiddlewareDispatcher;
-use Yiisoft\Router\Middleware\Router;
-use Yiisoft\Definitions\Reference;
-use Yiisoft\Definitions\DynamicReference;
 use HttpSoft\Message\RequestFactory;
 use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\ServerRequestFactory;
@@ -22,16 +15,23 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UriFactoryInterface;
 use Yiisoft\DataResponse\Middleware\FormatDataResponse;
+use Yiisoft\Definitions\DynamicReference;
+use Yiisoft\Definitions\Reference;
+use Yiisoft\ErrorHandler\Middleware\ErrorCatcher;
+use Yiisoft\Injector\Injector;
+use Yiisoft\Middleware\Dispatcher\MiddlewareDispatcher;
 use Yiisoft\Router\Group;
+use Yiisoft\Router\Middleware\Router;
 use Yiisoft\Router\RouteCollection;
 use Yiisoft\Router\RouteCollectionInterface;
 use Yiisoft\Router\RouteCollectorInterface;
+use Yiisoft\Yii\Debug\Viewer\NotFoundHandler;
 
 return [
     Yiisoft\Yii\Http\Application::class => [
         '__construct()' => [
             'dispatcher' => DynamicReference::to(static function (Injector $injector) {
-                return ($injector->make(MiddlewareDispatcher::class))
+                return $injector->make(MiddlewareDispatcher::class)
                     ->withMiddlewares(
                         [
                             Router::class,
@@ -49,7 +49,6 @@ return [
     UriFactoryInterface::class => UriFactory::class,
     UploadedFileFactoryInterface::class => UploadedFileFactory::class,
     RouteCollectionInterface::class => static function (RouteCollectorInterface $collector) use ($config) {
-        //$routes = array_merge($config->get('routes'), require 'routes.php');
         $collector
             ->middleware(FormatDataResponse::class)
             ->addGroup(Group::create()->routes(...$config->get('routes')));

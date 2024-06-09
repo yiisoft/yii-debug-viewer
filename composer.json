@@ -3,25 +3,38 @@
     "type": "library",
     "description": "Yii Debug Viewer",
     "keywords": [
-        "yii", "debug"
+        "yii",
+        "debug",
+        "dev"
     ],
     "homepage": "https://www.yiiframework.com/",
     "license": "BSD-3-Clause",
     "support": {
         "issues": "https://github.com/yiisoft/yii-debug-viewer/issues?state=open",
+        "source": "https://github.com/yiisoft/yii-debug-viewer",
         "forum": "https://www.yiiframework.com/forum/",
         "wiki": "https://www.yiiframework.com/wiki/",
-        "irc": "irc://irc.freenode.net/yii",
-        "chat": "https://t.me/yii3en",
-        "source": "https://github.com/yiisoft/yii-debug-viewer"
+        "irc": "ircs://irc.libera.chat:6697/yii",
+        "chat": "https://t.me/yii3en"
     },
+    "funding": [
+        {
+            "type": "opencollective",
+            "url": "https://opencollective.com/yiisoft"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/yiisoft"
+        }
+    ],
     "require": {
         "php": "^8.0",
         "nyholm/psr7": "^1.3",
-        "yiisoft/assets": "^2.1",
-        "yiisoft/data-response": "^1.0",
+        "yiisoft/assets": "^4.0",
+        "yiisoft/data-response": "^2.0",
         "yiisoft/http": "^1.1",
-        "yiisoft/view": "^4.0|^5.0|^6.0"
+        "yiisoft/view": "^8.0",
+        "yiisoft/yii-view": "^6.1"
     },
     "require-dev": {
         "httpsoft/http-message": "^1.0.5",
@@ -34,25 +47,26 @@
         "psr/http-server-handler": "^1.0",
         "psr/http-server-middleware": "^1.0",
         "psr/log": "^2.0|^3.0",
+        "rector/rector": "^0.15.1",
         "roave/infection-static-analysis-plugin": "^1.21",
         "spatie/phpunit-watcher": "^1.23",
         "vimeo/psalm": "^4.18",
-        "yiisoft/aliases": "^2.0",
+        "yiisoft/aliases": "^3.0",
         "yiisoft/config": "^1.0",
         "yiisoft/di": "^1.1",
-        "yiisoft/error-handler": "^2.0",
+        "yiisoft/error-handler": "^3.0",
         "yiisoft/factory": "^1.0",
         "yiisoft/files": "^2.0",
         "yiisoft/injector": "^1.0",
         "yiisoft/log": "^2.0",
-        "yiisoft/log-target-file": "^2.0",
-        "yiisoft/router": "^1.0",
-        "yiisoft/router-fastroute": "^1.0",
-        "yiisoft/yii-console": "^1.0",
-        "yiisoft/yii-event": "^1.0",
+        "yiisoft/log-target-file": "^3.0",
+        "yiisoft/router": "^3.0",
+        "yiisoft/router-fastroute": "^3.0",
+        "yiisoft/yii-console": "^2.0",
+        "yiisoft/yii-event": "^2.0",
         "yiisoft/yii-http": "^1.0",
-        "yiisoft/yii-runner-console": "^1.0",
-        "yiisoft/yii-runner-http": "^1.1"
+        "yiisoft/yii-runner-console": "^2.0",
+        "yiisoft/yii-runner-http": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -73,50 +87,29 @@
         },
         "config-plugin-environments": {
             "yii-debug-viewer-app": {
-                "common": "app/common.php",
                 "params": [
                     "app/params.php"
                 ],
-                "console": [
-                    "$common",
-                    "app/console.php"
-                ],
-                "web": [
-                    "$common",
+                "di": "app/di.php",
+                "di-console": "$di",
+                "di-web": [
+                    "$di",
                     "app/web.php"
                 ],
-                "events": "app/events.php",
-                "events-web": [
-                    "$events",
-                    "app/events-web.php"
-                ],
-                "events-console": [
-                    "$events",
-                    "app/events-console.php"
-                ],
-                "providers": "app/providers.php",
-                "providers-web": [
-                    "$providers",
-                    "app/providers-web.php"
-                ],
-                "providers-console": [
-                    "$providers",
-                    "app/providers-console.php"
-                ],
-                "routes": "app/routes.php",
-                "bootstrap": "app/bootstrap.php",
-                "bootstrap-web": [
-                    "$bootstrap",
-                    "app/bootstrap-web.php"
-                ],
-                "bootstrap-console": [
-                    "$bootstrap",
-                    "app/bootstrap-console.php"
-                ]
+                "events": [],
+                "events-web": "$events",
+                "events-console": "$events",
+                "di-providers": [],
+                "di-providers-web": "$di-providers",
+                "di-providers-console": "$di-providers",
+                "routes": [],
+                "bootstrap": [],
+                "bootstrap-web": "$bootstrap",
+                "bootstrap-console": "$bootstrap"
             }
         },
         "config-plugin": {
-            "web": "web.php",
+            "di-web": "di-web.php",
             "params": "params.php",
             "routes": "routes.php"
         }
