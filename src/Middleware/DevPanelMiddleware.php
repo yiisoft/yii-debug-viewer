@@ -61,7 +61,7 @@ final class DevPanelMiddleware implements MiddlewareInterface
                         toolbar: queryParams?.toolbar !== '0',
                     },
                     router: {
-                        basename: '{$baseUriPrefix}',
+                        basename: '{$baseUriPrefix}{$this->viewerUrl}',
                         useHashRouter: false,
                     },
                     backend: {
