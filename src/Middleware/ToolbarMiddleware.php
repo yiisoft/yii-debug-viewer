@@ -50,6 +50,9 @@ final class ToolbarMiddleware implements MiddlewareInterface
                     application: {
                         editorUrl: '{$this->editorUrl}',
                     },
+                    modules: {
+                         toolbar: '1',
+                     },
                     router: {
                         basename: '{$baseUriPrefix}',
                         useHashRouter: false,
