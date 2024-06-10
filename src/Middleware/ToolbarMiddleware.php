@@ -36,6 +36,7 @@ final class ToolbarMiddleware implements MiddlewareInterface
         $this->assetManager->registerCustomized(ToolbarAsset::class, ['baseUrl' => $this->staticUrl]);
         $this->view->registerJs(
             <<<JS
+            (function(){
             const containerId = '{$this->containerId}';
             const container = document.createElement('div');
             container.setAttribute('id', containerId);
@@ -49,15 +50,20 @@ final class ToolbarMiddleware implements MiddlewareInterface
                     application: {
                         editorUrl: '{$this->editorUrl}',
                     },
+                    modules: {
+                         toolbar: '1',
+                     },
                     router: {
                         basename: '{$baseUriPrefix}',
                         useHashRouter: false,
                     },
                     backend: {
                         baseUrl: '{$this->backendUrl}{$baseUriPrefix}',
+                        usePreferredUrl: true,
                     }
                 },
             };
+            })();
             JS,
             WebView::POSITION_LOAD,
         );
