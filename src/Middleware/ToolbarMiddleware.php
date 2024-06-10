@@ -56,6 +56,7 @@ final class ToolbarMiddleware implements MiddlewareInterface
                     },
                     backend: {
                         baseUrl: '{$this->backendUrl}{$baseUriPrefix}',
+                        usePreferredUrl: true,
                     }
                 },
             };
