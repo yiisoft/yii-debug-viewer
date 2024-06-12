@@ -36,6 +36,14 @@ final class DevPanelMiddleware implements MiddlewareInterface
         $this->assetManager->registerCustomized(DevPanelAsset::class, ['baseUrl' => $this->staticUrl]);
         $this->view->registerJs(
             <<<JS
+            (function(){
+            let queryParams = {toolbar: '1'};
+            try {
+                queryParams = Object.fromEntries(new URLSearchParams(location.search));
+            } catch (e) {
+                console.error('Error while parsing query params: ', e);
+            }
+
             const containerId = '{$this->containerId}';
             const container = document.createElement('div');
             container.setAttribute('id', containerId);
@@ -49,15 +57,20 @@ final class DevPanelMiddleware implements MiddlewareInterface
                     application: {
                         editorUrl: '{$this->editorUrl}',
                     },
+                    modules: {
+                        toolbar: queryParams?.toolbar !== '0',
+                    },
                     router: {
                         basename: '{$baseUriPrefix}{$this->viewerUrl}',
                         useHashRouter: false,
                     },
                     backend: {
                         baseUrl: '{$this->backendUrl}{$baseUriPrefix}',
+                        usePreferredUrl: true,
                     }
                 },
             };
+            })();
             JS,
             WebView::POSITION_LOAD,
         );

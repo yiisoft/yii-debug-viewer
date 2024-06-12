@@ -36,6 +36,7 @@
         "yiisoft/assets": "^4.0",
         "yiisoft/data-response": "^2.0",
         "yiisoft/http": "^1.1",
+        "yiisoft/router": "^3.1",
         "yiisoft/view": "^8.0",
         "yiisoft/yii-view": "^6.1"
     },
@@ -60,7 +61,6 @@
         "yiisoft/injector": "^1.0",
         "yiisoft/log": "^2.0",
         "yiisoft/log-target-file": "^3.0",
-        "yiisoft/router": "^3.0",
         "yiisoft/router-fastroute": "^3.0",
         "yiisoft/yii-console": "^2.0",
         "yiisoft/yii-event": "^2.0",
