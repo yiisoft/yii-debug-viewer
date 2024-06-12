@@ -15,4 +15,11 @@ return [
         'devPanelStaticUrl' => 'https://yiisoft.github.io/yii-dev-panel',
         'toolbarStaticUrl' => 'https://yiisoft.github.io/yii-dev-panel/toolbar',
     ],
+    'yiisoft/yii-debug-api' => [
+        'fallbackHandler' => [
+            'middlewares' => [
+                \Yiisoft\Yii\Debug\Viewer\Middleware\ToolbarMiddleware::class,
+            ],
+        ]
+    ],
 ];
