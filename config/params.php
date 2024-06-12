@@ -20,6 +20,6 @@ return [
             'middlewares' => [
                 \Yiisoft\Yii\Debug\Viewer\Middleware\ToolbarMiddleware::class,
             ],
-        ]
+        ],
     ],
 ];
