@@ -16,10 +16,8 @@ return [
         'toolbarStaticUrl' => 'https://yiisoft.github.io/yii-dev-panel/toolbar',
     ],
     'yiisoft/yii-debug-api' => [
-        'fallbackHandler' => [
-            'middlewares' => [
-                \Yiisoft\Yii\Debug\Viewer\Middleware\ToolbarMiddleware::class,
-            ],
+        'middlewares' => [
+            \Yiisoft\Yii\Debug\Viewer\Middleware\ToolbarMiddleware::class,
         ],
     ],
 ];
