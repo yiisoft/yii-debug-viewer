@@ -38,7 +38,7 @@
         "yiisoft/http": "^1.1",
         "yiisoft/router": "^3.1",
         "yiisoft/view": "^10.0",
-        "yiisoft/yii-view": "^7.1"
+        "yiisoft/yii-view-renderer": "^7.1"
     },
     "require-dev": {
         "httpsoft/http-message": "^1.0.5",
