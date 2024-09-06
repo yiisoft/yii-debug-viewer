@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Yiisoft\Yii\Debug\Viewer;
 
 use Psr\Http\Message\ResponseInterface;
-use Yiisoft\Yii\View\ViewRenderer;
+use Yiisoft\Yii\View\Renderer\ViewRenderer;
 
 final class IndexController
 {

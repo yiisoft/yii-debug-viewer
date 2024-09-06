@@ -9,7 +9,7 @@ return [
             'yiisoft/assets' => [
                 'config/params.php',
             ],
-            'yiisoft/yii-view' => [
+            'yiisoft/yii-view-renderer' => [
                 'config/params.php',
             ],
             'yiisoft/router-fastroute' => [
@@ -41,7 +41,7 @@ return [
             'yiisoft/assets' => [
                 'config/di-web.php',
             ],
-            'yiisoft/yii-view' => [
+            'yiisoft/yii-view-renderer' => [
                 'config/di-web.php',
             ],
             'yiisoft/router-fastroute' => [
@@ -70,7 +70,7 @@ return [
             ],
         ],
         'events-web' => [
-            'yiisoft/yii-view' => [
+            'yiisoft/yii-view-renderer' => [
                 'config/events-web.php',
             ],
             'yiisoft/log' => [
