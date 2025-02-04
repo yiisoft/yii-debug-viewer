@@ -33,7 +33,7 @@
         "psr/http-message": "^1.1",
         "psr/http-server-handler": "^1.0",
         "psr/http-server-middleware": "^1.0",
-        "yiisoft/assets": "^4.0",
+        "yiisoft/assets": "^5.0",
         "yiisoft/data-response": "^2.0",
         "yiisoft/http": "^1.1",
         "yiisoft/router": "^3.1",
