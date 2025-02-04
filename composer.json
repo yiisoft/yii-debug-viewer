@@ -28,12 +28,12 @@
         }
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "nyholm/psr7": "^1.3",
         "psr/http-message": "^1.1",
         "psr/http-server-handler": "^1.0",
         "psr/http-server-middleware": "^1.0",
-        "yiisoft/assets": "^4.0",
+        "yiisoft/assets": "^4.0|^5.0",
         "yiisoft/data-response": "^2.0",
         "yiisoft/http": "^1.1",
         "yiisoft/router": "^3.1",
@@ -51,7 +51,7 @@
         "rector/rector": "^0.15.1",
         "roave/infection-static-analysis-plugin": "^1.21",
         "spatie/phpunit-watcher": "^1.23",
-        "vimeo/psalm": "^4.18",
+        "vimeo/psalm": "^5.26.1",
         "yiisoft/aliases": "^3.0",
         "yiisoft/config": "^1.0",
         "yiisoft/di": "^1.1",
@@ -119,7 +119,7 @@
         "allow-plugins": {
             "infection/extension-installer": true,
             "composer/package-versions-deprecated": true,
-            "yiisoft/config": true
+            "yiisoft/config": false
         }
     },
     "scripts": {
