@@ -17,7 +17,7 @@ return [
     ],
     'yiisoft/yii-debug-api' => [
         'middlewares' => [
-            \Yiisoft\Yii\Debug\Viewer\Middleware\ToolbarMiddleware::class,
+            Yiisoft\Yii\Debug\Viewer\Middleware\ToolbarMiddleware::class,
         ],
     ],
 ];
