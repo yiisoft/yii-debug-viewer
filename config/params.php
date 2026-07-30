@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+use Yiisoft\Yii\Debug\Viewer\Middleware\ToolbarMiddleware;
 
 return [
     'yiisoft/yii-debug-viewer' => [
@@ -17,7 +18,7 @@ return [
     ],
     'yiisoft/yii-debug-api' => [
         'middlewares' => [
-            Yiisoft\Yii\Debug\Viewer\Middleware\ToolbarMiddleware::class,
+            ToolbarMiddleware::class,
         ],
     ],
 ];

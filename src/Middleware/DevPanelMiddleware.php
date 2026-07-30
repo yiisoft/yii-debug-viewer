@@ -24,8 +24,7 @@ final class DevPanelMiddleware implements MiddlewareInterface
         private AssetManager $assetManager,
         private WebView $view,
         private UrlGeneratorInterface $urlGenerator,
-    ) {
-    }
+    ) {}
 
     /**
      * @inheritDoc

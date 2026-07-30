@@ -15,14 +15,13 @@ final class NotFoundHandler implements RequestHandlerInterface
 {
     public function __construct(
         private DataResponseFormatterInterface $formatter,
-        private DataResponseFactoryInterface $dataResponseFactory
-    ) {
-    }
+        private DataResponseFactoryInterface $dataResponseFactory,
+    ) {}
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->formatter->format(
-            $this->dataResponseFactory->createResponse('Page not found', Status::NOT_FOUND)
+            $this->dataResponseFactory->createResponse('Page not found', Status::NOT_FOUND),
         );
     }
 }

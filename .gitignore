@@ -17,10 +17,6 @@ Thumbs.db
 
 /composer.lock
 
-# runtime dir
-
-/runtime
-
 # composer itself is not needed
 composer.phar
 

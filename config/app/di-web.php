@@ -26,9 +26,10 @@ use Yiisoft\Router\RouteCollection;
 use Yiisoft\Router\RouteCollectionInterface;
 use Yiisoft\Router\RouteCollectorInterface;
 use Yiisoft\Yii\Debug\Viewer\NotFoundHandler;
+use Yiisoft\Yii\Http\Application;
 
 return [
-    Yiisoft\Yii\Http\Application::class => [
+    Application::class => [
         '__construct()' => [
             'dispatcher' => DynamicReference::to(static function (Injector $injector) {
                 return $injector->make(MiddlewareDispatcher::class)
@@ -36,7 +37,7 @@ return [
                         [
                             Router::class,
                             ErrorCatcher::class,
-                        ]
+                        ],
                     );
             }),
             'fallbackHandler' => Reference::to(NotFoundHandler::class),
